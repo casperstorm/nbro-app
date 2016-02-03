@@ -10,12 +10,15 @@
 		181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventViewController.swift */; };
 		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
+		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
 		6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A5C291C60BF72007459A8 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		181FC69C072EEB0317D5CFC2 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		6C2D28F61C60C496003E5C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
+		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6C9A5C261C60BF72007459A8 /* nbro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nbro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C9A5C291C60BF72007459A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C9A5C351C60BF72007459A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -44,6 +47,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		6C4390801C62529800E923D0 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				6C4390831C6252E100E923D0 /* FacebookManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		6C9A5C1D1C60BF72007459A8 = {
 			isa = PBXGroup;
 			children = (
@@ -65,10 +76,12 @@
 		6C9A5C281C60BF72007459A8 /* nbro */ = {
 			isa = PBXGroup;
 			children = (
+				6C4390801C62529800E923D0 /* Managers */,
 				6C2D28F61C60C496003E5C74 /* Assets.xcassets */,
 				6C9A5C291C60BF72007459A8 /* AppDelegate.swift */,
 				6C9A5C351C60BF72007459A8 /* Info.plist */,
 				181FC285B7EFE73C3057C11A /* ViewControllers */,
+				6C4390851C62537600E923D0 /* Bridging-Header.h */,
 			);
 			path = nbro;
 			sourceTree = "<group>";
@@ -210,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */,
 			);
@@ -309,6 +323,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Bob.nbro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -322,6 +337,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Bob.nbro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 			};
 			name = Release;
 		};
