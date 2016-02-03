@@ -7,7 +7,7 @@ import FoldingCell
 import UIKit
 
 class EventCell: FoldingCell {
-
+    
     override func animationDuration(itemIndex:NSInteger, type:AnimationType)-> NSTimeInterval {
         
         // durations count equal it itemCount
