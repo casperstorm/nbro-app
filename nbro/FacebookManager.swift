@@ -11,7 +11,9 @@ import FBSDKLoginKit
 
 class FacebookManager {
     class func logInWithReadPermissions(completion: (success: Bool) -> Void) {
-        FBSDKLoginManager().logInWithReadPermissions(["email"], fromViewController: nil, handler: {
+        let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
+        loginManager.logInWithReadPermissions(["email"], fromViewController: nil, handler: {
             (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
             if let _ = result {
                 completion(success: true)
@@ -33,7 +35,6 @@ class FacebookManager {
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
             if let r = result {
-                //let paging = r["paging"]
                 let data = r["data"] as! Array<AnyObject>
                 var events: [Event] = []
                 for event in data {
