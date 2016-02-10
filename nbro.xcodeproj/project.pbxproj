@@ -8,14 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventViewController.swift */; };
+		181FC68ED212E98808EB164D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC338CA0EF384A74A91FD /* Event.swift */; };
 		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
 		6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A5C291C60BF72007459A8 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		181FC338CA0EF384A74A91FD /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		181FC69C072EEB0317D5CFC2 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6C2D28F61C60C496003E5C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -43,8 +47,17 @@
 			isa = PBXGroup;
 			children = (
 				181FC69C072EEB0317D5CFC2 /* EventViewController.swift */,
+				6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		181FC99C36C53CE439F618A7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				181FC338CA0EF384A74A91FD /* Event.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		6C4390801C62529800E923D0 /* Managers */ = {
@@ -82,6 +95,7 @@
 				6C9A5C351C60BF72007459A8 /* Info.plist */,
 				181FC285B7EFE73C3057C11A /* ViewControllers */,
 				6C4390851C62537600E923D0 /* Bridging-Header.h */,
+				181FC99C36C53CE439F618A7 /* Models */,
 			);
 			path = nbro;
 			sourceTree = "<group>";
@@ -226,6 +240,8 @@
 				6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */,
+				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
+				181FC68ED212E98808EB164D /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,7 +337,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = nbro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Bob.nbro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 			};
@@ -335,7 +351,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = nbro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Bob.nbro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 			};
