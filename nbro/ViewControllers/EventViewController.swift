@@ -22,6 +22,10 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         self.setupSubviews()
         self.defineLayout()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         self.loadData()
     }
     
