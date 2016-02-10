@@ -40,6 +40,10 @@ class LoginViewController: UIViewController {
     }
     
     func facebookLoginButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        FacebookManager.logInWithReadPermissions { (success) in
+            if(success) {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
     }
 }
