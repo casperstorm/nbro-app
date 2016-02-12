@@ -9,7 +9,7 @@ class Event {
     var name: String?
     var startDate: NSDate?
     
-    convenience init(_ dictionary: Dictionary<String, AnyObject>) {
+    convenience init(_ dictionary: NSDictionary) {
         self.init()
         self.name = dictionary["name"] as? String
         

@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKLoginManager.renewSystemCredentials {
             (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
         }
+        
+        setupAdditionalStyling()
 
         let eventsViewController = EventViewController()
         let loginViewController = LoginViewController()
@@ -48,6 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         FBSDKAppEvents.activateApp()
+    }
+    
+    // MARK: Styling
+    
+    func setupAdditionalStyling() {
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
 }
 

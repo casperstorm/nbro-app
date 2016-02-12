@@ -24,26 +24,42 @@ class FacebookManager {
     }
     
     class func authenticated() -> Bool {
+        return false
         return FBSDKAccessToken.currentAccessToken() != nil
     }
     
     class func events(completion: (events: [Event]) -> Void) {
-        let nbro = "108900355842020"
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
+        let graphPath = eventGraphPath()
 
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: nbro+"/events?since=2016-02-10&limit=999", parameters: params)
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
             if let r = result {
-                let data = r["data"] as! Array<AnyObject>
-                var events: [Event] = []
-                for event in data {
-                    events.append(Event.init(event as! Dictionary<String, AnyObject>))
+                let data = r["data"] as! Array<NSDictionary>
+                var events = data.map { (dict: NSDictionary) -> Event in
+                    return Event(dict)
                 }
-                
                 events.sortInPlace({ $0.startDate!.compare($1.startDate!) == NSComparisonResult.OrderedAscending })
                 completion(events: events)
             }
         })
+    }
+    
+    // MARK: Helpers
+    
+    private class func currentDateString(format: String) -> String {
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    private class func eventGraphPath() -> String {
+        let dateString = currentDateString("yyyy-MM-dd")
+        let nbroGroupId = "108900355842020"
+        let limit = "999"
+        let path = nbroGroupId + "/events" + "?since=" + dateString + "&limit=" + limit
+        return path
     }
 }
