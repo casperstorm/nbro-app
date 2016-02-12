@@ -31,17 +31,17 @@ class LoginViewController: UIViewController {
         facebookButton.addTarget(self, action: "facebookLoginButtonPressed", forControlEvents: .TouchUpInside)
         return facebookButton
     }()
-    lazy var backgroundImageView: UIImageView = {
+    let backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView(image: UIImage(named: "temp_login_background"))
-//        backgroundImageView.contentMode = .Left //.ScaleAspectFill
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         return backgroundImageView
     }()
     let imageContainerView = UIView()
+    let vignetteImageView: UIImageView = {
+        return UIImageView(image: UIImage(named: "background_vignette"))
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.darkGrayColor()
         
         setupSubviews()
         defineLayout()
@@ -53,18 +53,29 @@ class LoginViewController: UIViewController {
         view.setNeedsLayout()
         view.layoutIfNeeded()
         
-        
+
+    }
+    
+    func applicationDidBecomeActive() {
+        animateBackgroundImage()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
         animateBackgroundImage()
-
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
 
     func setupSubviews() {
         view.addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
+        imageContainerView.addSubview(vignetteImageView)
         self.view.addSubview(self.facebookButton)
     }
     
@@ -77,6 +88,10 @@ class LoginViewController: UIViewController {
         imageContainerView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(imageContainerView.superview!)
             make.bottom.equalTo(facebookButton.snp_top)
+        }
+        
+        vignetteImageView.snp_updateConstraints { (make) -> Void in
+            make.edges.equalTo(vignetteImageView.superview!)
         }
         
     }
@@ -117,9 +132,8 @@ class LoginViewController: UIViewController {
             self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
 
             }) { (finished) -> Void in
-                
+                self.backgroundImageView.transform = CGAffineTransformIdentity
         }
     
     }
-    
 }
