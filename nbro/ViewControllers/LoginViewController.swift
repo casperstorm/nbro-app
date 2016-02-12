@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         let fbRange = NSRange(location: auth.characters.count, length: fb.characters.count)
         let fbFont = UIFont.boldSystemFontOfSize(14)
         let authFont = UIFont.systemFontOfSize(14)
-        let attrString = NSMutableAttributedString(string: combinedString)
+        let attrString = NSMutableAttributedString(string: combinedString.uppercaseString)
         attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
         attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)
         
@@ -32,12 +32,27 @@ class LoginViewController: UIViewController {
         return facebookButton
     }()
     let backgroundImageView: UIImageView = {
-        let backgroundImageView = UIImageView(image: UIImage(named: "temp_login_background"))
+        let backgroundImageView = UIImageView(image: UIImage(named: "login_background_image_1"))
         return backgroundImageView
     }()
     let imageContainerView = UIView()
     let vignetteImageView: UIImageView = {
         return UIImageView(image: UIImage(named: "background_vignette"))
+    }()
+    let logoImageView: UIImageView = {
+        let logoImageView = UIImageView(image: UIImage(named: "nbro_logo_w_detail"))
+        return logoImageView
+    }()
+    let buttonContainerView: UIView = {
+        let buttonContainerView = UIView()
+        buttonContainerView.backgroundColor = UIColor.whiteColor()
+        return buttonContainerView
+    }()
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.color = UIColor.blackColor()
+        return activityIndicatorView
     }()
     
     override func viewDidLoad() {
@@ -52,37 +67,37 @@ class LoginViewController: UIViewController {
         view.updateConstraintsIfNeeded()
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        
-
     }
     
-    func applicationDidBecomeActive() {
+    func applicationWillEnterForeground() {
         animateBackgroundImage()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         animateBackgroundImage()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
 
     func setupSubviews() {
         view.addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
-        self.view.addSubview(self.facebookButton)
+        imageContainerView.addSubview(logoImageView)
+        view.addSubview(buttonContainerView)
+        buttonContainerView.addSubview(facebookButton)
+        buttonContainerView.addSubview(activityIndicatorView)
     }
     
     func defineLayout() {
-        self.facebookButton.snp_makeConstraints { (make) -> Void in
-            make.width.bottom.left.equalTo(self.view)
-            make.height.equalTo(75)
+        facebookButton.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(facebookButton.superview!)
         }
         
         imageContainerView.snp_makeConstraints { (make) -> Void in
@@ -92,6 +107,20 @@ class LoginViewController: UIViewController {
         
         vignetteImageView.snp_updateConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
+        }
+        
+        logoImageView.snp_makeConstraints { (make) in
+            make.centerX.equalTo(logoImageView.superview!)
+            make.top.equalTo(logoImageView.superview!.snp_centerY).multipliedBy(0.35)
+        }
+        
+        activityIndicatorView.snp_makeConstraints { (make) in
+            make.center.equalTo(activityIndicatorView.superview!)
+        }
+        
+        buttonContainerView.snp_makeConstraints { (make) in
+            make.width.bottom.left.equalTo(self.view)
+            make.height.equalTo(75)
         }
         
     }
@@ -116,7 +145,11 @@ class LoginViewController: UIViewController {
     }
     
     func facebookLoginButtonPressed() {
+        activityIndicatorView.startAnimating()
+        facebookButton.hidden = true
         FacebookManager.logInWithReadPermissions { (success) in
+            self.activityIndicatorView.stopAnimating()
+            self.facebookButton.hidden = false
             if(success) {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -128,7 +161,7 @@ class LoginViewController: UIViewController {
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         
-        UIView.animateWithDuration(30.0, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
+        UIView.animateWithDuration(90.0, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
             self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
 
             }) { (finished) -> Void in
