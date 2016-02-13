@@ -14,8 +14,8 @@ class FacebookManager {
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
         loginManager.logInWithReadPermissions(["email"], fromViewController: nil, handler: {
-            (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
-            if result.token != nil {
+            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+            if result?.token != nil {
                 completion(success: true)
             } else {
                 completion(success: false)
