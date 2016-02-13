@@ -8,8 +8,6 @@
 		<string>Exo2-Light.ttf</string>
 		<string>MyriadPro-BoldCond.otf</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>NBRO</string>
 	<key>CFBundleDevelopmentRegion</key>

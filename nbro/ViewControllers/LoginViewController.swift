@@ -87,6 +87,10 @@ class LoginViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
 
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     func setupSubviews() {
         view.addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
