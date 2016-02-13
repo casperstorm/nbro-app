@@ -60,6 +60,7 @@ private extension MGLMapView {
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
         mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        mapView.attributionButton.hidden = true
         
         return mapView
     }

@@ -46,6 +46,8 @@
 	<true/>
 	<key>MGLMapboxAccessToken</key>
 	<string>pk.eyJ1IjoiY2FzcGVyc3Rvcm0iLCJhIjoiY2lranEwd2MzMDA1bHZxbHNlcXJyc2trcyJ9.GwZjHDNOUCIkpN6R8yGgUA</string>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
