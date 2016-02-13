@@ -71,14 +71,15 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")! as! EventCell
 
         let event = self.events[indexPath.row]
-//        cell.nameLabel.text = event.name?.uppercaseString
+        cell.nameLabel.text = event.name?.uppercaseString
         cell.dateLabel.text = "12 Feb 2016"
 
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 150
+        let event = self.events[indexPath.row]
+        return EventCell.calculatedHeightForCellWithText(event.name)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

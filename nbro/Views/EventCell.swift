@@ -15,24 +15,11 @@ class EventCell: UITableViewCell {
         label.font = UIFont.titleBoldFontOfSize(42)
         label.textColor = UIColor.whiteColor()
         label.numberOfLines = 0
-        label.lineBreakMode = .ByCharWrapping
-        let string = "LONG SATURDAY (ALL MOODS)"
-        let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 0, length: string.characters.count))
-        label.attributedText = attrString
-    
-        //[mutableAttributedString addAttribute:NSBackgroundColorAttributeName value:[UIColor yellowColor] range:selectedRange];
-
-        /*
-         let attrString = NSMutableAttributedString(string: combinedString.uppercaseString)
-         attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
-         attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)
-         attrString.addAttribute(NSKernAttributeName, value: 1.1, range: fbRange)
-         attrString.addAttribute(NSKernAttributeName, value: 1.1, range: authRange)
-         
-         facebookButton.setAttributedTitle(attrString, forState: .Normal)
-        */
-        
+//        label.lineBreakMode = .ByCharWrapping
+//        let string = "LONG SATURDAY (ALL MOODS)"
+//        let attrString = NSMutableAttributedString(string: string)
+//        attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 0, length: string.characters.count))
+//        label.attributedText = attrString
         return label
     }()
     lazy var dateLabel: UILabel = {
@@ -41,12 +28,14 @@ class EventCell: UITableViewCell {
         label.textColor = UIColor.whiteColor()
         return label
     }()
+    private static let DateLabelHeight: CGFloat = 15
+    private static let DefaultMargin: CGFloat = 22
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.clearColor()
-        selectionStyle = .None;
+//        selectionStyle = .None;
 
         setupSubviews()
         defineLayouts()
@@ -64,13 +53,25 @@ class EventCell: UITableViewCell {
     func defineLayouts() {
         
         nameLabel.snp_makeConstraints { (make) in
-            make.left.top.right.equalTo(nameLabel.superview!).inset(22)
+            make.left.top.right.equalTo(nameLabel.superview!).inset(EventCell.DefaultMargin)
             make.bottom.equalTo(dateLabel.snp_top)
         }
         
         dateLabel.snp_makeConstraints { (make) in
-            make.left.bottom.right.equalTo(dateLabel.superview!).inset(22)
+            make.left.bottom.right.equalTo(dateLabel.superview!).inset(EventCell.DefaultMargin)
             make.top.equalTo(nameLabel.snp_bottom)
+            make.height.equalTo(EventCell.DateLabelHeight)
         }
+    }
+    
+    class func calculatedHeightForCellWithText(string: String?) -> CGFloat {
+        if string == nil {
+            return 0
+        }
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let maxWidth = CGRectGetWidth(screenSize) - (EventCell.DefaultMargin * 2)
+        let stringHeight = string?.heightWithConstrainedWidth(maxWidth, font: UIFont.titleBoldFontOfSize(42))
+        let height = stringHeight! + DefaultMargin + DefaultMargin + DateLabelHeight
+        return height
     }
 }
