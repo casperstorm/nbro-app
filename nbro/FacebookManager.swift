@@ -24,7 +24,6 @@ class FacebookManager {
     }
     
     class func authenticated() -> Bool {
-        return false
         return FBSDKAccessToken.currentAccessToken() != nil
     }
     

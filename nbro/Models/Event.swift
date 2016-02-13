@@ -31,4 +31,17 @@ struct Event {
         self.longitude = longitude
         self.locationName = dictionary["place"]?["name"] as? String ?? "-"
     }
+    
+    func formattedStartTime() -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd. MMM"
+        
+        let timeFormatter = NSDateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        let dateString = dateFormatter.stringFromDate(self.startDate)
+        let timeString = timeFormatter.stringFromDate(self.startDate)
+        let combinedString = dateString + " at " + timeString
+        return combinedString.uppercaseString
+    }
 }
