@@ -10,24 +10,8 @@ import Foundation
 import UIKit
 
 class EventCell: UITableViewCell {
-    lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.titleBoldFontOfSize(42)
-        label.textColor = UIColor.whiteColor()
-        label.numberOfLines = 0
-//        label.lineBreakMode = .ByCharWrapping
-//        let string = "LONG SATURDAY (ALL MOODS)"
-//        let attrString = NSMutableAttributedString(string: string)
-//        attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 0, length: string.characters.count))
-//        label.attributedText = attrString
-        return label
-    }()
-    lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.defaultFontOfSize(14)
-        label.textColor = UIColor.whiteColor()
-        return label
-    }()
+    let nameLabel = UILabel.nameLabel()
+    let dateLabel = UILabel.dateLabel()
     private static let DateLabelHeight: CGFloat = 15
     private static let DefaultMargin: CGFloat = 22
     
@@ -73,5 +57,27 @@ class EventCell: UITableViewCell {
         let stringHeight = string?.heightWithConstrainedWidth(maxWidth, font: UIFont.titleBoldFontOfSize(42))
         let height = stringHeight! + DefaultMargin + DefaultMargin + DateLabelHeight
         return height
+    }
+}
+
+
+private extension UILabel {
+    static func nameLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.titleBoldFontOfSize(42)
+        label.textColor = UIColor.whiteColor()
+        label.numberOfLines = 0
+        //        label.lineBreakMode = .ByCharWrapping
+        //        let string = "LONG SATURDAY (ALL MOODS)"
+        //        let attrString = NSMutableAttributedString(string: string)
+        //        attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 0, length: string.characters.count))
+        //        label.attributedText = attrString
+        return label
+    }
+    static func dateLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.defaultFontOfSize(14)
+        label.textColor = UIColor.whiteColor()
+        return label
     }
 }
