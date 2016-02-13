@@ -29,6 +29,10 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.loadData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     func setupSubviews() {
         self.view.addSubview(self.tableView)
     }
