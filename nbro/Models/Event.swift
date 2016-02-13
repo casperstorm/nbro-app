@@ -12,13 +12,29 @@ struct Event {
         case Date(includeYear: Bool)
         case Time
         
-        func dateFormatString() -> String {
+        private static var dateformatters = [String:NSDateFormatter]()
+        
+        private func dateFormat() -> String {
             switch self {
             case Date(let includeYear):
                 return "dd. MMM" + (includeYear ? " yyyy" : "")
             case Time:
                 return "HH:mm"
             }
+        }
+        
+        func dateFormatter() -> NSDateFormatter {
+            let format = dateFormat()
+            
+            if let dateFormatter = DateFormat.dateformatters[format] {
+                return dateFormatter
+            } else {
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = format
+                DateFormat.dateformatters[format] = dateFormatter
+                return dateFormatter
+            }
+            
         }
     }
     
@@ -48,9 +64,7 @@ struct Event {
     }
     
     func formattedStartDate(dateFormat: DateFormat) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = dateFormat.dateFormatString()
-        
+        let dateFormatter = dateFormat.dateFormatter()
         return dateFormatter.stringFromDate(startDate)
     }
 }
