@@ -13,6 +13,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
+    var shownIndexes = NSMutableSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +73,21 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if !shownIndexes.containsObject(indexPath) {
+            shownIndexes.addObject(indexPath)
+            cell.alpha = 0
+            UIView.animateWithDuration(1.0) {
+                cell.alpha = 1
+            }
+        }
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return LogoCell.preferredCellHeight()
         } else {
-            let event = self.events[indexPath.row]
+            let event = self.events[indexPath.row - 1]
             return EventCell.calculatedHeightForCellWithText(event.name)
         }
     }
@@ -94,7 +105,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
-        let event = self.events[indexPath.row]
+        let event = self.events[indexPath.row - 1]
         cell.nameLabel.text = event.name.uppercaseString
         cell.dateLabel.text = event.formattedStartTime()
         
