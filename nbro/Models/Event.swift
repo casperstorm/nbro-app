@@ -50,6 +50,7 @@ struct Event {
     func formattedStartDate(dateFormat: DateFormat) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat.dateFormatString()
+        
         return dateFormatter.stringFromDate(startDate)
     }
 }

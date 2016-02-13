@@ -19,9 +19,21 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.setupSubviews()
     }
     
+    func applicationWillEnterForeground() {
+        contentView.animateBackgroundImage()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        contentView.animateBackgroundImage()
         self.loadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,18 +65,20 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")! as! EventCell
-
-        let event = self.events[indexPath.row]
-        cell.nameLabel.text = event.name.uppercaseString
-        cell.dateLabel.text = "12 Feb 2016"
-
-        return cell
+        if indexPath.row == 0 {
+            return configureLogoCell(indexPath)
+        } else {
+            return configureEventCell(indexPath)
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let event = self.events[indexPath.row]
-        return EventCell.calculatedHeightForCellWithText(event.name)
+        if indexPath.row == 0 {
+            return LogoCell.preferredCellHeight()
+        } else {
+            let event = self.events[indexPath.row]
+            return EventCell.calculatedHeightForCellWithText(event.name)
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -74,6 +88,22 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             let eventDetailViewController = EventDetailViewController(event: event)
             self.presentViewController(eventDetailViewController, animated: true, completion: nil)
         }
+    }
+    
+    // MARK : Cell Creation
+    
+    func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
+        let event = self.events[indexPath.row]
+        cell.nameLabel.text = event.name.uppercaseString
+        cell.dateLabel.text = "\(event.formattedStartDate(.Date(includeYear: true))) at \(event.formattedStartDate(.Time))"
+        
+        return cell
+    }
+    
+    func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("logo", forIndexPath: indexPath) as! LogoCell
+        return cell
     }
     
 }
