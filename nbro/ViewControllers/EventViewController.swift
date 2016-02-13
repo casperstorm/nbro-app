@@ -33,6 +33,10 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.navigationBarHidden = true
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     func setupSubviews() {
         self.view.addSubview(self.tableView)
     }
