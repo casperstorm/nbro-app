@@ -80,6 +80,7 @@
 		<string>Exo2-Bold.ttf</string>
 		<string>Exo2-Light.ttf</string>
 		<string>MyriadPro-BoldCond.otf</string>
+		<string>Exo2-SemiBold.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

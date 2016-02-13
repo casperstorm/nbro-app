@@ -74,6 +74,8 @@ class EventDetailView: UIView {
 class EventView: UIView {
     
     let titleLabel = UILabel.titleLabel()
+    let dateLabel = UILabel.dateLabel()
+    let titleSeparator = EventSeparator()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -81,7 +83,7 @@ class EventView: UIView {
         setupSubviews()
         defineLayout()
         
-        layer.cornerRadius = 4
+        layer.cornerRadius = 6
         layer.masksToBounds = true
     }
 
@@ -90,14 +92,87 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel]
+        let subviews = [titleLabel, dateLabel, titleSeparator]
         subviews.forEach { addSubview($0) }
     }
     
     private func defineLayout() {
         titleLabel.snp_makeConstraints { (make) -> Void in
-            make.leading.trailing.top.bottom.equalTo(titleLabel.superview!).inset(EdgeInsetsMake(15, left: 20, bottom: 0, right: 20))
+            make.leading.trailing.top.equalTo(titleLabel.superview!).inset(EdgeInsetsMake(25, left: 25, bottom: 0, right: 25))
         }
+        
+        dateLabel.snp_makeConstraints { (make) -> Void in
+            make.leading.trailing.equalTo(dateLabel.superview!).inset(EdgeInsetsMake(0, left: 25, bottom: 0, right: 25))
+            make.top.equalTo(titleLabel.snp_bottom).offset(5)
+        }
+        
+        titleSeparator.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(titleSeparator.superview!)
+            make.top.equalTo(dateLabel.snp_bottom).offset(15)
+        }
+    }
+    
+    class EventSeparator: UIView {
+        private class Circle: UIView {
+            init(cornerRadius: CGFloat) {
+                super.init(frame: CGRect.zero)
+                
+                backgroundColor = .blackColor()
+                layer.cornerRadius = cornerRadius
+                layer.masksToBounds = true
+                snp_makeConstraints { (make) -> Void in
+                    make.height.width.equalTo(2 * cornerRadius)
+                }
+            }
+            
+            required init?(coder aDecoder: NSCoder) {
+                fatalError("init(coder:) has not been implemented")
+            }
+            
+        }
+        
+        private let leftCircle = Circle(cornerRadius: 5)
+        private let rightCircle = Circle(cornerRadius: 5)
+        private let line: UIView = {
+            let view = UIView()
+            view.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)
+            
+            return view
+        }()
+        
+        init() {
+            super.init(frame: CGRect.zero)
+            
+            setupSubviews()
+            defineLayout()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        private func setupSubviews() {
+            let subviews = [leftCircle, rightCircle, line]
+            subviews.forEach { addSubview($0) }
+        }
+        
+        private func defineLayout() {
+            leftCircle.snp_makeConstraints { (make) -> Void in
+                make.centerX.equalTo(leftCircle.superview!.snp_leading)
+                make.top.bottom.equalTo(leftCircle.superview!)
+            }
+            
+            line.snp_makeConstraints { (make) -> Void in
+                make.centerY.leading.trailing.equalTo(line.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+                make.height.equalTo(1)
+            }
+            
+            rightCircle.snp_makeConstraints { (make) -> Void in
+                make.centerX.equalTo(rightCircle.superview!.snp_trailing)
+                make.top.bottom.equalTo(rightCircle.superview!)
+            }
+        }
+        
     }
     
 }
@@ -115,7 +190,16 @@ class EventScrollView: UIScrollView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.titleBoldFontOfSize(35)
+        label.font = UIFont.titleBoldFontOfSize(40)
+        label.numberOfLines = 2
+        
+        return label
+    }
+    
+    static func dateLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.defaultSemiBoldFontOfSize(14)
+        label.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
         
         return label
     }

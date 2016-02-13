@@ -52,6 +52,9 @@ class EventDetailViewController: UIViewController {
                 longitude: longitude),
                 zoomLevel: 12, animated: false)
         }
+        
+        contentView.eventView.titleLabel.text = event.name.uppercaseString
+        contentView.eventView.dateLabel.text = event.formattedStartDate(.Date(includeYear: true)).uppercaseString
     }
     
     // MARK: Actions

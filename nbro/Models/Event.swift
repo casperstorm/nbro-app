@@ -7,6 +7,21 @@ import Foundation
 import CoreLocation
 
 struct Event {
+    
+    enum DateFormat {
+        case Date(includeYear: Bool)
+        case Time
+        
+        func dateFormatString() -> String {
+            switch self {
+            case Date(let includeYear):
+                return "dd. MMM" + (includeYear ? " yyyy" : "")
+            case Time:
+                return "HH:mm"
+            }
+        }
+    }
+    
     let name: String
     let startDate: NSDate
     let latitude: CLLocationDegrees?
@@ -30,5 +45,11 @@ struct Event {
         self.latitude = latitude
         self.longitude = longitude
         self.locationName = dictionary["place"]?["name"] as? String ?? "-"
+    }
+    
+    func formattedStartDate(dateFormat: DateFormat) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat.dateFormatString()
+        return dateFormatter.stringFromDate(startDate)
     }
 }
