@@ -36,10 +36,10 @@ class FacebookManager {
             (connection, result, error) -> Void in
             if let r = result {
                 let data = r["data"] as! Array<NSDictionary>
-                var events = data.map { (dict: NSDictionary) -> Event in
-                    return Event(dict)
-                }
-                events.sortInPlace({ $0.startDate!.compare($1.startDate!) == NSComparisonResult.OrderedAscending })
+                var events = data.map { (dict: NSDictionary) -> Event? in
+                    return Event(dictionary: dict)
+                    }.flatMap { $0 }
+                events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
                 completion(events: events)
             }
         })
