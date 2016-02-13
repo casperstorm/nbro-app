@@ -18,6 +18,10 @@ extension UIFont {
         return UIFont(name: "Exo2-Bold", size: size)!
     }
     
+    class func defaultSemiBoldFontOfSize(size: CGFloat) -> UIFont {
+        return UIFont(name: "Exo2-SemiBold", size: size)!
+    }
+    
     class func titleBoldFontOfSize(size: CGFloat) -> UIFont {
         return UIFont(name: "MyriadPro-BoldCond", size: size)!
     }

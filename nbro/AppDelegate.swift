@@ -37,10 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        print(NSBundle.mainBundle().bundlePath)
-//        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-
-        
         return true
     }
     

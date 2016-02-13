@@ -107,7 +107,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
         let event = self.events[indexPath.row - 1]
         cell.nameLabel.text = event.name.uppercaseString
-        cell.dateLabel.text = event.formattedStartTime()
+        cell.dateLabel.text = "\(event.formattedStartDate(.Date(includeYear: true))) at \(event.formattedStartDate(.Time))"
         
         return cell
     }

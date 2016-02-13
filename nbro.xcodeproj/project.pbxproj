@@ -27,6 +27,7 @@
 		D02E19021C6F729300D4C3D5 /* LaunchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E19011C6F729300D4C3D5 /* LaunchImageView.swift */; };
 		D02E19051C6F793700D4C3D5 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E19041C6F793700D4C3D5 /* EventDetailViewController.swift */; };
 		D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E19061C6F794000D4C3D5 /* EventDetailView.swift */; };
+		D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		D02E19011C6F729300D4C3D5 /* LaunchImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchImageView.swift; sourceTree = "<group>"; };
 		D02E19041C6F793700D4C3D5 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		D02E19061C6F794000D4C3D5 /* EventDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-SemiBold.ttf"; sourceTree = "<group>"; };
 		E92275841A0C1BB365AF4F45 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 		6C8AF9D41C6E7FE8004D4789 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */,
 				6C8AF9DC1C6E83E3004D4789 /* Exo2-Bold.ttf */,
 				6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */,
 				6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */,
@@ -267,6 +270,7 @@
 			files = (
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
 				6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */,
+				D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */,
 				6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */,
 				6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */,
 			);
