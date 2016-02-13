@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupAdditionalStyling()
 
-        let eventsViewController = EventViewController()
+        let eventListViewController = EventListViewController()
         let loginViewController = LoginViewController()
-        let navigationController = UINavigationController(rootViewController: eventsViewController)
+        let navigationController = UINavigationController(rootViewController: eventListViewController)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = navigationController

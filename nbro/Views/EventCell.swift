@@ -35,7 +35,7 @@ class EventCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.clearColor()
-//        selectionStyle = .None;
+        selectionStyle = .None;
 
         setupSubviews()
         defineLayouts()

@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventViewController.swift */; };
+		181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */; };
 		181FC68ED212E98808EB164D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC338CA0EF384A74A91FD /* Event.swift */; };
-		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; };
+		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05A1C6F785300A53017 /* EventCell.swift */; };
 		6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05C1C6F80C600A53017 /* String+Additions.swift */; };
 		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
+		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */; };
 		6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */; };
 		6C8AF9DB1C6E835B004D4789 /* UIFont+NBRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */; };
@@ -27,13 +28,14 @@
 
 /* Begin PBXFileReference section */
 		181FC338CA0EF384A74A91FD /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		181FC69C072EEB0317D5CFC2 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		6C0EF05A1C6F785300A53017 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventCell.swift; path = Views/EventCell.swift; sourceTree = "<group>"; };
 		6C0EF05C1C6F80C600A53017 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
 		6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6C2D28F61C60C496003E5C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Light.ttf"; path = "Fonts/Exo2-Light.ttf"; sourceTree = "<group>"; };
 		6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MyriadPro-BoldCond.otf"; path = "Fonts/MyriadPro-BoldCond.otf"; sourceTree = "<group>"; };
 		6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+NBRO.swift"; sourceTree = "<group>"; };
@@ -64,9 +66,9 @@
 		181FC285B7EFE73C3057C11A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6C65A1F51C6F8C42009015D1 /* Login */,
+				6C65A1F21C6F89EA009015D1 /* EventList */,
 				D02E19031C6F792300D4C3D5 /* EventDetail */,
-				181FC69C072EEB0317D5CFC2 /* EventViewController.swift */,
-				6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -85,6 +87,23 @@
 				6C4390831C6252E100E923D0 /* FacebookManager.swift */,
 			);
 			name = Managers;
+			sourceTree = "<group>";
+		};
+		6C65A1F21C6F89EA009015D1 /* EventList */ = {
+			isa = PBXGroup;
+			children = (
+				181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */,
+				6C65A1F31C6F8A05009015D1 /* EventListView.swift */,
+			);
+			name = EventList;
+			sourceTree = "<group>";
+		};
+		6C65A1F51C6F8C42009015D1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		6C8AF9D41C6E7FE8004D4789 /* Fonts */ = {
@@ -302,8 +321,9 @@
 				6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */,
 				6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */,
 				D02E19021C6F729300D4C3D5 /* LaunchImageView.swift in Sources */,
+				6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
-				181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */,
+				181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */,
 				6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
 				D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */,
