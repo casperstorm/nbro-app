@@ -71,10 +71,12 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.textLabel?.text = event.name
         
         return cell
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let event = self.events[indexPath.row]
+        let eventDetailViewController = EventDetailViewController(event: event)
+        presentViewController(eventDetailViewController, animated: true, completion: nil)
     }
     
 }
