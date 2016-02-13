@@ -18,12 +18,14 @@ class LoginViewController: UIViewController {
         let combinedString = auth + fb
         let authRange = NSRange(location: 0, length: auth.characters.count)
         let fbRange = NSRange(location: auth.characters.count, length: fb.characters.count)
-        let fbFont = UIFont.boldSystemFontOfSize(14)
-        let authFont = UIFont.systemFontOfSize(14)
+        let fbFont = UIFont.defaultBoldFontOfSize(15)
+        let authFont = UIFont.defaultFontOfSize(15)
         let attrString = NSMutableAttributedString(string: combinedString.uppercaseString)
         attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
         attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)
-        
+        attrString.addAttribute(NSKernAttributeName, value: 1.1, range: fbRange)
+        attrString.addAttribute(NSKernAttributeName, value: 1.1, range: authRange)
+
         facebookButton.setAttributedTitle(attrString, forState: .Normal)
         facebookButton.backgroundColor = UIColor.whiteColor()
         facebookButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
@@ -111,7 +113,7 @@ class LoginViewController: UIViewController {
         
         logoImageView.snp_makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
-            make.top.equalTo(logoImageView.superview!.snp_centerY).multipliedBy(0.35)
+            make.top.equalTo(logoImageView.superview!.snp_centerY).multipliedBy(0.24)
         }
         
         activityIndicatorView.snp_makeConstraints { (make) in
