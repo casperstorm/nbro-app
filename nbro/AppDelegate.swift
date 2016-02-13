@@ -31,8 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = navigationController
         
         if (!FacebookManager.authenticated()) {
-            self.window?.rootViewController?.presentViewController(loginViewController, animated: false, completion: nil)
+            LaunchImageView.show()
+            self.window?.rootViewController?.presentViewController(loginViewController, animated: false) {
+                LaunchImageView.hide()
+            }
         }
+        
+        print(NSBundle.mainBundle().bundlePath)
+//        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+
         
         return true
     }
