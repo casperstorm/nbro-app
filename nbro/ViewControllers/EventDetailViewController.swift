@@ -7,7 +7,8 @@
 //
 
 import Foundation
-
+import UIKit
+import CoreLocation
 
 class EventDetailViewController: UIViewController {
     
@@ -37,10 +38,17 @@ class EventDetailViewController: UIViewController {
         super.viewDidLoad()
         
         setupActions()
+        setupSubviews()
     }
     
     private func setupActions() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+    }
+    
+    private func setupSubviews() {
+        contentView.mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: 40.7326808,
+            longitude: -73.9843407),
+            zoomLevel: 12, animated: false)
     }
     
     // MARK: Actions
