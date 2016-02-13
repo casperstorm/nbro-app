@@ -82,9 +82,12 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let event = self.events[indexPath.row]
-        let eventDetailViewController = EventDetailViewController(event: event)
-        presentViewController(eventDetailViewController, animated: true, completion: nil)
+        // iOS still contains weird bug where presenting something from didSelectRow can take a while
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            let event = self.events[indexPath.row]
+            let eventDetailViewController = EventDetailViewController(event: event)
+            self.presentViewController(eventDetailViewController, animated: true, completion: nil)
+        }
     }
     
 }

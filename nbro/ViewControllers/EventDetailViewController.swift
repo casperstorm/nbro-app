@@ -29,6 +29,24 @@ class EventDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupActions()
+    }
+    
+    private func setupActions() {
+        contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+    }
+    
+    // MARK: Actions
+    
+    func cancelPressed() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }
