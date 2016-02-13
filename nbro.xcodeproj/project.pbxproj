@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		181FC20B9B42C364690B0448 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventViewController.swift */; };
 		181FC68ED212E98808EB164D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC338CA0EF384A74A91FD /* Event.swift */; };
-		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; };
 		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
