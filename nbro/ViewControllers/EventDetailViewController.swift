@@ -46,9 +46,12 @@ class EventDetailViewController: UIViewController {
     }
     
     private func setupSubviews() {
-        contentView.mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: 40.7326808,
-            longitude: -73.9843407),
-            zoomLevel: 12, animated: false)
+        
+        if let longitude = event.longitude, latitude = event.latitude {
+            contentView.mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: latitude,
+                longitude: longitude),
+                zoomLevel: 12, animated: false)
+        }
     }
     
     // MARK: Actions

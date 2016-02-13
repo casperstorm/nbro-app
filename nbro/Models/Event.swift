@@ -4,22 +4,31 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Event {
     let name: String
     let startDate: NSDate
+    let latitude: CLLocationDegrees?
+    let longitude: CLLocationDegrees?
+    let locationName: String
     
     init?(dictionary: NSDictionary) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+        let startDateString = dictionary["start_time"] as? String ?? ""
+        
         guard let name = dictionary["name"] as? String,
-            startDateString = dictionary["start_time"] as? String,
-            startDate = dateFormatter.dateFromString(startDateString) else {
+            startDate = dateFormatter.dateFromString(startDateString),
+            latitude = dictionary["place"]?["location"]??["latitude"] as? CLLocationDegrees,
+            longitude = dictionary["place"]?["location"]??["longitude"] as? CLLocationDegrees else {
                 return nil
         }
         
         self.name = name
         self.startDate = startDate
+        self.latitude = latitude
+        self.longitude = longitude
+        self.locationName = dictionary["place"]?["name"] as? String ?? "-"
     }
-    
 }
