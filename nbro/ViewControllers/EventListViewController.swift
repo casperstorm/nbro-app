@@ -5,26 +5,18 @@
 
 import UIKit
 
-class EventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.registerClass(EventCell.self, forCellReuseIdentifier: "cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
-
-        return tableView
-    }()
+class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var contentView = EventListView()
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
     var events: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
-        
         self.setupSubviews()
-        self.defineLayout()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,17 +31,10 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
-    
-    func setupSubviews() {
-        self.view.addSubview(self.tableView)
-    }
 
-    func defineLayout() {
-        let horizontalConstraint = self.tableView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor)
-        let vertivalConstraint = self.tableView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor)
-        let widthConstraint = self.tableView.widthAnchor.constraintEqualToAnchor(view.widthAnchor)
-        let heightConstraint = self.tableView.heightAnchor.constraintEqualToAnchor(view.heightAnchor)
-        NSLayoutConstraint.activateConstraints([horizontalConstraint, vertivalConstraint, widthConstraint, heightConstraint])
+    func setupSubviews() {
+        self.contentView.tableView.dataSource = self
+        self.contentView.tableView.delegate = self
     }
     
     // MARK: Data
@@ -57,7 +42,7 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func loadData() {
         FacebookManager.events { (events) -> Void in
             self.events = events
-            self.tableView.reloadData()
+            self.contentView.tableView.reloadData()
         }
     }
     
@@ -78,7 +63,8 @@ class EventViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 150
+        let event = self.events[indexPath.row]
+        return EventCell.calculatedHeightForCellWithText(event.name)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
