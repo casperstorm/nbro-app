@@ -7,6 +7,11 @@ import UIKit
 
 class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    enum EventListType {
+        case LogoCell
+        case EventCell
+    }
+    
     var contentView = EventListView()
     override func loadView() {
         super.loadView()
@@ -16,7 +21,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupSubviews()
+        setupSubviews()
     }
     
     func applicationWillEnterForeground() {
@@ -28,7 +33,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         contentView.animateBackgroundImage()
-        self.loadData()
+        loadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -45,9 +50,9 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     private func setupSubviews() {
-        self.contentView.tableView.dataSource = self
-        self.contentView.tableView.delegate = self
-        self.contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
+        contentView.tableView.dataSource = self
+        contentView.tableView.delegate = self
+        contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions
@@ -70,13 +75,16 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: UITableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
+        return events.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        let cellType = cellTypeForIndexPath(indexPath)
+        
+        switch cellType {
+        case .LogoCell:
             return configureLogoCell(indexPath)
-        } else {
+        case .EventCell:
             return configureEventCell(indexPath)
         }
     }
@@ -98,9 +106,12 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        let cellType = cellTypeForIndexPath(indexPath)
+        
+        switch cellType {
+        case .LogoCell:
             return LogoCell.preferredCellHeight()
-        } else {
+        case .EventCell:
             let event = self.events[indexPath.row - 1]
             return EventCell.calculatedHeightForCellWithText(event.name)
         }
@@ -108,9 +119,10 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // iOS still contains weird bug where presenting something from didSelectRow can take a while
-        if(indexPath.row > 0) {
+        let cellType = cellTypeForIndexPath(indexPath)
+        if(cellType == .EventCell) {
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                let event = self.events[indexPath.row - 1]
+                let event = self.eventForIndexPath(indexPath)
                 let eventDetailViewController = EventDetailViewController(event: event)
                 self.presentViewController(eventDetailViewController, animated: true, completion: nil)
             }
@@ -121,7 +133,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
-        let event = self.events[indexPath.row - 1]
+        let event = eventForIndexPath(indexPath)
         cell.nameLabel.text = event.name.uppercaseString
         cell.dateLabel.text = "\(event.formattedStartDate(.Date(includeYear: true))) at \(event.formattedStartDate(.Time))"
         
@@ -131,6 +143,20 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("logo", forIndexPath: indexPath) as! LogoCell
         return cell
+    }
+    
+    // MARK : Helper
+    
+    private func cellTypeForIndexPath(indexPath: NSIndexPath) -> EventListType {
+        if(indexPath.row == 0) {
+            return EventListType.LogoCell
+        } else {
+            return EventListType.EventCell
+        }
+    }
+    
+    private func eventForIndexPath(indexPath: NSIndexPath) -> Event {
+        return events[indexPath.row - 1]
     }
     
 }
