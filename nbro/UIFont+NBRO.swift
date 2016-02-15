@@ -10,8 +10,12 @@ import UIKit
 
 
 extension UIFont {
-    class func defaultFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultLightFontOfSize(size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-Light", size: size)!
+    }
+    
+    class func defaultMediumFontOfSize(size: CGFloat) -> UIFont {
+        return UIFont(name: "Exo2-Medium", size: size)!
     }
     
     class func defaultBoldFontOfSize(size: CGFloat) -> UIFont {

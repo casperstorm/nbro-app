@@ -63,7 +63,7 @@ private extension UILabel {
         let label = UILabel()
         label.textColor = UIColor(hex: 0x959595)
         label.textAlignment = .Center
-        label.font = UIFont.defaultFontOfSize(15)
+        label.font = UIFont.defaultLightFontOfSize(15)
         label.numberOfLines = 0
         return label
     }

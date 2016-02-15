@@ -96,6 +96,19 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let cellType = AboutCellType(rawValue: indexPath.row)!
+        switch cellType {
+        case .AppStoreActionCell:
+            UIApplication.sharedApplication().openURL(NSURL(string: "itms-apps://itunes.apple.com/app/id1084299725")!)
+        case .FacebookActionCell:
+            UIApplication.sharedApplication().openURL(NSURL(string: "fb://profile/108900355842020/")!)
+        case .CreditsActionCell:
+            //todo add credits page
+            print("missing credit page..")
+        default: break
+
+        }
     }
     
     // MARK : Cell Creation
@@ -115,21 +128,24 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func configureAppStoreActionCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("appstore-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.titleLabel.text = "Rate in App Store".uppercaseString
+        cell.setTitleText("Rate in App Store".uppercaseString)
         cell.bottomSeparatorView.hidden = true
+        cell.iconImageView.image = UIImage(named: "about_like_icon")
         return cell
     }
     
     func configureFacebookActionCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("facebook-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.titleLabel.text = "NBRO Running Facebook".uppercaseString
+        cell.setTitleText("NBRO Running Facebook".uppercaseString)
         cell.bottomSeparatorView.hidden = true
+        cell.iconImageView.image = UIImage(named: "about_facebook_icon")
         return cell
     }
     
     func configureCreditsActionCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("credits-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.titleLabel.text = "Credits".uppercaseString
+        cell.setTitleText("Credits".uppercaseString)
+        cell.iconImageView.image = UIImage(named: "about_credit_icon")
         return cell
     }
     

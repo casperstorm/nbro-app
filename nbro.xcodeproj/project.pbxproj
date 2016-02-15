@@ -22,6 +22,7 @@
 		6C3144601C71FF4200A138EF /* AboutTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C31445F1C71FF4200A138EF /* AboutTextCell.swift */; };
 		6C3144621C71FF6400A138EF /* AboutActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144611C71FF6400A138EF /* AboutActionCell.swift */; };
 		6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144631C72128F00A138EF /* UIColor+HEX.swift */; };
+		6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C3144651C72398D00A138EF /* Exo2-Medium.ttf */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
 		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F81C6F99B0009015D1 /* LoginView.swift */; };
@@ -53,6 +54,7 @@
 		6C31445F1C71FF4200A138EF /* AboutTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutTextCell.swift; path = Views/AboutTextCell.swift; sourceTree = "<group>"; };
 		6C3144611C71FF6400A138EF /* AboutActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutActionCell.swift; path = Views/AboutActionCell.swift; sourceTree = "<group>"; };
 		6C3144631C72128F00A138EF /* UIColor+HEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+HEX.swift"; path = "Extensions/UIColor+HEX.swift"; sourceTree = "<group>"; };
+		6C3144651C72398D00A138EF /* Exo2-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Medium.ttf"; path = "Fonts/Exo2-Medium.ttf"; sourceTree = "<group>"; };
 		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		6C8AF9D41C6E7FE8004D4789 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				6C3144651C72398D00A138EF /* Exo2-Medium.ttf */,
 				D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */,
 				6C8AF9DC1C6E83E3004D4789 /* Exo2-Bold.ttf */,
 				6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */,
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
+				6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */,
 				6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */,
 				D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */,
 				6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */,

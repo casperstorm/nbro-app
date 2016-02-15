@@ -116,7 +116,7 @@ private extension UIButton {
         let authRange = NSRange(location: 0, length: auth.characters.count)
         let fbRange = NSRange(location: auth.characters.count, length: fb.characters.count)
         let fbFont = UIFont.defaultBoldFontOfSize(15)
-        let authFont = UIFont.defaultFontOfSize(15)
+        let authFont = UIFont.defaultLightFontOfSize(15)
         let attrString = NSMutableAttributedString(string: combinedString.uppercaseString)
         attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
         attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)

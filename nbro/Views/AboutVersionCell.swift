@@ -62,7 +62,7 @@ private extension UILabel {
         let label = UILabel()
         label.textColor = .grayColor()
         label.textAlignment = .Center
-        label.font = UIFont.defaultFontOfSize(14)
+        label.font = UIFont.defaultLightFontOfSize(14)
         return label
     }
 }
