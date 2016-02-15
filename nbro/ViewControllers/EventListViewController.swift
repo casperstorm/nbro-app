@@ -13,7 +13,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
-    var shownIndexes = NSMutableSet()
+    var animatedCellEntrance = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +61,10 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func loadData() {
         FacebookManager.events { (events) -> Void in
+            let animate = self.events.count == 0
             self.events = events
             self.contentView.tableView.reloadData()
+            self.animateCellsEntrance(animate)
         }
     }
     
@@ -80,12 +82,18 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if !shownIndexes.containsObject(indexPath) {
-            shownIndexes.addObject(indexPath)
-            cell.alpha = 0
-            UIView.animateWithDuration(1.0) {
-                cell.alpha = 1
+    private func animateCellsEntrance(animate: Bool) {
+        if(animate) {
+            let visibleCells = contentView.tableView.visibleCells
+            for index in 0 ..< visibleCells.count {
+                let delay = (Double(index) * 0.04) + 0.3
+                let cell = visibleCells[index]
+                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.size.width - 120.0, 0)
+                cell.alpha = 0
+                UIView.animateWithDuration(0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
+                    cell.transform = CGAffineTransformIdentity
+                    cell.alpha = 1.0
+                    }, completion: nil)
             }
         }
     }
@@ -101,10 +109,12 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // iOS still contains weird bug where presenting something from didSelectRow can take a while
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            let event = self.events[indexPath.row]
-            let eventDetailViewController = EventDetailViewController(event: event)
-            self.presentViewController(eventDetailViewController, animated: true, completion: nil)
+        if(indexPath.row > 0) {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                let event = self.events[indexPath.row - 1]
+                let eventDetailViewController = EventDetailViewController(event: event)
+                self.presentViewController(eventDetailViewController, animated: true, completion: nil)
+            }
         }
     }
     
