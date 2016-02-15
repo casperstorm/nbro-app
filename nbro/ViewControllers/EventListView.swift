@@ -15,6 +15,7 @@ class EventListView: UIView {
     let backgroundImageView = UIImageView.backgroundImageView()
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
+    let aboutButton = UIButton.aboutButton()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -32,6 +33,7 @@ class EventListView: UIView {
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
+        addSubview(aboutButton)
     }
     
     private func defineLayout() {
@@ -39,7 +41,7 @@ class EventListView: UIView {
             make.edges.equalTo(imageContainerView.superview!)
         }
         
-        vignetteImageView.snp_updateConstraints { (make) -> Void in
+        vignetteImageView.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
         }
         
@@ -47,7 +49,7 @@ class EventListView: UIView {
             make.edges.equalTo(tableView.superview!)
         }
         
-        self.backgroundImageView.snp_updateConstraints { (make) -> Void in
+        backgroundImageView.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             
@@ -58,6 +60,12 @@ class EventListView: UIView {
             make.width.equalTo(imageSize.width * factor)
             make.height.equalTo(imageSize.height * factor)
         }
+        
+        aboutButton.snp_makeConstraints { (make) in
+            make.right.bottom.equalTo(aboutButton.superview!)
+            make.width.height.equalTo(25)
+        }
+        
     }
     
     // MARK : Animation
@@ -92,5 +100,14 @@ private extension UIImageView {
     }
     static func vignetteImageView() -> UIImageView {
         return UIImageView(image: UIImage(named: "background_vignette"))
+    }
+}
+
+private extension UIButton {
+    static func aboutButton() -> UIButton {
+        let button = UIButton()
+        //todo fix this graphic
+        button.setBackgroundImage(UIImage(color: .whiteColor()), forState: .Normal)
+        return button
     }
 }

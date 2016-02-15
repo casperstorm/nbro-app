@@ -48,6 +48,13 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     func setupSubviews() {
         self.contentView.tableView.dataSource = self
         self.contentView.tableView.delegate = self
+        self.contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
+    }
+    
+    // MARK: Actions
+    
+    func aboutButtonPressed() {
+        self.presentViewController(AboutViewController(), animated: true, completion: nil)
     }
     
     // MARK: Data

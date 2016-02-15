@@ -14,6 +14,14 @@
 		6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05C1C6F80C600A53017 /* String+Additions.swift */; };
 		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
+		6C3144531C71DEA000A138EF /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144521C71DEA000A138EF /* AboutViewController.swift */; };
+		6C3144551C71DEA800A138EF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144541C71DEA800A138EF /* AboutView.swift */; };
+		6C3144571C71E23400A138EF /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144561C71E23400A138EF /* UIImage+Additions.swift */; };
+		6C31445C1C71FEBF00A138EF /* AboutVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C31445B1C71FEBF00A138EF /* AboutVersionCell.swift */; };
+		6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C31445D1C71FEFC00A138EF /* AboutLogoCell.swift */; };
+		6C3144601C71FF4200A138EF /* AboutTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C31445F1C71FF4200A138EF /* AboutTextCell.swift */; };
+		6C3144621C71FF6400A138EF /* AboutActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144611C71FF6400A138EF /* AboutActionCell.swift */; };
+		6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144631C72128F00A138EF /* UIColor+HEX.swift */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
 		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F81C6F99B0009015D1 /* LoginView.swift */; };
@@ -37,6 +45,14 @@
 		6C0EF05C1C6F80C600A53017 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
 		6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6C2D28F61C60C496003E5C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6C3144521C71DEA000A138EF /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		6C3144541C71DEA800A138EF /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		6C3144561C71E23400A138EF /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Additions.swift"; path = "Extensions/UIImage+Additions.swift"; sourceTree = "<group>"; };
+		6C31445B1C71FEBF00A138EF /* AboutVersionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutVersionCell.swift; path = Views/AboutVersionCell.swift; sourceTree = "<group>"; };
+		6C31445D1C71FEFC00A138EF /* AboutLogoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutLogoCell.swift; path = Views/AboutLogoCell.swift; sourceTree = "<group>"; };
+		6C31445F1C71FF4200A138EF /* AboutTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutTextCell.swift; path = Views/AboutTextCell.swift; sourceTree = "<group>"; };
+		6C3144611C71FF6400A138EF /* AboutActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutActionCell.swift; path = Views/AboutActionCell.swift; sourceTree = "<group>"; };
+		6C3144631C72128F00A138EF /* UIColor+HEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+HEX.swift"; path = "Extensions/UIColor+HEX.swift"; sourceTree = "<group>"; };
 		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
@@ -74,6 +90,7 @@
 		181FC285B7EFE73C3057C11A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6C3144511C71DE7900A138EF /* About */,
 				6C65A1F51C6F8C42009015D1 /* Login */,
 				6C65A1F21C6F89EA009015D1 /* EventList */,
 				D02E19031C6F792300D4C3D5 /* EventDetail */,
@@ -87,6 +104,44 @@
 				181FC338CA0EF384A74A91FD /* Event.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6C3144511C71DE7900A138EF /* About */ = {
+			isa = PBXGroup;
+			children = (
+				6C3144521C71DEA000A138EF /* AboutViewController.swift */,
+				6C3144541C71DEA800A138EF /* AboutView.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		6C3144581C71FE3D00A138EF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6C31445A1C71FE4F00A138EF /* EventList */,
+				6C3144591C71FE4700A138EF /* About */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		6C3144591C71FE4700A138EF /* About */ = {
+			isa = PBXGroup;
+			children = (
+				6C31445B1C71FEBF00A138EF /* AboutVersionCell.swift */,
+				6C31445D1C71FEFC00A138EF /* AboutLogoCell.swift */,
+				6C31445F1C71FF4200A138EF /* AboutTextCell.swift */,
+				6C3144611C71FF6400A138EF /* AboutActionCell.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		6C31445A1C71FE4F00A138EF /* EventList */ = {
+			isa = PBXGroup;
+			children = (
+				6CDDFAFA1C6FD712002F9687 /* LogoCell.swift */,
+				6C0EF05A1C6F785300A53017 /* EventCell.swift */,
+			);
+			name = EventList;
 			sourceTree = "<group>";
 		};
 		6C4390801C62529800E923D0 /* Managers */ = {
@@ -131,6 +186,8 @@
 			children = (
 				6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */,
 				6C0EF05C1C6F80C600A53017 /* String+Additions.swift */,
+				6C3144561C71E23400A138EF /* UIImage+Additions.swift */,
+				6C3144631C72128F00A138EF /* UIColor+HEX.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -181,10 +238,9 @@
 		D02E19001C6F728A00D4C3D5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6C0EF05A1C6F785300A53017 /* EventCell.swift */,
+				6C3144581C71FE3D00A138EF /* Cells */,
 				D02E19011C6F729300D4C3D5 /* LaunchImageView.swift */,
 				6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */,
-				6CDDFAFA1C6FD712002F9687 /* LogoCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -333,19 +389,27 @@
 			files = (
 				6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */,
 				6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */,
+				6C3144551C71DEA800A138EF /* AboutView.swift in Sources */,
 				D02E19021C6F729300D4C3D5 /* LaunchImageView.swift in Sources */,
 				6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */,
+				6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */,
+				6C3144571C71E23400A138EF /* UIImage+Additions.swift in Sources */,
+				6C3144601C71FF4200A138EF /* AboutTextCell.swift in Sources */,
 				6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */,
+				6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
 				D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */,
 				6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */,
 				6C8AF9DB1C6E835B004D4789 /* UIFont+NBRO.swift in Sources */,
+				6C31445C1C71FEBF00A138EF /* AboutVersionCell.swift in Sources */,
 				6CDDFAFB1C6FD712002F9687 /* LogoCell.swift in Sources */,
 				6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */,
 				D02E19051C6F793700D4C3D5 /* EventDetailViewController.swift in Sources */,
+				6C3144531C71DEA000A138EF /* AboutViewController.swift in Sources */,
 				181FC68ED212E98808EB164D /* Event.swift in Sources */,
+				6C3144621C71FF6400A138EF /* AboutActionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
