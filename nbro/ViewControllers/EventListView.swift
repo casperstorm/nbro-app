@@ -84,7 +84,6 @@ class EventListView: UIView {
     }
 }
 
-
 private extension UIRefreshControl {
     static func refreshControl() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
@@ -118,7 +117,7 @@ private extension UIButton {
     static func aboutButton() -> UIButton {
         let button = UIButton()
         //todo fix this graphic
-        button.setBackgroundImage(UIImage(color: .whiteColor()), forState: .Normal)
+        button.setBackgroundImage(UIImage(named: "about_button"), forState: .Normal)
         return button
     }
 }
