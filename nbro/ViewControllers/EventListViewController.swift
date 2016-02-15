@@ -52,7 +52,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: Actions
     
-    private func aboutButtonPressed() {
+    func aboutButtonPressed() {
         self.presentViewController(AboutViewController(), animated: true, completion: nil)
     }
     
