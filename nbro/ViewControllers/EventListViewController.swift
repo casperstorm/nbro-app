@@ -13,7 +13,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
-    var animatedCellEntrance = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +44,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         return .LightContent
     }
 
-    func setupSubviews() {
+    private func setupSubviews() {
         self.contentView.tableView.dataSource = self
         self.contentView.tableView.delegate = self
         self.contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
@@ -53,13 +52,13 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: Actions
     
-    func aboutButtonPressed() {
+    private func aboutButtonPressed() {
         self.presentViewController(AboutViewController(), animated: true, completion: nil)
     }
     
     // MARK: Data
     
-    func loadData() {
+    private func loadData() {
         FacebookManager.events { (events) -> Void in
             let animate = self.events.count == 0
             self.events = events
@@ -120,7 +119,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK : Cell Creation
     
-    func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
+    private func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
         let event = self.events[indexPath.row - 1]
         cell.nameLabel.text = event.name.uppercaseString
@@ -129,7 +128,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-    func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
+    private func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("logo", forIndexPath: indexPath) as! LogoCell
         return cell
     }
