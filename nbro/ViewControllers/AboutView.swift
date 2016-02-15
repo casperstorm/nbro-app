@@ -12,8 +12,6 @@ import SnapKit
 
 class AboutView: UIView {
     let cancelButton = UIButton.cancelButton()
-    let nameLabel = UILabel.nameLabel()
-    let versionLabel = UILabel.versionLabel()
     let tableView = UITableView.tableView()
     
     init() {
@@ -28,7 +26,7 @@ class AboutView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [tableView, cancelButton, nameLabel, versionLabel]
+        let subviews = [tableView, cancelButton]
         subviews.forEach { addSubview($0) }
     }
     
@@ -36,16 +34,6 @@ class AboutView: UIView {
         cancelButton.snp_makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
-        }
-        
-        nameLabel.snp_makeConstraints { (make) in
-            make.centerX.equalTo(nameLabel.superview!)
-            make.bottom.equalTo(versionLabel.snp_top)
-        }
-        
-        versionLabel.snp_makeConstraints { (make) in
-            make.centerX.equalTo(versionLabel.superview!)
-            make.bottom.equalTo(versionLabel.superview!).offset(-16)
         }
         
         tableView.snp_makeConstraints { (make) in
@@ -63,8 +51,10 @@ private extension UITableView {
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
+        tableView.registerClass(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
         tableView.backgroundColor = UIColor.clearColor()
         tableView.separatorColor = UIColor.clearColor()
+        tableView.alwaysBounceVertical = false
         return tableView
     }
 }
@@ -75,27 +65,5 @@ private extension UIButton {
         button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
         
         return button
-    }
-}
-
-private extension UILabel {
-    static func nameLabel() -> UILabel {
-        let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Center
-        label.font = UIFont.defaultSemiBoldFontOfSize(14)
-        label.text = "NBRO RUNNING APP"
-        return label
-    }
-    
-    static func versionLabel() -> UILabel {
-        let label = UILabel()
-        label.textColor = .grayColor()
-        label.textAlignment = .Center
-        label.font = UIFont.defaultFontOfSize(14)
-        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-        let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
-        label.text = "v. " + version + " (" + build + ")"
-        return label
     }
 }

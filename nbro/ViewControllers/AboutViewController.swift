@@ -17,7 +17,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case AppStoreActionCell
         case FacebookActionCell
         case CreditsActionCell
-//        case VersionCell
+        case VersionCell
         
         case Amount
     }
@@ -68,6 +68,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return configureFacebookActionCell(indexPath)
         case .CreditsActionCell:
             return configureCreditsActionCell(indexPath)
+        case .VersionCell:
+            return configureVersionCell(indexPath)
         default:
             return UITableViewCell()
         }
@@ -86,6 +88,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return AboutActionCell.preferredCellHeight()
         case .CreditsActionCell:
             return AboutActionCell.preferredCellHeight()
+        case .VersionCell:
+            return AboutVersionCell.preferredCellHeight()
         default:
             return 0
         }
@@ -129,4 +133,12 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
+    func configureVersionCell(indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("version-cell", forIndexPath: indexPath) as! AboutVersionCell
+        cell.nameLabel.text = "NBRO RUNNING APP"
+        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
+        cell.versionLabel.text = "v. " + version + " (" + build + ")"
+        return cell
+    }
 }

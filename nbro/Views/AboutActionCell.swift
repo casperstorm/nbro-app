@@ -17,6 +17,10 @@ class AboutActionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor(hex: 0x171717)
+        let highligtedView = UIView()
+        highligtedView.backgroundColor = UIColor(hex: 0x202020)
+        selectedBackgroundView = highligtedView
+        
         topSeparatorView.backgroundColor = UIColor(hex: 0x2c2c2c)
         bottomSeparatorView.backgroundColor = UIColor(hex: 0x2c2c2c)
 

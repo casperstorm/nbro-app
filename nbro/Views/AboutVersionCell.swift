@@ -10,11 +10,12 @@ import Foundation
 import UIKit
 
 class AboutVersionCell: UITableViewCell {
-    
+    let nameLabel = UILabel.nameLabel()
+    let versionLabel = UILabel.versionLabel()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.blackColor()
         selectionStyle = .None;
         
         setupSubviews()
@@ -25,11 +26,43 @@ class AboutVersionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupSubviews() {
-        
+    private func setupSubviews() {
+        let subviews = [nameLabel, versionLabel]
+        subviews.forEach { addSubview($0) }
     }
     
-    func defineLayouts() {
+    private func defineLayouts() {
+        nameLabel.snp_makeConstraints { (make) in
+            make.centerX.equalTo(nameLabel.superview!)
+            make.bottom.equalTo(versionLabel.snp_top)
+        }
+        
+        versionLabel.snp_makeConstraints { (make) in
+            make.centerX.equalTo(versionLabel.superview!)
+            make.bottom.equalTo(versionLabel.superview!).offset(-16)
+        }
+    }
+    
+    class func preferredCellHeight() -> CGFloat {
+        return 75
+    }
+}
 
+
+private extension UILabel {
+    static func nameLabel() -> UILabel {
+        let label = UILabel()
+        label.textColor = .whiteColor()
+        label.textAlignment = .Center
+        label.font = UIFont.defaultSemiBoldFontOfSize(14)
+        return label
+    }
+    
+    static func versionLabel() -> UILabel {
+        let label = UILabel()
+        label.textColor = .grayColor()
+        label.textAlignment = .Center
+        label.font = UIFont.defaultFontOfSize(14)
+        return label
     }
 }
