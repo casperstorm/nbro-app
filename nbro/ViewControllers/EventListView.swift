@@ -16,6 +16,7 @@ class EventListView: UIView {
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
     let aboutButton = UIButton.aboutButton()
+    let refreshControl = UIRefreshControl.refreshControl()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -29,6 +30,7 @@ class EventListView: UIView {
     }
     
     private func setupSubviews() {
+        tableView.addSubview(refreshControl)
         addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
@@ -79,6 +81,15 @@ class EventListView: UIView {
         }) { (finished) -> Void in
             self.backgroundImageView.transform = CGAffineTransformIdentity
         }
+    }
+}
+
+
+private extension UIRefreshControl {
+    static func refreshControl() -> UIRefreshControl {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .whiteColor()
+        return refreshControl
     }
 }
 

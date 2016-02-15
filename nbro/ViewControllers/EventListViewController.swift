@@ -32,6 +32,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         contentView.animateBackgroundImage()
         loadData()
     }
@@ -53,6 +54,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
         contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
+        contentView.refreshControl.addTarget(self, action: Selector("shouldRefreshData"), forControlEvents: .ValueChanged)
     }
     
     // MARK: Actions
@@ -61,11 +63,17 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.presentViewController(AboutViewController(), animated: true, completion: nil)
     }
     
+    func shouldRefreshData() {
+        loadData()
+    }
+    
     // MARK: Data
     
     private func loadData() {
         FacebookManager.events { (events) -> Void in
             let animate = self.events.count == 0
+            self.contentView.refreshControl.endRefreshing()
+
             self.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
