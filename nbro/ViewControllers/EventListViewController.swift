@@ -18,7 +18,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
-    let transitionManager = TransitionManager(style: .SwipeRight)
+    let transitionManager = TransitionManager(style: .Swipe(reverse: false))
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -10,27 +10,20 @@ import Foundation
 import UIKit
 
 class TransitionManager: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate  {
-    private var style = AnimaionStyle.SwipeRight
+    private var style = AnimaionStyle.Swipe(reverse: false)
     enum AnimaionStyle {
-        case SwipeRight
-        case SwipeLeft
+        case Swipe(reverse: Bool)
     }
 
     init(style:AnimaionStyle) {
         self.style = style
         super.init()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+        
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         switch style {
-        case .SwipeRight:
-            swipeTransition(false, transitionContext: transitionContext)
-        case .SwipeLeft:
-            swipeTransition(true, transitionContext: transitionContext)
+        case .Swipe(let reverse):
+            swipeTransition(reverse, transitionContext: transitionContext)
         }
     }
     
