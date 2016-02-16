@@ -46,6 +46,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: Actions
     
     func cancelPressed() {
+        let transitionManager = TransitionManager(style: .SwipeLeft)
+        self.transitioningDelegate = transitionManager
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

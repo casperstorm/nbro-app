@@ -18,7 +18,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
-    
+    let transitionManager = TransitionManager(style: .SwipeRight)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
@@ -60,7 +61,9 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Actions
     
     func aboutButtonPressed() {
-        self.presentViewController(AboutViewController(), animated: true, completion: nil)
+        let aboutViewController = AboutViewController()
+        aboutViewController.transitioningDelegate = transitionManager
+        self.presentViewController(aboutViewController, animated: true, completion: nil)
     }
     
     func shouldRefreshData() {
