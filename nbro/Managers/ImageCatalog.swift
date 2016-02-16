@@ -15,6 +15,8 @@ class ImageCatalog {
             return [
                 UIImage(named: "background_image_1")!,
                 UIImage(named: "background_image_2")!,
+                UIImage(named: "background_image_3")!,
+                UIImage(named: "background_image_4")!,
             ]
         }
     }
