@@ -39,16 +39,16 @@ platform :ios do
     commit
   end
 
-  desc "Publish to iTunes Connect"
-  lane :itc do
+  desc "Build .ipa file"
+  lane :ipa do
     ensure_git_status_clean
     cocoapods
     increment_build_number
     build
-    pilot(
-      ipa: "../nbro.ipa",
-      skip_submission: true,
-    )
+    # pilot(
+    #   ipa: "../nbro.ipa",
+    #   skip_submission: true,
+    # )
     commit
   end
 
