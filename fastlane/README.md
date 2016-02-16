@@ -11,11 +11,11 @@ sudo gem install fastlane
 fastlane ios bump
 ```
 Increment build number
-### ios itc
+### ios ipa
 ```
-fastlane ios itc
+fastlane ios ipa
 ```
-Publish to iTunes Connect
+Build .ipa file
 
 ----
 
