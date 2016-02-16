@@ -46,7 +46,7 @@ platform :ios do
     increment_build_number
     build
     pilot(
-      ipa: "../nbrot.ipa",
+      ipa: "../nbro.ipa",
       skip_submission: true,
     )
     commit
