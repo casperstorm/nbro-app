@@ -9,7 +9,7 @@ PODS:
     - Bolts (~> 1.5)
   - FBSDKLoginKit (4.9.1):
     - FBSDKCoreKit
-  - Mapbox-iOS-SDK (3.1.0)
+  - Mapbox-iOS-SDK (3.1.1)
   - SnapKit (0.19.1)
 
 DEPENDENCIES:
@@ -22,7 +22,7 @@ SPEC CHECKSUMS:
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   FBSDKCoreKit: aee20b6d9855f15b618d4fddd1a5ad45f5a4a59d
   FBSDKLoginKit: ec22dc49bd372b064e93d6773df4ffefb3a552a2
-  Mapbox-iOS-SDK: e8b6480b94015c3c701f123171c5b8975645af8f
+  Mapbox-iOS-SDK: 8e94e5a2548f0514d3ef04abed3b0140f3cec9e1
   SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
 
 COCOAPODS: 0.39.0
