@@ -82,6 +82,33 @@ class EventListView: UIView {
             self.backgroundImageView.transform = CGAffineTransformIdentity
         }
     }
+    
+    func animateBackgroundImageCrossfadeChange() {
+        let isAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
+        if(!isAnimating) {
+            if let backgroundImage = backgroundImageView.image {
+                let fromImage = backgroundImage
+                let toImage = ImageCatalog().randomImageFromCatalogAndAvoidImage(fromImage)
+                
+                let crossfade = CABasicAnimation(keyPath: "contents")
+                crossfade.duration = 1.0
+                crossfade.fromValue = fromImage
+                crossfade.toValue = toImage
+                crossfade.delegate = self
+                crossfade.removedOnCompletion = true
+                backgroundImageView.layer .addAnimation(crossfade, forKey: "animateContents")
+                backgroundImageView.image = toImage;
+            }
+        }
+    }
+    
+
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        let didFinishAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
+        if(!didFinishAnimating) {
+            backgroundImageView.layer.removeAnimationForKey("animateContents")
+        }
+    }
 }
 
 private extension UIRefreshControl {
@@ -105,7 +132,8 @@ private extension UITableView {
 
 private extension UIImageView {
     static func backgroundImageView() -> UIImageView {
-        let backgroundImageView = UIImageView(image: UIImage(named: "events_background_image_1"))
+        let image = ImageCatalog().randomImageFromCatalog()
+        let backgroundImageView = UIImageView(image: image)
         return backgroundImageView
     }
     static func vignetteImageView() -> UIImageView {

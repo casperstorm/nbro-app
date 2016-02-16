@@ -23,9 +23,11 @@
 		6C3144621C71FF6400A138EF /* AboutActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144611C71FF6400A138EF /* AboutActionCell.swift */; };
 		6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144631C72128F00A138EF /* UIColor+HEX.swift */; };
 		6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C3144651C72398D00A138EF /* Exo2-Medium.ttf */; };
+		6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C402B231C7331BD00E57613 /* Array+Additions.swift */; };
 		6C4390841C6252E100E923D0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4390831C6252E100E923D0 /* FacebookManager.swift */; };
 		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F81C6F99B0009015D1 /* LoginView.swift */; };
+		6C7337081C73224300744511 /* ImageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7337071C73224300744511 /* ImageCatalog.swift */; };
 		6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */; };
 		6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */; };
 		6C8AF9DB1C6E835B004D4789 /* UIFont+NBRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */; };
@@ -55,10 +57,12 @@
 		6C3144611C71FF6400A138EF /* AboutActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutActionCell.swift; path = Views/AboutActionCell.swift; sourceTree = "<group>"; };
 		6C3144631C72128F00A138EF /* UIColor+HEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+HEX.swift"; path = "Extensions/UIColor+HEX.swift"; sourceTree = "<group>"; };
 		6C3144651C72398D00A138EF /* Exo2-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Medium.ttf"; path = "Fonts/Exo2-Medium.ttf"; sourceTree = "<group>"; };
+		6C402B231C7331BD00E57613 /* Array+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Additions.swift"; path = "Extensions/Array+Additions.swift"; sourceTree = "<group>"; };
 		6C4390831C6252E100E923D0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		6C65A1F81C6F99B0009015D1 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6C7337071C73224300744511 /* ImageCatalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCatalog.swift; path = Managers/ImageCatalog.swift; sourceTree = "<group>"; };
 		6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Light.ttf"; path = "Fonts/Exo2-Light.ttf"; sourceTree = "<group>"; };
 		6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MyriadPro-BoldCond.otf"; path = "Fonts/MyriadPro-BoldCond.otf"; sourceTree = "<group>"; };
 		6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+NBRO.swift"; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				6C4390831C6252E100E923D0 /* FacebookManager.swift */,
+				6C7337071C73224300744511 /* ImageCatalog.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				6C0EF05C1C6F80C600A53017 /* String+Additions.swift */,
 				6C3144561C71E23400A138EF /* UIImage+Additions.swift */,
 				6C3144631C72128F00A138EF /* UIColor+HEX.swift */,
+				6C402B231C7331BD00E57613 /* Array+Additions.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				6C3144551C71DEA800A138EF /* AboutView.swift in Sources */,
 				D02E19021C6F729300D4C3D5 /* LaunchImageView.swift in Sources */,
 				6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */,
+				6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */,
 				6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */,
@@ -404,6 +411,7 @@
 				6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */,
 				6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
+				6C7337081C73224300744511 /* ImageCatalog.swift in Sources */,
 				D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */,
 				6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */,
 				6C8AF9DB1C6E835B004D4789 /* UIFont+NBRO.swift in Sources */,

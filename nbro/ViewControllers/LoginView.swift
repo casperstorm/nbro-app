@@ -133,7 +133,7 @@ private extension UIButton {
 
 private extension UIImageView {
     static func backgroundImageView() -> UIImageView {
-        let backgroundImageView = UIImageView(image: UIImage(named: "login_background_image_1"))
+        let backgroundImageView = UIImageView(image: UIImage(named: "background_image_2"))
         return backgroundImageView
     }
     static func vignetteImageView() -> UIImageView {

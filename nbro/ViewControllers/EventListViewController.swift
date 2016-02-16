@@ -134,6 +134,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
                 let eventDetailViewController = EventDetailViewController(event: event)
                 self.presentViewController(eventDetailViewController, animated: true, completion: nil)
             }
+        } else if(cellType == .LogoCell) {
+            contentView.animateBackgroundImageCrossfadeChange()
         }
     }
     
@@ -166,5 +168,4 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func eventForIndexPath(indexPath: NSIndexPath) -> Event {
         return events[indexPath.row - 1]
     }
-    
 }
