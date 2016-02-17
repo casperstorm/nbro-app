@@ -11,12 +11,13 @@ import UIKit
 import SnapKit
 import Mapbox
 
-class EventDetailView: UIView {
+class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
  
     let cancelButton = UIButton.cancelButton()
     let facebookButton = UIButton.facebookButton()
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
+    let bottomView = UIView()
     private let scrollView = EventScrollView()
     let eventView = EventView()
     
@@ -33,6 +34,25 @@ class EventDetailView: UIView {
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
+        mapView.delegate = self
+        
+        bottomView.backgroundColor = .blackColor()
+        
+    }
+    
+    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
+        let annotation = MGLPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+    }
+    
+    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        return MGLAnnotationImage(image: UIImage(named: "pin")!, reuseIdentifier: "Pin")
+    }
+    
+    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,7 +60,7 @@ class EventDetailView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [mapView, mapOverlay, cancelButton, scrollView, facebookButton]
+        let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -49,12 +69,17 @@ class EventDetailView: UIView {
     private func defineLayout() {
         mapView.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapView.superview!)
-            make.height.equalTo(mapView.superview!).multipliedBy(0.32)
+            make.height.equalTo(mapView.superview!).multipliedBy(1.0) // 0.32
         }
         
         mapOverlay.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapOverlay.superview!)
             make.height.equalTo(mapView.superview!).multipliedBy(0.35)
+        }
+        
+        bottomView.snp_makeConstraints { (make) in
+            make.top.equalTo(mapOverlay.snp_bottom)
+            make.leading.trailing.bottom.equalTo(bottomView.superview!)
         }
         
         scrollView.snp_makeConstraints { (make) -> Void in

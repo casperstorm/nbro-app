@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreLocation
+import Mapbox
 
 class EventDetailViewController: UIViewController {
     
@@ -47,13 +48,6 @@ class EventDetailViewController: UIViewController {
     }
     
     private func setupSubviews() {
-        
-        if let longitude = event.longitude, latitude = event.latitude {
-            contentView.mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: latitude,
-                longitude: longitude),
-                zoomLevel: 12, animated: false)
-        }
-        
         contentView.eventView.titleLabel.text = event.name.uppercaseString
         contentView.eventView.dateLabel.text = event.formattedStartDate(.Date(includeYear: true)).uppercaseString
         contentView.eventView.descriptionLabel.text = event.description
@@ -61,6 +55,19 @@ class EventDetailViewController: UIViewController {
         contentView.eventView.timeDetailView.detailLabel.text = event.formattedStartDate(.Time).uppercaseString
         contentView.eventView.locationDetailView.titleLabel.text = "Location".uppercaseString
         contentView.eventView.locationDetailView.detailLabel.text = event.locationName.uppercaseString
+        
+        if let longitude = event.longitude, latitude = event.latitude {
+            let coordinate = CLLocationCoordinate2D(latitude: latitude,
+                                                    longitude: longitude)
+            self.contentView.addAnnotationAtCoordinate(coordinate)
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.01 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.contentView.mapView.setCenterCoordinate(coordinate,
+                                                             zoomLevel: 14, animated: false)
+                self.contentView.mapView.contentInset = UIEdgeInsets(top: -UIScreen.mainScreen().bounds.height/2 - 100, left: 0, bottom: 0, right: 0)
+            }
+        }
     }
     
     // MARK: Actions
