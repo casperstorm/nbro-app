@@ -88,26 +88,6 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let cellType = AboutCellType(rawValue: indexPath.row)!
-        switch cellType {
-        case .LogoCell:
-            return AboutLogoCell.preferredCellHeight()
-        case .TextCell:
-            return AboutTextCell.preferredCellHeight()
-        case .AppStoreActionCell:
-            return AboutActionCell.preferredCellHeight()
-        case .FacebookActionCell:
-            return AboutActionCell.preferredCellHeight()
-        case .CreditsActionCell:
-            return AboutActionCell.preferredCellHeight()
-        case .VersionCell:
-            return AboutVersionCell.preferredCellHeight()
-        default:
-            return 0
-        }
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let cellType = AboutCellType(rawValue: indexPath.row)!

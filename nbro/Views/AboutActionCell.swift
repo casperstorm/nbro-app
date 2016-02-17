@@ -45,7 +45,7 @@ class AboutActionCell: UITableViewCell {
     
     private func defineLayouts() {
         titleLabel.snp_makeConstraints { (make) in
-            make.centerY.equalTo(titleLabel.superview!)
+            make.top.bottom.equalTo(titleLabel.superview!).inset(15)
             make.left.equalTo(iconImageView.snp_right).offset(22)
         }
         
@@ -74,10 +74,6 @@ class AboutActionCell: UITableViewCell {
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
         titleLabel.attributedText = attrString
-    }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 55
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

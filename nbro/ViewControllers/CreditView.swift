@@ -41,6 +41,8 @@ private extension UITableView {
         tableView.backgroundColor = UIColor.clearColor()
         tableView.registerClass(CreditCell.self, forCellReuseIdentifier: "credit-cell")
         tableView.separatorColor = UIColor.clearColor()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
         return tableView
     }
 }

@@ -33,6 +33,7 @@ class AboutVersionCell: UITableViewCell {
     
     private func defineLayouts() {
         nameLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(nameLabel.superview!).inset(16)
             make.centerX.equalTo(nameLabel.superview!)
             make.bottom.equalTo(versionLabel.snp_top)
         }
@@ -41,10 +42,6 @@ class AboutVersionCell: UITableViewCell {
             make.centerX.equalTo(versionLabel.superview!)
             make.bottom.equalTo(versionLabel.superview!).offset(-16)
         }
-    }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 75
     }
 }
 
