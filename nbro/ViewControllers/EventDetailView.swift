@@ -32,6 +32,7 @@ class EventDetailView: UIView {
         scrollView.topInset = Float(topInset)
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
     }
 
     required init?(coder aDecoder: NSCoder) {

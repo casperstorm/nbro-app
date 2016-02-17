@@ -72,10 +72,15 @@ class EventListView: UIView {
     
     // MARK : Animation
     
+    func stopBackgroundAnimation() {
+        self.backgroundImageView.layer.removeAllAnimations()
+        self.backgroundImageView.transform = CGAffineTransformIdentity
+    }
+    
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         
-        UIView.animateWithDuration(90.0, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
+        UIView.animateWithDuration(90, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
             self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
             
         }) { (finished) -> Void in

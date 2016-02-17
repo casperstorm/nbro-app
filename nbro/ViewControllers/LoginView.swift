@@ -95,6 +95,11 @@ class LoginView: UIView {
     
     // MARK : Animation
     
+    func stopBackgroundAnimation() {
+        self.backgroundImageView.layer.removeAllAnimations()
+        self.backgroundImageView.transform = CGAffineTransformIdentity
+    }
+    
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         

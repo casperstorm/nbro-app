@@ -25,20 +25,26 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func applicationWillEnterForeground() {
-        contentView.animateBackgroundImage()
+        self.contentView.animateBackgroundImage()
+    }
+    
+    func applicationDidEnterBackground() {
+        contentView.stopBackgroundAnimation()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+
         contentView.animateBackgroundImage()
         loadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
