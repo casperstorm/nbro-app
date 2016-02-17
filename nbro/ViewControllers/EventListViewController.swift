@@ -66,10 +66,11 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Actions
     
     func aboutButtonPressed() {
-        let transitionManager = TransitionManager(style: .Swipe(reverse: false))
+//        let transitionManager = TransitionManager(style: .Swipe(reverse: false))
         let aboutViewController = AboutViewController()
-        aboutViewController.transitioningDelegate = transitionManager
-        self.presentViewController(aboutViewController, animated: true, completion: nil)
+        let navigationController = UINavigationController(rootViewController: aboutViewController)
+//        navigationController.transitioningDelegate = transitionManager
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func shouldRefreshData() {

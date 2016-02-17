@@ -33,6 +33,17 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         setupSubviews()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barStyle = .Black
+        self.navigationController?.navigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
     private func setupSubviews() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.tableView.delegate = self
@@ -106,8 +117,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .FacebookActionCell:
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/groups/108900355842020/")!)
         case .CreditsActionCell:
-            //todo add credits page
-            print("missing credit page..")
+            self.navigationController?.pushViewController(CreditViewController(), animated: true)
         default: break
 
         }

@@ -59,6 +59,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupAdditionalStyling() {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.tintColor = UIColor(hex: 0xffffff)
+        navigationBarAppearace.barTintColor = UIColor(hex: 0x000000)
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+        
+        let backButtonImage = UIImage(named: "back_button")
+        navigationBarAppearace.backIndicatorImage = backButtonImage
+        navigationBarAppearace.backIndicatorTransitionMaskImage = backButtonImage
+        
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.max), forBarMetrics: .Default)
     }
 }
 
