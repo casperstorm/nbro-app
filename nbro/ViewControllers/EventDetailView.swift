@@ -30,6 +30,7 @@ class EventDetailView: UIView {
         let topInset = screenHeight * 0.32
         scrollView.topInset = Float(topInset)
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        scrollView.alwaysBounceVertical = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -76,6 +77,7 @@ class EventView: UIView {
     let titleLabel = UILabel.titleLabel()
     let dateLabel = UILabel.dateLabel()
     let titleSeparator = EventSeparator()
+    let descriptionLabel = UILabel.descriptionLabel()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -92,7 +94,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel]
         subviews.forEach { addSubview($0) }
     }
     
@@ -109,6 +111,12 @@ class EventView: UIView {
         titleSeparator.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(titleSeparator.superview!)
             make.top.equalTo(dateLabel.snp_bottom).offset(15)
+        }
+        
+        descriptionLabel.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+            make.top.equalTo(titleSeparator.snp_bottom).offset(15)
+            make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
     }
     
@@ -200,6 +208,15 @@ private extension UILabel {
         let label = UILabel()
         label.font = UIFont.defaultSemiBoldFontOfSize(14)
         label.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+        
+        return label
+    }
+    
+    static func descriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.defaultLightFontOfSize(13)
+        label.textColor = UIColor(hex: 0x090909)
         
         return label
     }

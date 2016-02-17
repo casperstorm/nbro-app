@@ -55,6 +55,7 @@ class EventDetailViewController: UIViewController {
         
         contentView.eventView.titleLabel.text = event.name.uppercaseString
         contentView.eventView.dateLabel.text = event.formattedStartDate(.Date(includeYear: true)).uppercaseString
+        contentView.eventView.descriptionLabel.text = event.description
     }
     
     // MARK: Actions
