@@ -1,4 +1,5 @@
 PODS:
+  - AFDateHelper (3.1.1)
   - Bolts (1.6.0):
     - Bolts/AppLinks (= 1.6.0)
     - Bolts/Tasks (= 1.6.0)
@@ -13,12 +14,14 @@ PODS:
   - SnapKit (0.19.1)
 
 DEPENDENCIES:
+  - AFDateHelper (~> 3.1)
   - FBSDKCoreKit (~> 4.9.1)
   - FBSDKLoginKit (~> 4.9.1)
   - Mapbox-iOS-SDK (~> 3.1.0)
   - SnapKit (~> 0.19)
 
 SPEC CHECKSUMS:
+  AFDateHelper: 22d6439a3529a144c89b7e6aa214ebbe4d5c2337
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   FBSDKCoreKit: aee20b6d9855f15b618d4fddd1a5ad45f5a4a59d
   FBSDKLoginKit: ec22dc49bd372b064e93d6773df4ffefb3a552a2

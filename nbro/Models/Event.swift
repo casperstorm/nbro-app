@@ -5,27 +5,52 @@
 
 import Foundation
 import CoreLocation
+import AFDateHelper
 
 struct Event {
     
     enum DateFormat {
         case Date(includeYear: Bool)
         case Time
+        case Relative
         
         private static var dateformatters = [String:NSDateFormatter]()
         
-        private func dateFormat() -> String {
+        func formattedStringFromDate(date: NSDate) -> String {
             switch self {
+            case Date(_):
+                let format = formatFromDateFormat(self)
+                let dateFormatter = self.dateFormatter(format)
+                return dateFormatter.stringFromDate(date)
+            case Time:
+                let format = formatFromDateFormat(self)
+                let dateFormatter = self.dateFormatter(format)
+                return dateFormatter.stringFromDate(date)
+            case Relative:
+                if(date.isTomorrow()) {
+                    return "Tomorrow"
+                } else if(date.isToday()) {
+                    return "Today"
+                } else {
+                    let format = formatFromDateFormat(.Date(includeYear: true))
+                    let dateFormatter = self.dateFormatter(format)
+                    return dateFormatter.stringFromDate(date)
+                }
+            }
+        }
+        
+        private func formatFromDateFormat(format: DateFormat) -> String {
+            switch format {
             case Date(let includeYear):
                 return "dd. MMM" + (includeYear ? " yyyy" : "")
             case Time:
                 return "HH:mm"
+            default:
+                return ""
             }
         }
         
-        func dateFormatter() -> NSDateFormatter {
-            let format = dateFormat()
-            
+        private func dateFormatter(format: String) -> NSDateFormatter {
             if let dateFormatter = DateFormat.dateformatters[format] {
                 return dateFormatter
             } else {
@@ -64,7 +89,6 @@ struct Event {
     }
     
     func formattedStartDate(dateFormat: DateFormat) -> String {
-        let dateFormatter = dateFormat.dateFormatter()
-        return dateFormatter.stringFromDate(startDate)
+        return dateFormat.formattedStringFromDate(self.startDate)
     }
 }
