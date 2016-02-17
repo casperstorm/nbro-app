@@ -51,10 +51,6 @@ class CreditViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return configureCreditCell(indexPath, cellType: cellType)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CreditCell.preferredCellHeight()
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let cellType = CreditCellType(rawValue: indexPath.row)!

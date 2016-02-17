@@ -62,7 +62,7 @@ class CreditCell: UITableViewCell {
         
         containerView.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(iconImageView.snp_right).offset(22)
-            make.centerY.equalTo(containerView.superview!)
+            make.top.bottom.equalTo(containerView.superview!).inset(20)
         }
         
         topSeparatorView.snp_makeConstraints { (make) in
@@ -95,10 +95,6 @@ class CreditCell: UITableViewCell {
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
         titleLabel.attributedText = attrString
-    }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 75
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 
 class AboutLogoCell: UITableViewCell {
-    let runnerLogoView = UIImageView.maskedRunnerImageView()
-    let containerView = UIView()
+    let runnerLogoView = UIImageView.runnerImageView()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -27,31 +26,21 @@ class AboutLogoCell: UITableViewCell {
     }
     
     private func setupSubviews() {
-        containerView.maskView = runnerLogoView
-        containerView.backgroundColor = .whiteColor()
-        contentView.addSubview(containerView)
+        contentView.addSubview(runnerLogoView)
     }
     
     private func defineLayouts() {
         runnerLogoView.snp_makeConstraints { (make) in
+            make.top.equalTo(runnerLogoView.superview!).inset(30)
+            make.bottom.equalTo(runnerLogoView.superview!).inset(10)
             make.centerX.equalTo(runnerLogoView.superview!)
-            make.centerY.equalTo(runnerLogoView.superview!)
-        }
-        
-        containerView.snp_makeConstraints { (make) in
-            make.centerX.equalTo(containerView.superview!)
-            make.centerY.equalTo(containerView.superview!).offset(25)
-            make.height.width.equalTo(105)
         }
     }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 150
-    }
+
 }
 
 private extension UIImageView {
-    static func maskedRunnerImageView() -> UIImageView {
+    static func runnerImageView() -> UIImageView {
         return UIImageView(image: UIImage(named: "runner_logo"))
     }
 }

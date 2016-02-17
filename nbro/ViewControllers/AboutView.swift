@@ -55,6 +55,8 @@ private extension UITableView {
         tableView.backgroundColor = UIColor.clearColor()
         tableView.separatorColor = UIColor.clearColor()
         tableView.alwaysBounceVertical = false
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
         return tableView
     }
 }

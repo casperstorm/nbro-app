@@ -123,18 +123,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let cellType = cellTypeForIndexPath(indexPath)
-        
-        switch cellType {
-        case .LogoCell:
-            return LogoCell.preferredCellHeight()
-        case .EventCell:
-            let event = self.events[indexPath.row - 1]
-            return EventCell.calculatedHeightForCellWithText(event.name)
-        }
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // iOS still contains weird bug where presenting something from didSelectRow can take a while
         let cellType = cellTypeForIndexPath(indexPath)
@@ -154,7 +142,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
         let event = eventForIndexPath(indexPath)
-//        cell.nameLabel.text = event.name.uppercaseString
+        cell.nameLabel.text = event.name.uppercaseString
         cell.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
 
         return cell

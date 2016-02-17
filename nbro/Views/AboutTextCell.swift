@@ -36,18 +36,15 @@ class AboutTextCell: UITableViewCell {
     private func defineLayouts() {
         headerLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(headerLabel.superview!)
-            make.top.equalTo(16)
+            make.top.equalTo(headerLabel.superview!).inset(16)
         }
         
         bodyLabel.snp_makeConstraints { (make) in
             make.width.equalTo(bodyLabel.superview!).inset(40)
             make.centerX.equalTo(bodyLabel.superview!)
             make.top.equalTo(headerLabel.snp_bottom).offset(16)
+            make.bottom.equalTo(bodyLabel.superview!).inset(20)
         }
-    }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 200
     }
 }
 
