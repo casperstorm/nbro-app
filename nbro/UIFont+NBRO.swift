@@ -26,6 +26,10 @@ extension UIFont {
         return UIFont(name: "Exo2-SemiBold", size: size)!
     }
     
+    class func defaultRegularFontOfSize(size: CGFloat) -> UIFont {
+        return UIFont(name: "Exo2-Regular", size: size)!
+    }
+    
     class func titleBoldFontOfSize(size: CGFloat) -> UIFont {
         return UIFont(name: "MyriadPro-BoldCond", size: size)!
     }

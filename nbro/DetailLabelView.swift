@@ -32,12 +32,11 @@ class DetailLabelView: UIView {
         
         titleLabel.snp_makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(titleLabel.superview!)
-            make.bottom.equalTo(detailLabel.snp_top)
         }
         
         detailLabel.snp_makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(detailLabel.superview!)
-            make.top.equalTo(titleLabel.snp_bottom)
+            make.top.equalTo(titleLabel.snp_bottom).offset(10)
         }
     }
     
@@ -51,14 +50,14 @@ class DetailLabelView: UIView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.defaultMediumFontOfSize(30)
+        label.font = UIFont.defaultRegularFontOfSize(12)
         label.textColor = UIColor(hex: 0x737373)
         label.textAlignment = .Center
         return label
     }
     static func detailLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.titleBoldFontOfSize(14)
+        label.font = UIFont.titleBoldFontOfSize(22)
         label.textColor = .blackColor()
         label.textAlignment = .Center
         return label

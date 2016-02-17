@@ -83,6 +83,10 @@ class EventView: UIView {
     let titleLabel = UILabel.titleLabel()
     let dateLabel = UILabel.dateLabel()
     let titleSeparator = EventSeparator()
+    let descriptionSeparator = EventSeparator()
+
+    let timeDetailView = DetailLabelView()
+    let locationDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
     
     init() {
@@ -100,7 +104,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator]
         subviews.forEach { addSubview($0) }
     }
     
@@ -119,9 +123,25 @@ class EventView: UIView {
             make.top.equalTo(dateLabel.snp_bottom).offset(15)
         }
         
+        timeDetailView.snp_makeConstraints { (make) -> Void in
+            make.leading.equalTo(timeDetailView.superview!).offset(30)
+            make.top.equalTo(titleSeparator.snp_bottom).offset(15)
+        }
+        
+        locationDetailView.snp_makeConstraints { (make) -> Void in
+            make.leading.equalTo(timeDetailView.snp_trailing)
+            make.trailing.equalTo(locationDetailView.superview!).offset(-30)
+            make.height.width.top.equalTo(timeDetailView)
+        }
+        
+        descriptionSeparator.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(descriptionSeparator.superview!)
+            make.top.equalTo(locationDetailView.snp_bottom).offset(15)
+        }
+        
         descriptionLabel.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(titleSeparator.snp_bottom).offset(15)
+            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
     }
