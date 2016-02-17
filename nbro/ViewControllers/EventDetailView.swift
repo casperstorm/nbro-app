@@ -14,6 +14,7 @@ import Mapbox
 class EventDetailView: UIView {
  
     let cancelButton = UIButton.cancelButton()
+    let facebookButton = UIButton.facebookButton()
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
     private let scrollView = EventScrollView()
@@ -30,6 +31,8 @@ class EventDetailView: UIView {
         let topInset = screenHeight * 0.32
         scrollView.topInset = Float(topInset)
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +40,7 @@ class EventDetailView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [mapView, mapOverlay, cancelButton, scrollView]
+        let subviews = [mapView, mapOverlay, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -65,7 +68,12 @@ class EventDetailView: UIView {
         }
         
         cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 5, bottom: 0, right: 0))
+            make.width.height.equalTo(40)
+        }
+        
+        facebookButton.snp_makeConstraints { (make) -> Void in
+            make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
     }
@@ -76,6 +84,11 @@ class EventView: UIView {
     let titleLabel = UILabel.titleLabel()
     let dateLabel = UILabel.dateLabel()
     let titleSeparator = EventSeparator()
+    let descriptionSeparator = EventSeparator()
+
+    let timeDetailView = DetailLabelView()
+    let locationDetailView = DetailLabelView()
+    let descriptionLabel = UILabel.descriptionLabel()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -92,7 +105,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator]
         subviews.forEach { addSubview($0) }
     }
     
@@ -109,6 +122,28 @@ class EventView: UIView {
         titleSeparator.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(titleSeparator.superview!)
             make.top.equalTo(dateLabel.snp_bottom).offset(15)
+        }
+        
+        timeDetailView.snp_makeConstraints { (make) -> Void in
+            make.leading.equalTo(timeDetailView.superview!).offset(30)
+            make.top.equalTo(titleSeparator.snp_bottom).offset(15)
+        }
+        
+        locationDetailView.snp_makeConstraints { (make) -> Void in
+            make.leading.equalTo(timeDetailView.snp_trailing)
+            make.trailing.equalTo(locationDetailView.superview!).offset(-30)
+            make.height.width.top.equalTo(timeDetailView)
+        }
+        
+        descriptionSeparator.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(descriptionSeparator.superview!)
+            make.top.equalTo(locationDetailView.snp_bottom).offset(15)
+        }
+        
+        descriptionLabel.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+            make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
     }
     
@@ -158,7 +193,7 @@ class EventView: UIView {
         
         private func defineLayout() {
             leftCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(leftCircle.superview!.snp_leading)
+                make.centerX.equalTo(leftCircle.superview!.snp_leading).offset(-1)
                 make.top.bottom.equalTo(leftCircle.superview!)
             }
             
@@ -168,7 +203,7 @@ class EventView: UIView {
             }
             
             rightCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(rightCircle.superview!.snp_trailing)
+                make.centerX.equalTo(rightCircle.superview!.snp_trailing).offset(1)
                 make.top.bottom.equalTo(rightCircle.superview!)
             }
         }
@@ -203,12 +238,28 @@ private extension UILabel {
         
         return label
     }
+    
+    static func descriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.defaultLightFontOfSize(13)
+        label.textColor = UIColor(hex: 0x090909)
+        
+        return label
+    }
 }
 
 private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        
+        return button
+    }
+    
+    static func facebookButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "about_facebook_icon"), forState: .Normal)
         
         return button
     }
@@ -219,6 +270,9 @@ private extension MGLMapView {
         // There is a bug where it needs a frame in init https://github.com/mapbox/mapbox-gl-native/issues/1572
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+        mapView.rotateEnabled = false
         mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         mapView.attributionButton.hidden = true
         

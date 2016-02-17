@@ -115,7 +115,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .AppStoreActionCell:
             UIApplication.sharedApplication().openURL(NSURL(string: "itms-apps://itunes.apple.com/app/id1084299725")!)
         case .FacebookActionCell:
-            UIApplication.sharedApplication().openURL(NSURL(string: "fb://profile/108900355842020/")!)
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/groups/108900355842020/")!)
         case .CreditsActionCell:
             self.navigationController?.pushViewController(CreditViewController(), animated: true)
         default: break

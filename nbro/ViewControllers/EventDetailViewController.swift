@@ -43,6 +43,7 @@ class EventDetailViewController: UIViewController {
     
     private func setupActions() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -55,12 +56,21 @@ class EventDetailViewController: UIViewController {
         
         contentView.eventView.titleLabel.text = event.name.uppercaseString
         contentView.eventView.dateLabel.text = event.formattedStartDate(.Date(includeYear: true)).uppercaseString
+        contentView.eventView.descriptionLabel.text = event.description
+        contentView.eventView.timeDetailView.titleLabel.text = "Time".uppercaseString
+        contentView.eventView.timeDetailView.detailLabel.text = event.formattedStartDate(.Time).uppercaseString
+        contentView.eventView.locationDetailView.titleLabel.text = "Location".uppercaseString
+        contentView.eventView.locationDetailView.detailLabel.text = event.locationName.uppercaseString
     }
     
     // MARK: Actions
     
     func cancelPressed() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func facebookPressed() {
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
 }
