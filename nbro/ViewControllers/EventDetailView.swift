@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Mapbox
 
-class EventDetailView: UIView {
+class EventDetailView: UIView, MGLMapViewDelegate {
  
     let cancelButton = UIButton.cancelButton()
     let facebookButton = UIButton.facebookButton()
@@ -33,6 +33,26 @@ class EventDetailView: UIView {
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
+        
+        mapView.delegate = self
+        
+    }
+    
+    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
+        let annotation = MGLPointAnnotation()
+        annotation.title = "Hello world!"
+        annotation.subtitle = "Welcome to my marker"
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+    }
+    
+    // Use the default marker; see our custom marker example for more information
+    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        return MGLAnnotationImage(image: UIImage(named: "pin")!, reuseIdentifier: "Pin")
+    }
+    
+    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +69,7 @@ class EventDetailView: UIView {
     private func defineLayout() {
         mapView.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapView.superview!)
-            make.height.equalTo(mapView.superview!).multipliedBy(0.32)
+            make.height.equalTo(mapView.superview!).multipliedBy(1.0) // 0.32
         }
         
         mapOverlay.snp_makeConstraints { (make) -> Void in
@@ -280,9 +300,9 @@ private extension MGLMapView {
         // There is a bug where it needs a frame in init https://github.com/mapbox/mapbox-gl-native/issues/1572
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
-        mapView.zoomEnabled = false
-        mapView.scrollEnabled = false
-        mapView.rotateEnabled = false
+//        mapView.zoomEnabled = false
+//        mapView.scrollEnabled = false
+//        mapView.rotateEnabled = false
         mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         mapView.attributionButton.hidden = true
         
