@@ -85,7 +85,8 @@ class EventView: UIView {
     let dateLabel = UILabel.dateLabel()
     let titleSeparator = EventSeparator()
     let descriptionSeparator = EventSeparator()
-
+    let verticalSeparator = UIView()
+    
     let timeDetailView = DetailLabelView()
     let locationDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
@@ -93,6 +94,7 @@ class EventView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .whiteColor()
+        verticalSeparator.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)
         setupSubviews()
         defineLayout()
         
@@ -105,7 +107,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator]
         subviews.forEach { addSubview($0) }
     }
     
@@ -125,19 +127,27 @@ class EventView: UIView {
         }
         
         timeDetailView.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(timeDetailView.superview!).offset(30)
-            make.top.equalTo(titleSeparator.snp_bottom).offset(15)
+            make.leading.equalTo(timeDetailView.superview!).offset(40)
+            make.top.equalTo(titleSeparator.snp_bottom).offset(10)
+            make.width.equalTo(50)
+        }
+        
+        verticalSeparator.snp_makeConstraints { (make) in
+            make.leading.equalTo(timeDetailView.snp_trailing).offset(20)
+            make.top.equalTo(titleSeparator.snp_bottom)
+            make.width.equalTo(1)
+            make.bottom.equalTo(descriptionSeparator.snp_top)
         }
         
         locationDetailView.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(timeDetailView.snp_trailing)
-            make.trailing.equalTo(locationDetailView.superview!).offset(-30)
-            make.height.width.top.equalTo(timeDetailView)
+            make.leading.equalTo(verticalSeparator.snp_trailing).offset(20)
+            make.trailing.equalTo(locationDetailView.superview!).offset(-25)
+            make.height.top.equalTo(timeDetailView)
         }
         
         descriptionSeparator.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionSeparator.superview!)
-            make.top.equalTo(locationDetailView.snp_bottom).offset(15)
+            make.top.equalTo(locationDetailView.snp_bottom).offset(10)
         }
         
         descriptionLabel.snp_makeConstraints { (make) -> Void in
@@ -198,7 +208,7 @@ class EventView: UIView {
             }
             
             line.snp_makeConstraints { (make) -> Void in
-                make.centerY.leading.trailing.equalTo(line.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+                make.centerY.leading.trailing.equalTo(line.superview!).inset(EdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
                 make.height.equalTo(1)
             }
             

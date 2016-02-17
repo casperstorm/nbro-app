@@ -36,7 +36,7 @@ class DetailLabelView: UIView {
         
         detailLabel.snp_makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(detailLabel.superview!)
-            make.top.equalTo(titleLabel.snp_bottom).offset(10)
+            make.top.equalTo(titleLabel.snp_bottom).offset(6)
         }
     }
     
@@ -52,14 +52,14 @@ private extension UILabel {
         let label = UILabel()
         label.font = UIFont.defaultRegularFontOfSize(12)
         label.textColor = UIColor(hex: 0x737373)
-        label.textAlignment = .Center
+        label.textAlignment = .Left
         return label
     }
     static func detailLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.titleBoldFontOfSize(22)
         label.textColor = .blackColor()
-        label.textAlignment = .Center
+        label.textAlignment = .Left
         return label
     }
 }
