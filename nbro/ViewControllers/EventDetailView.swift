@@ -11,12 +11,13 @@ import UIKit
 import SnapKit
 import Mapbox
 
-class EventDetailView: UIView, MGLMapViewDelegate {
+class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
  
     let cancelButton = UIButton.cancelButton()
     let facebookButton = UIButton.facebookButton()
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
+    let bottomView = UIView()
     private let scrollView = EventScrollView()
     let eventView = EventView()
     
@@ -33,26 +34,25 @@ class EventDetailView: UIView, MGLMapViewDelegate {
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
-        
+        scrollView.delegate = self
         mapView.delegate = self
+        
+        bottomView.backgroundColor = .blackColor()
         
     }
     
     func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
         let annotation = MGLPointAnnotation()
-        annotation.title = "Hello world!"
-        annotation.subtitle = "Welcome to my marker"
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
     
-    // Use the default marker; see our custom marker example for more information
     func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
         return MGLAnnotationImage(image: UIImage(named: "pin")!, reuseIdentifier: "Pin")
     }
     
     func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
+        return false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class EventDetailView: UIView, MGLMapViewDelegate {
     }
     
     private func setupSubviews() {
-        let subviews = [mapView, mapOverlay, cancelButton, scrollView, facebookButton]
+        let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -75,6 +75,11 @@ class EventDetailView: UIView, MGLMapViewDelegate {
         mapOverlay.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapOverlay.superview!)
             make.height.equalTo(mapView.superview!).multipliedBy(0.35)
+        }
+        
+        bottomView.snp_makeConstraints { (make) in
+            make.top.equalTo(mapOverlay.snp_bottom)
+            make.leading.trailing.bottom.equalTo(bottomView.superview!)
         }
         
         scrollView.snp_makeConstraints { (make) -> Void in
@@ -300,9 +305,9 @@ private extension MGLMapView {
         // There is a bug where it needs a frame in init https://github.com/mapbox/mapbox-gl-native/issues/1572
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
-//        mapView.zoomEnabled = false
-//        mapView.scrollEnabled = false
-//        mapView.rotateEnabled = false
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+        mapView.rotateEnabled = false
         mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         mapView.attributionButton.hidden = true
         
