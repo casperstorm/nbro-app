@@ -76,7 +76,7 @@ private extension UILabel {
     }
     static func dateLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.defaultLightFontOfSize(14)
+        label.font = UIFont.defaultMediumFontOfSize(14)
         label.textColor = UIColor.whiteColor()
         return label
     }
