@@ -148,7 +148,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
         let event = eventForIndexPath(indexPath)
         cell.nameLabel.text = event.name.uppercaseString
-        cell.dateLabel.text = "\(event.formattedStartDate(.Relative)) at \(event.formattedStartDate(.Time))".uppercaseString
+        cell.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
 
         return cell
     }

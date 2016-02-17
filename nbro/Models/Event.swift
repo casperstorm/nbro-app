@@ -12,31 +12,31 @@ struct Event {
     enum DateFormat {
         case Date(includeYear: Bool)
         case Time
-        case Relative
+        indirect case Relative(fallback: DateFormat)
         
         private static var dateformatters = [String:NSDateFormatter]()
         
         func formattedStringFromDate(date: NSDate) -> String {
             switch self {
             case Date(_):
-                let format = formatFromDateFormat(self)
-                let dateFormatter = self.dateFormatter(format)
-                return dateFormatter.stringFromDate(date)
+                return dateString(date, dateFormat: self)
             case Time:
-                let format = formatFromDateFormat(self)
-                let dateFormatter = self.dateFormatter(format)
-                return dateFormatter.stringFromDate(date)
-            case Relative:
+                return dateString(date, dateFormat: self)
+            case Relative(let fallback):
                 if(date.isTomorrow()) {
                     return "Tomorrow"
                 } else if(date.isToday()) {
                     return "Today"
                 } else {
-                    let format = formatFromDateFormat(.Date(includeYear: true))
-                    let dateFormatter = self.dateFormatter(format)
-                    return dateFormatter.stringFromDate(date)
+                    return dateString(date, dateFormat: fallback)
                 }
             }
+        }
+        
+        private func dateString(date: NSDate, dateFormat: DateFormat) -> String {
+            let format = formatFromDateFormat(dateFormat)
+            let dateFormatter = self.dateFormatter(format)
+            return dateFormatter.stringFromDate(date)
         }
         
         private func formatFromDateFormat(format: DateFormat) -> String {
