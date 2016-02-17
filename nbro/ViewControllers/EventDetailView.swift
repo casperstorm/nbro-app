@@ -193,7 +193,7 @@ class EventView: UIView {
         
         private func defineLayout() {
             leftCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(leftCircle.superview!.snp_leading)
+                make.centerX.equalTo(leftCircle.superview!.snp_leading).offset(-1)
                 make.top.bottom.equalTo(leftCircle.superview!)
             }
             
@@ -203,7 +203,7 @@ class EventView: UIView {
             }
             
             rightCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(rightCircle.superview!.snp_trailing)
+                make.centerX.equalTo(rightCircle.superview!.snp_trailing).offset(1)
                 make.top.bottom.equalTo(rightCircle.superview!)
             }
         }
@@ -270,6 +270,9 @@ private extension MGLMapView {
         // There is a bug where it needs a frame in init https://github.com/mapbox/mapbox-gl-native/issues/1572
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+        mapView.rotateEnabled = false
         mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         mapView.attributionButton.hidden = true
         
