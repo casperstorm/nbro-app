@@ -63,6 +63,7 @@ struct Event {
         }
     }
     
+    let id: String
     let name: String
     let startDate: NSDate
     let latitude: CLLocationDegrees?
@@ -79,10 +80,12 @@ struct Event {
             startDate = dateFormatter.dateFromString(startDateString),
             latitude = dictionary["place"]?["location"]??["latitude"] as? CLLocationDegrees,
             longitude = dictionary["place"]?["location"]??["longitude"] as? CLLocationDegrees,
-            description = dictionary["description"] as? String else {
+            description = dictionary["description"] as? String,
+            id = dictionary["id"] as? String else {
                 return nil
         }
         
+        self.id = id
         self.name = name
         self.startDate = startDate
         self.latitude = latitude

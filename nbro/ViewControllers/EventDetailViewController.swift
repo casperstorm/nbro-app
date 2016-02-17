@@ -43,6 +43,7 @@ class EventDetailViewController: UIViewController {
     
     private func setupActions() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -62,6 +63,10 @@ class EventDetailViewController: UIViewController {
     
     func cancelPressed() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func facebookPressed() {
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
 }

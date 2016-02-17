@@ -14,6 +14,7 @@ import Mapbox
 class EventDetailView: UIView {
  
     let cancelButton = UIButton.cancelButton()
+    let facebookButton = UIButton.facebookButton()
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
     private let scrollView = EventScrollView()
@@ -38,7 +39,7 @@ class EventDetailView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [mapView, mapOverlay, cancelButton, scrollView]
+        let subviews = [mapView, mapOverlay, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -66,7 +67,12 @@ class EventDetailView: UIView {
         }
         
         cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 5, bottom: 0, right: 0))
+            make.width.height.equalTo(40)
+        }
+        
+        facebookButton.snp_makeConstraints { (make) -> Void in
+            make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
     }
@@ -226,6 +232,13 @@ private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        
+        return button
+    }
+    
+    static func facebookButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "about_facebook_icon"), forState: .Normal)
         
         return button
     }
