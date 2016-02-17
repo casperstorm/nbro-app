@@ -38,13 +38,13 @@ class LogoCell: UITableViewCell {
     }
     
     class func preferredCellHeight() -> CGFloat {
-        return 170
+        return 175
     }
 }
 
 private extension UIImageView {
     static func logoImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo_w_detail"))
+        return UIImageView(image: UIImage(named: "nbro_logo"))
     }
     
 }

@@ -76,7 +76,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return UITableViewCell()
         }
     }
-    
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellType = AboutCellType(rawValue: indexPath.row)!
         switch cellType {

@@ -140,7 +140,7 @@ private extension UIImageView {
         return UIImageView(image: UIImage(named: "background_vignette"))
     }
     static func logoImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo_w_detail"))
+        return UIImageView(image: UIImage(named: "nbro_logo"))
     }
     
 }
