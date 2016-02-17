@@ -97,10 +97,6 @@ class CreditCell: UITableViewCell {
         titleLabel.attributedText = attrString
     }
     
-    class func preferredCellHeight() -> CGFloat {
-        return 75
-    }
-    
     override func setSelected(selected: Bool, animated: Bool) {
         let color = topSeparatorView.backgroundColor
         super.setSelected(selected, animated: animated)
