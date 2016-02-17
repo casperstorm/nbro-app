@@ -43,7 +43,7 @@ class AboutTextCell: UITableViewCell {
             make.width.equalTo(bodyLabel.superview!).inset(40)
             make.centerX.equalTo(bodyLabel.superview!)
             make.top.equalTo(headerLabel.snp_bottom).offset(16)
-            make.bottom.equalTo(bodyLabel.superview!).inset(20)
+            make.bottom.equalTo(bodyLabel.superview!).inset(25)
         }
     }
 }

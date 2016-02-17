@@ -45,7 +45,7 @@ class AboutActionCell: UITableViewCell {
     
     private func defineLayouts() {
         titleLabel.snp_makeConstraints { (make) in
-            make.top.bottom.equalTo(titleLabel.superview!).inset(15)
+            make.top.bottom.equalTo(titleLabel.superview!).inset(18)
             make.left.equalTo(iconImageView.snp_right).offset(22)
         }
         

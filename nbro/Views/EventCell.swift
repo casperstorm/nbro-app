@@ -45,8 +45,18 @@ class EventCell: UITableViewCell {
             make.top.equalTo(nameLabel.snp_bottom)
         }
     }
+    
+    func nameLabelText(name: String) {
+        nameLabel.text = name
+//        nameLabel.textAlignment = .Justified
+//
+//        let attrString = NSMutableAttributedString(string: name)
+//        attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.blackColor(),
+//                                                                range: NSRange(location: 0, length:
+//                                                                    name.characters.count))
+//        nameLabel.attributedText = attrString
+    }
 }
-
 
 private extension UILabel {
     static func nameLabel() -> UILabel {
@@ -54,11 +64,7 @@ private extension UILabel {
         label.font = UIFont.titleBoldFontOfSize(42)
         label.textColor = UIColor.whiteColor()
         label.numberOfLines = 0
-//        label.lineBreakMode = .ByWordWrapping
-//                let string = "LONG SATURDAY (ALL MOODS)"
-//                let attrString = NSMutableAttributedString(string: string)
-//                attrString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 0, length: string.characters.count))
-//                label.attributedText = attrString
+
         return label
     }
     static func dateLabel() -> UILabel {
