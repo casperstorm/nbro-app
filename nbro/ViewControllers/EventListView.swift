@@ -131,6 +131,8 @@ private extension UITableView {
         tableView.registerClass(LogoCell.self, forCellReuseIdentifier: "logo")
         tableView.backgroundColor = UIColor.clearColor()
         tableView.separatorColor = UIColor.clearColor()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
         return tableView
     }
 }

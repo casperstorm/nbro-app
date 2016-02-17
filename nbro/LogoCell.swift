@@ -34,11 +34,8 @@ class LogoCell: UITableViewCell {
         logoImageView.snp_makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
             make.bottom.equalTo(logoImageView.superview!).inset(16)
+            make.top.equalTo(logoImageView.superview!).inset(40)
         }
-    }
-    
-    class func preferredCellHeight() -> CGFloat {
-        return 175
     }
 }
 
