@@ -12,8 +12,7 @@ import FBSDKLoginKit
 class FacebookManager {
     class func logInWithReadPermissions(completion: (success: Bool) -> Void) {
         let loginManager = FBSDKLoginManager()
-        loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
-        loginManager.logInWithReadPermissions(["email"], fromViewController: nil, handler: {
+        loginManager.logInWithReadPermissions(["public_profile"], fromViewController: nil, handler: {
             (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
             if result?.token != nil {
                 completion(success: true)
