@@ -38,8 +38,31 @@ class EventDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         setupActions()
         setupSubviews()
+        
+        setupMapView()
+    }
+    
+    func applicationWillEnterForeground() {
+        setupMapView()
+    }
+    
+    private func setupMapView() {
+        if let longitude = event.longitude, latitude = event.latitude {
+            let coordinate = CLLocationCoordinate2D(latitude: latitude,
+                longitude: longitude)
+            self.contentView.addAnnotationAtCoordinate(coordinate)
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.01 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.contentView.mapView.setCenterCoordinate(coordinate,
+                    zoomLevel: 14, animated: false)
+                self.contentView.mapView.contentInset = UIEdgeInsets(top: -UIScreen.mainScreen().bounds.height/2 - 100, left: 0, bottom: 0, right: 0)
+            }
+        }
     }
     
     private func setupActions() {
@@ -55,19 +78,6 @@ class EventDetailViewController: UIViewController {
         contentView.eventView.timeDetailView.detailLabel.text = event.formattedStartDate(.Time).uppercaseString
         contentView.eventView.locationDetailView.titleLabel.text = "Location".uppercaseString
         contentView.eventView.locationDetailView.detailLabel.text = event.locationName.uppercaseString
-        
-        if let longitude = event.longitude, latitude = event.latitude {
-            let coordinate = CLLocationCoordinate2D(latitude: latitude,
-                                                    longitude: longitude)
-            self.contentView.addAnnotationAtCoordinate(coordinate)
-            
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.01 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.contentView.mapView.setCenterCoordinate(coordinate,
-                                                             zoomLevel: 14, animated: false)
-                self.contentView.mapView.contentInset = UIEdgeInsets(top: -UIScreen.mainScreen().bounds.height/2 - 100, left: 0, bottom: 0, right: 0)
-            }
-        }
     }
     
     // MARK: Actions

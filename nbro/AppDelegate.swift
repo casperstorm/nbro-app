@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
         }
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "tokenDidChange", name: FBSDKAccessTokenDidChangeNotification, object: nil)
+        
         setupAdditionalStyling()
 
         let eventListViewController = EventListViewController()
@@ -60,6 +62,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         FBSDKAppEvents.activateApp()
+    }
+    
+    func tokenDidChange() {
+        let accessToken = FBSDKAccessToken.currentAccessToken()
+        if accessToken == nil {
+            let loginViewController = LoginViewController()
+            self.window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+        }
     }
     
     // MARK: Styling

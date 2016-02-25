@@ -36,6 +36,10 @@ class EventListView: UIView {
         imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
         addSubview(aboutButton)
+
+        if refreshControl.subviews.count > 0 {
+            refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
+        }
     }
     
     private func defineLayout() {
@@ -67,7 +71,6 @@ class EventListView: UIView {
             make.right.bottom.equalTo(aboutButton.superview!)
             make.width.height.equalTo(25)
         }
-        
     }
     
     // MARK : Animation
