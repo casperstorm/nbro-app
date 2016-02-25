@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import FXLabel
 import SnapKit
 
 class EventCell: UITableViewCell {
@@ -70,6 +69,7 @@ private extension UILabel {
 class TextView: UITextView, NSLayoutManagerDelegate {
     static func nameTextView() -> TextView {
         let label = TextView()
+        label.editable = false
         label.scrollEnabled = false
         label.textContainer.maximumNumberOfLines = 2;
         label.font = UIFont.titleBoldFontOfSize(42)
