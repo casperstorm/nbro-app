@@ -9,6 +9,9 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Fabric
+import Crashlytics
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -30,11 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = navigationController
         
+        Fabric.with([Crashlytics.self])
+        
         if (!FacebookManager.authenticated()) {
             LaunchImageView.show()
             self.window?.rootViewController?.presentViewController(loginViewController, animated: false) {
                 LaunchImageView.hide()
             }
+        } else {
+            TrackingManager.trackUser()
         }
         
         return true

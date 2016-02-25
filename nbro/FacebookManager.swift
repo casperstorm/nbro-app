@@ -44,6 +44,17 @@ class FacebookManager {
         })
     }
     
+    class func user(completion: (user: User) -> Void) {
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "name"])
+        graphRequest.startWithCompletionHandler({
+            (connection, result, error) -> Void in
+            guard let dict = result as? NSDictionary, user = User(dictionary: dict) else {
+                return
+            }
+            completion(user: user)
+        })
+    }
+    
     // MARK: Helpers
     
     private class func currentDateString(format: String) -> String {

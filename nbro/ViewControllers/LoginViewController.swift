@@ -66,6 +66,7 @@ class LoginViewController: UIViewController {
             self.contentView.activityIndicatorView.stopAnimating()
             self.contentView.facebookButton.hidden = false
             if(success) {
+                TrackingManager.trackUser()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
