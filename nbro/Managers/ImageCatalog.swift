@@ -17,6 +17,12 @@ class ImageCatalog {
                 UIImage(named: "background_image_2")!,
                 UIImage(named: "background_image_3")!,
                 UIImage(named: "background_image_4")!,
+                UIImage(named: "background_image_5")!,
+                UIImage(named: "background_image_6")!,
+                UIImage(named: "background_image_7")!,
+                UIImage(named: "background_image_8")!,
+                UIImage(named: "background_image_9")!,
+                UIImage(named: "background_image_10")!,
             ]
         }
     }
