@@ -51,6 +51,7 @@ private extension UITableView {
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
         tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
+        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "instagram-action-cell")
         tableView.registerClass(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
         tableView.backgroundColor = UIColor.clearColor()
         tableView.separatorColor = UIColor.clearColor()
