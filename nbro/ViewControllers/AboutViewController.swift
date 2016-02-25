@@ -15,6 +15,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case LogoCell = 0
         case TextCell
         case AppStoreActionCell
+        case InstagramActionCell
         case FacebookActionCell
         case CreditsActionCell
         case VersionCell
@@ -77,6 +78,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return configureTextCell(indexPath)
         case .AppStoreActionCell:
             return configureAppStoreActionCell(indexPath)
+        case .InstagramActionCell:
+            return configureInstagramActionCell(indexPath)
         case .FacebookActionCell:
             return configureFacebookActionCell(indexPath)
         case .CreditsActionCell:
@@ -96,6 +99,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
             UIApplication.sharedApplication().openURL(NSURL(string: "itms-apps://itunes.apple.com/app/id1084299725")!)
         case .FacebookActionCell:
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/groups/108900355842020/")!)
+        case .InstagramActionCell:
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.instagram.com/nbrorunning/")!)
         case .CreditsActionCell:
             self.navigationController?.pushViewController(CreditViewController(), animated: true)
         default: break
@@ -128,7 +133,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func configureFacebookActionCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("facebook-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.setTitleText("NBRO Running Facebook".uppercaseString)
+        cell.setTitleText("NBRO Facebook".uppercaseString)
         cell.bottomSeparatorView.hidden = true
         cell.iconImageView.image = UIImage(named: "about_facebook_icon")
         return cell
@@ -147,6 +152,14 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
         cell.versionLabel.text = "v. " + version + " (" + build + ")"
+        return cell
+    }
+    
+    func configureInstagramActionCell(indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("instagram-action-cell", forIndexPath: indexPath) as! AboutActionCell
+        cell.setTitleText("NBRO Instagram".uppercaseString)
+        cell.bottomSeparatorView.hidden = true
+        cell.iconImageView.image = UIImage(named: "about_instagram_icon")
         return cell
     }
 }

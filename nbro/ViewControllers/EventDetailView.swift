@@ -294,7 +294,7 @@ private extension UIButton {
     
     static func facebookButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "about_facebook_icon"), forState: .Normal)
+        button.setImage(UIImage(named: "detail_facebook_icon"), forState: .Normal)
         
         return button
     }

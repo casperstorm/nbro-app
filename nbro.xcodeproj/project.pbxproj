@@ -37,6 +37,8 @@
 		6C8AF9DB1C6E835B004D4789 /* UIFont+NBRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8AF9DA1C6E835B004D4789 /* UIFont+NBRO.swift */; };
 		6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9DC1C6E83E3004D4789 /* Exo2-Bold.ttf */; };
 		6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A5C291C60BF72007459A8 /* AppDelegate.swift */; };
+		6CA29E1B1C7F70F50086FE67 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA29E1A1C7F70F50086FE67 /* User.swift */; };
+		6CA29E1D1C7F74FD0086FE67 /* TrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA29E1C1C7F74FD0086FE67 /* TrackingManager.swift */; };
 		6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */; };
 		6CDDFAFB1C6FD712002F9687 /* LogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDFAFA1C6FD712002F9687 /* LogoCell.swift */; };
 		6CFDC1C61C738DCC009A26F0 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFDC1C51C738DCC009A26F0 /* TransitionManager.swift */; };
@@ -80,6 +82,8 @@
 		6C9A5C261C60BF72007459A8 /* nbro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nbro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C9A5C291C60BF72007459A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C9A5C351C60BF72007459A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CA29E1A1C7F70F50086FE67 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6CA29E1C1C7F74FD0086FE67 /* TrackingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingManager.swift; path = Managers/TrackingManager.swift; sourceTree = "<group>"; };
 		6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatedBackgroundView.swift; path = Views/AnimatedBackgroundView.swift; sourceTree = "<group>"; };
 		6CDDFAFA1C6FD712002F9687 /* LogoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoCell.swift; sourceTree = "<group>"; };
 		6CFDC1C51C738DCC009A26F0 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionManager.swift; path = Managers/TransitionManager.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				181FC338CA0EF384A74A91FD /* Event.swift */,
+				6CA29E1A1C7F70F50086FE67 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				6C4390831C6252E100E923D0 /* FacebookManager.swift */,
 				6C7337071C73224300744511 /* ImageCatalog.swift */,
 				6CFDC1C51C738DCC009A26F0 /* TransitionManager.swift */,
+				6CA29E1C1C7F74FD0086FE67 /* TrackingManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				6C9A5C241C60BF72007459A8 /* Resources */,
 				34DC1683CDD0DBD4F1F35FE7 /* Embed Pods Frameworks */,
 				3B9D4AD1FDEFC73B288A6136 /* Copy Pods Resources */,
+				6CA29E191C7F67AC0086FE67 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -426,6 +433,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6CA29E191C7F67AC0086FE67 /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 25b0af9cb9222e07a9f9087f58cfd627ea25f281 eb4873ecef83394bf14bbf3a911da31385466ad68104591d64cf315199ca85a2";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -437,6 +458,7 @@
 				6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */,
 				6C3144551C71DEA800A138EF /* AboutView.swift in Sources */,
 				D02E19021C6F729300D4C3D5 /* LaunchImageView.swift in Sources */,
+				6CA29E1B1C7F70F50086FE67 /* User.swift in Sources */,
 				6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */,
 				6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */,
 				6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */,
@@ -462,6 +484,7 @@
 				6C3144531C71DEA000A138EF /* AboutViewController.swift in Sources */,
 				6C85B2531C74DC2900157C93 /* DetailLabelView.swift in Sources */,
 				181FC68ED212E98808EB164D /* Event.swift in Sources */,
+				6CA29E1D1C7F74FD0086FE67 /* TrackingManager.swift in Sources */,
 				6C3144621C71FF6400A138EF /* AboutActionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -559,6 +582,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 6;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = nbro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

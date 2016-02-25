@@ -52,7 +52,6 @@ class LoginViewController: UIViewController {
     
     func setupSubviews() {
         contentView.facebookButton.addTarget(self, action: "facebookLoginButtonPressed", forControlEvents: .TouchUpInside)
-
     }
   
     override func viewDidLayoutSubviews() {
@@ -62,11 +61,16 @@ class LoginViewController: UIViewController {
     func facebookLoginButtonPressed() {
         contentView.activityIndicatorView.startAnimating()
         contentView.facebookButton.hidden = true
-        FacebookManager.logInWithReadPermissions { (success) in
+        FacebookManager.logInWithReadPermissions { (success, error) in
             self.contentView.activityIndicatorView.stopAnimating()
             self.contentView.facebookButton.hidden = false
             if(success) {
+                TrackingManager.trackUser()
                 self.dismissViewControllerAnimated(true, completion: nil)
+            } else if (error != nil) {
+                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
     }

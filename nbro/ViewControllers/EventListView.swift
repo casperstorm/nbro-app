@@ -69,7 +69,7 @@ class EventListView: UIView {
         
         aboutButton.snp_makeConstraints { (make) in
             make.right.bottom.equalTo(aboutButton.superview!)
-            make.width.height.equalTo(25)
+            make.width.height.equalTo(50)
         }
     }
     
@@ -154,7 +154,6 @@ private extension UIImageView {
 private extension UIButton {
     static func aboutButton() -> UIButton {
         let button = UIButton()
-        //todo fix this graphic
         button.setBackgroundImage(UIImage(named: "about_button"), forState: .Normal)
         return button
     }

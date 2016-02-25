@@ -10,14 +10,16 @@ import Foundation
 import FBSDKLoginKit
 
 class FacebookManager {
-    class func logInWithReadPermissions(completion: (success: Bool) -> Void) {
+    class func logInWithReadPermissions(completion: (success: Bool, error: NSError?) -> Void) {
         let loginManager = FBSDKLoginManager()
         loginManager.logInWithReadPermissions(["public_profile"], fromViewController: nil, handler: {
             (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
             if result?.token != nil {
-                completion(success: true)
+                completion(success: true, error: nil)
+            } else if error != nil {
+                completion(success: false, error: error)
             } else {
-                completion(success: false)
+                completion(success: false, error: nil)
             }
         })
     }
@@ -41,6 +43,17 @@ class FacebookManager {
                 events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
                 completion(events: events)
             }
+        })
+    }
+    
+    class func user(completion: (user: User) -> Void) {
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "name, email"])
+        graphRequest.startWithCompletionHandler({
+            (connection, result, error) -> Void in
+            guard let dict = result as? NSDictionary, user = User(dictionary: dict) else {
+                return
+            }
+            completion(user: user)
         })
     }
     
