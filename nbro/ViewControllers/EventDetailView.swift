@@ -113,6 +113,7 @@ class EventView: UIView {
     let titleSeparator = EventSeparator()
     let descriptionSeparator = EventSeparator()
     let verticalSeparator = UIView()
+    let attentButtonView = AttentEventButtonView()
     
     let timeDetailView = DetailLabelView()
     let locationDetailView = DetailLabelView()
@@ -134,7 +135,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator, attentButtonView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -177,9 +178,14 @@ class EventView: UIView {
             make.top.equalTo(locationDetailView.snp_bottom).offset(10)
         }
         
+        attentButtonView.snp_makeConstraints { (make) in
+            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+            make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+        }
+        
         descriptionLabel.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+            make.top.equalTo(attentButtonView.snp_bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
     }
