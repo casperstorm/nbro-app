@@ -20,6 +20,7 @@ class EventDetailViewController: UIViewController {
     }
 
     let event: Event
+    var interactor:Interactor? = nil
     
     init(event:Event) {
         self.event = event
@@ -68,6 +69,7 @@ class EventDetailViewController: UIViewController {
     private func setupActions() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
+        contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
     }
     
     private func setupSubviews() {
@@ -88,6 +90,38 @@ class EventDetailViewController: UIViewController {
     
     func facebookPressed() {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
+    }
+    
+    func handleDismissGesture(sender: UIPanGestureRecognizer) {
+        let percentThreshold:CGFloat = 0.3
+        
+        // convert y-position to downward pull progress (percentage)
+        let translation = sender.translationInView(view)
+        let verticalMovement = translation.y / view.bounds.height
+        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
+        let downwardMovementPercent = fminf(downwardMovement, 1.0)
+        let progress = CGFloat(downwardMovementPercent)
+        
+        guard let interactor = interactor else { return }
+        
+        switch sender.state {
+        case .Began:
+            interactor.hasStarted = true
+            dismissViewControllerAnimated(true, completion: nil)
+        case .Changed:
+            interactor.shouldFinish = progress > percentThreshold
+            interactor.updateInteractiveTransition(progress)
+        case .Cancelled:
+            interactor.hasStarted = false
+            interactor.cancelInteractiveTransition()
+        case .Ended:
+            interactor.hasStarted = false
+            interactor.shouldFinish
+                ? interactor.finishInteractiveTransition()
+                : interactor.cancelInteractiveTransition()
+        default:
+            break
+        }
     }
     
 }

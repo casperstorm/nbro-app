@@ -18,6 +18,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         view = contentView
     }
     var events: [Event] = []
+    let interactor = Interactor()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,6 +131,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 let event = self.eventForIndexPath(indexPath)
                 let eventDetailViewController = EventDetailViewController(event: event)
+                eventDetailViewController.transitioningDelegate = self
+                eventDetailViewController.interactor = self.interactor
                 self.presentViewController(eventDetailViewController, animated: true, completion: nil)
             }
         } else if(cellType == .LogoCell) {
@@ -167,3 +170,14 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         return events[indexPath.row - 1]
     }
 }
+
+extension EventListViewController: UIViewControllerTransitioningDelegate {
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
+}
+

@@ -20,6 +20,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
     let bottomView = UIView()
     private let scrollView = EventScrollView()
     let eventView = EventView()
+    let panGestureRecognizer = UIPanGestureRecognizer()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -60,6 +61,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
     }
     
     private func setupSubviews() {
+        mapView.addGestureRecognizer(panGestureRecognizer)
         let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
