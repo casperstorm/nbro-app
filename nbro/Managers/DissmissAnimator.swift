@@ -34,11 +34,9 @@ extension DismissAnimator : UIViewControllerAnimatedTransitioning {
         let finalFrame = CGRect(origin: bottomLeftCorner, size: screenBounds.size)
         
         UIView.animateWithDuration(
-            transitionDuration(transitionContext),
-            animations: {
-                fromVC.view.frame = finalFrame
-            },
-            completion: { _ in
+            transitionDuration(transitionContext), delay: 0.0, options: transitionContext.isInteractive() ? .CurveLinear : .CurveEaseInOut, animations: {
+            fromVC.view.frame = finalFrame
+            }, completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             }
         )
