@@ -5,7 +5,7 @@
 
 import UIKit
 
-class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     
     enum EventListType {
         case LogoCell
@@ -23,6 +23,27 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        
+        if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
+            registerForPreviewingWithDelegate(self, sourceView: view)
+        }
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = contentView.tableView.indexPathForRowAtPoint(location) else { return nil }
+        
+        let cellType = cellTypeForIndexPath(indexPath)
+        if cellType == .EventCell {
+            let event = self.eventForIndexPath(indexPath)
+            let eventDetailViewController = EventDetailViewController(event: event)
+            return eventDetailViewController
+        } else {
+            return nil
+        }
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        self.presentViewController(viewControllerToCommit, animated: true, completion: nil)
     }
     
     func applicationWillEnterForeground() {
