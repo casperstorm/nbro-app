@@ -100,8 +100,10 @@ class EventDetailViewController: UIViewController {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
+    
     func handleDismissGesture(sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
+        let velocityThreshold:CGFloat = 1000
         
         // convert y-position to downward pull progress (percentage)
         let translation = sender.translationInView(view)
@@ -110,6 +112,7 @@ class EventDetailViewController: UIViewController {
         let downwardMovementPercent = fminf(downwardMovement, 1.0)
         let progress = CGFloat(downwardMovementPercent)
         
+        let velocity = sender.velocityInView(contentView)
         guard let interactor = interactor else { return }
         
         switch sender.state {
@@ -117,7 +120,7 @@ class EventDetailViewController: UIViewController {
             interactor.hasStarted = true
             dismissViewControllerAnimated(true, completion: nil)
         case .Changed:
-            interactor.shouldFinish = progress > percentThreshold
+            interactor.shouldFinish = progress > percentThreshold || velocity.y > velocityThreshold
             interactor.updateInteractiveTransition(progress)
         case .Cancelled:
             interactor.hasStarted = false
