@@ -24,7 +24,7 @@ class EventCell: UITableViewCell {
         setupSubviews()
         defineLayouts()
         
-        nameTextView.textContainerInset = UIEdgeInsets(top: 20, left: 7, bottom: 25, right: 10)
+        nameTextView.textContainerInset = UIEdgeInsets(top: 24, left: 7, bottom: 25, right: 10)
         nameTextView.font = UIFont.titleBoldFontOfSize(42)
         nameTextView.textColor = UIColor.whiteColor()
         nameTextView.backgroundColor = UIColor.clearColor()
@@ -46,7 +46,7 @@ class EventCell: UITableViewCell {
         }
         
         dateLabel.snp_makeConstraints { (make) in
-            make.left.bottom.right.equalTo(dateLabel.superview!).inset(EdgeInsets(top: 0, left: 35, bottom: 15, right: 22))
+            make.left.bottom.right.equalTo(dateLabel.superview!).inset(EdgeInsets(top: 0, left: 35, bottom: 20, right: 22))
             make.top.equalTo(nameTextView.snp_bottom).offset(-25)
         }
     }
@@ -107,7 +107,7 @@ class TextView: UITextView, NSLayoutManagerDelegate {
             }
         }
         
-        let inset = UIEdgeInsets(top: 0, left: 20, bottom: 11, right: 3)
+        let inset = UIEdgeInsets(top: 0, left: 20, bottom: 21, right: 3)
 
         if rects.count == 1 {
             let usedRect = rects.first!
