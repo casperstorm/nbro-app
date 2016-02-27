@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Mapbox
 
-class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
+class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
  
     let cancelButton = UIButton.cancelButton()
     let facebookButton = UIButton.facebookButton()
@@ -21,16 +21,16 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
     private let scrollView = EventScrollView()
     let eventView = EventView()
     let panGestureRecognizer = UIPanGestureRecognizer()
-    
+    let topInset: CGFloat
     init() {
+        let screenHeight = UIScreen.mainScreen().bounds.height
+        self.topInset = screenHeight * 0.32
         super.init(frame: CGRect.zero)
         backgroundColor = .blackColor()
         setupSubviews()
         defineLayout()
         
-        let screenHeight = UIScreen.mainScreen().bounds.height
         
-        let topInset = screenHeight * 0.32
         scrollView.topInset = Float(topInset)
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.alwaysBounceVertical = true
@@ -40,6 +40,27 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
         
         bottomView.backgroundColor = .blackColor()
         
+        panGestureRecognizer.delegate = self
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        let point = gestureRecognizer.locationInView(gestureRecognizer.view)
+        let offset = scrollView.contentOffset.y + topInset
+        if point.y + offset <= topInset {
+            return true
+        } else {
+            return Int(scrollView.contentOffset.y) <= Int(-topInset)
+        }
+    }
+    
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
+            return false
+        }
+        
+        let velocity = panGestureRecognizer.velocityInView(gestureRecognizer.view)
+        
+        return velocity.y > 0.0
     }
     
     func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
@@ -61,7 +82,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate {
     }
     
     private func setupSubviews() {
-        mapView.addGestureRecognizer(panGestureRecognizer)
+        addGestureRecognizer(panGestureRecognizer)
         let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
