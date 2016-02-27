@@ -24,7 +24,7 @@ class EventCell: UITableViewCell {
         setupSubviews()
         defineLayouts()
         
-        nameTextView.textContainerInset = UIEdgeInsets(top: 8, left: 7, bottom: 10, right: 10)
+        nameTextView.textContainerInset = UIEdgeInsets(top: 20, left: 7, bottom: 25, right: 10)
         nameTextView.font = UIFont.titleBoldFontOfSize(42)
         nameTextView.textColor = UIColor.whiteColor()
         nameTextView.backgroundColor = UIColor.clearColor()
@@ -47,12 +47,22 @@ class EventCell: UITableViewCell {
         
         dateLabel.snp_makeConstraints { (make) in
             make.left.bottom.right.equalTo(dateLabel.superview!).inset(EdgeInsets(top: 0, left: 35, bottom: 15, right: 22))
-            make.top.equalTo(nameTextView.snp_bottom).offset(-10)
+            make.top.equalTo(nameTextView.snp_bottom).offset(-25)
         }
     }
     
     func nameLabelText(name: String) {
-        nameTextView.text = name
+        let attrString = NSMutableAttributedString(string: name)
+        let style = NSMutableParagraphStyle()
+        style.lineHeightMultiple = 0.7
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSRange(location: 0, length:
+                                                                                name.characters.count))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.titleBoldFontOfSize(42), range: NSRange(location: 0, length:
+                                                                                name.characters.count))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length:
+            name.characters.count))
+
+        nameTextView.attributedText = attrString
         nameTextView.setNeedsDisplay()
     }
 }
@@ -88,17 +98,51 @@ class TextView: UITextView, NSLayoutManagerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
-    func layoutManager(layoutManager: NSLayoutManager, lineSpacingAfterGlyphAtIndex glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 5
-    }
-    
     override func drawRect(rect: CGRect) {
+        var rects = [CGRect]()
+        
         self.layoutManager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, self.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
-            let inset = UIEdgeInsets(top: 0.03, left: 20, bottom: 0, right: 5)
-            let path = UIBezierPath(rect: CGRect(x: usedRect.origin.x - inset.left, y: usedRect.origin.y - inset.top, width: usedRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: usedRect.size.height + inset.top + inset.bottom))
+            if rects.count < 2 { // Only support 2 lines
+                rects.append(usedRect)
+            }
+        }
+        
+        let inset = UIEdgeInsets(top: 0, left: 20, bottom: 11, right: 3)
+
+        if rects.count == 1 {
+            let usedRect = rects.first!
+            
+            let path = UIBezierPath(rect: CGRect(x: usedRect.origin.x - inset.left, y: 0, width: usedRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: usedRect.size.height + inset.top + inset.bottom))
             UIColor(hex: 0x76edff, alpha: 0.55).setFill()
             path.fill()
+        } else if rects.count == 2 {
+            var topRect = rects.first!
+            var bottomRect = rects.last!
+            
+            if -10...10 ~= topRect.width - bottomRect.width { // if almost same width, make them the same width
+                let maxWidth = max(topRect.width, bottomRect.width)
+                topRect.size.width = maxWidth
+                bottomRect.size.width = maxWidth
+            }
+            
+            if topRect.width > bottomRect.width {
+                let path = UIBezierPath(rect: CGRect(x: topRect.origin.x - inset.left, y: 0, width: topRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(topRect.size.height + inset.top + inset.bottom))))
+                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                path.fill()
+                
+                let lastPath = UIBezierPath(rect: CGRect(x: bottomRect.origin.x - inset.left, y: CGFloat(Int(bottomRect.origin.y + inset.bottom)), width: bottomRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: bottomRect.size.height + inset.top))
+                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                lastPath.fill()
+            } else {
+                let path = UIBezierPath(rect: CGRect(x: topRect.origin.x - inset.left, y: 0, width: topRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(topRect.size.height + inset.top))))
+                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                path.fill()
+                
+                let lastPath = UIBezierPath(rect: CGRect(x: bottomRect.origin.x - inset.left, y: CGFloat(Int(bottomRect.origin.y)), width: bottomRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(bottomRect.size.height + inset.top + inset.bottom))))
+                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                lastPath.fill()
+            }
+            
         }
     }
 }
