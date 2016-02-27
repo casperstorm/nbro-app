@@ -30,12 +30,16 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = contentView.tableView.indexPathForRowAtPoint(location) else { return nil }
-        
+        let point = contentView.tableView.convertPoint(location, fromView: contentView)
+        guard let indexPath = contentView.tableView.indexPathForRowAtPoint(point) else { return nil }
+        print(indexPath)
         let cellType = cellTypeForIndexPath(indexPath)
         if cellType == .EventCell {
             let event = self.eventForIndexPath(indexPath)
             let eventDetailViewController = EventDetailViewController(event: event)
+            eventDetailViewController.transitioningDelegate = self
+            eventDetailViewController.interactor = self.interactor
+            
             return eventDetailViewController
         } else {
             return nil
