@@ -20,7 +20,7 @@ class EventDetailViewController: UIViewController {
     }
 
     let event: Event
-    var interactor:Interactor? = nil
+    var interactor:Interactor?
     
     init(event:Event) {
         self.event = event
