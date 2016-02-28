@@ -48,6 +48,7 @@ class EventDetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupMapView()
+        evaluateAttendButton()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -78,6 +79,7 @@ class EventDetailViewController: UIViewController {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
         contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
+        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -100,6 +102,21 @@ class EventDetailViewController: UIViewController {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
+    func attentEvent() {
+        startAnimatingAttendButton()
+        FacebookManager.attentEvent(event) { (success, error) in
+            if(success) {
+                self.evaluateAttendButton()
+            } else if(error != nil) {
+                self.stopAnimatingAttendButton()
+                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                self.stopAnimatingAttendButton()
+            }
+        }
+    }
     
     func handleDismissGesture(sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
@@ -132,6 +149,31 @@ class EventDetailViewController: UIViewController {
                 : interactor.cancelInteractiveTransition()
         default:
             break
+        }
+    }
+    
+    //MARK: Helpers
+    
+    func stopAnimatingAttendButton() {
+        contentView.eventView.attentButtonView.stopAnimating()
+    }
+    
+    func startAnimatingAttendButton() {
+        contentView.eventView.attentButtonView.startAnimating()
+    }
+    
+    func evaluateAttendButton() {
+        startAnimatingAttendButton()
+        FacebookManager.isAttendingEvent(event) { (attending) in
+            self.stopAnimatingAttendButton()
+            var text: String
+            //todo
+            if(attending) {
+                text = "GOING! 🏃🏽"
+            } else {
+                text = "ARE YOU ATTENDING?"
+            }
+            self.contentView.eventView.attentButtonView.button.setTitle(text, forState: .Normal)
         }
     }
     

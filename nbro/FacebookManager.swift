@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKLoginKit
+import FBSDKCoreKit
 
 class FacebookManager {
     class func logInWithReadPermissions(completion: (success: Bool, error: NSError?) -> Void) {
@@ -57,6 +58,112 @@ class FacebookManager {
         })
     }
     
+    class func requestPermission(permissions: Array<String>, completion:(success: Bool, error: NSError?) -> Void) {
+        let loginManager = FBSDKLoginManager()
+        loginManager.logInWithPublishPermissions(permissions, fromViewController: nil, handler: {
+            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+            
+            if result?.token != nil {
+                completion(success: true, error: nil)
+            } else if error != nil {
+                completion(success: false, error: error)
+            } else {
+                completion(success: false, error: nil)
+            }
+        })
+    }
+    
+    private class func userHasPermission(permission: String) -> Bool {
+        let permissions = FBSDKAccessToken.currentAccessToken().permissions
+        return permissions.contains(permission)
+    }
+    
+    class func attentEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
+        let path = "/\(event.id)/attending"
+        let rsvp = "rsvp_event"
+        let hasPermissionAccess = FacebookManager.userHasPermission(rsvp)
+        
+        if !hasPermissionAccess {
+            // No RSVP permission in local stored token.
+            // Request the permission, and call this function again.
+            FacebookManager.requestPermission([rsvp], completion: { (success, error) in
+                if(!success || error != nil) {
+                    completion(success: false, error: error)
+                } else {
+                    FacebookManager.attentEvent(event, completion: completion)
+                }
+            })
+        } else {
+            // Permission was found in local stored token.
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""], HTTPMethod: "POST")
+            graphRequest.startWithCompletionHandler({
+                (connection, result, error) -> Void in
+                
+                // If error exsist try to handle it.
+                if(error != nil) {
+                    // Error codes are based on: https://developers.facebook.com/docs/graph-api/using-graph-api#errors
+                    // Unpack the graph-error-code
+                    guard let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
+                        return
+                    }
+                    
+                    switch code {
+                    case 102:
+                        // Login status or access token has expired, been revoked, or is otherwise invalid
+                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.presentLoginViewController()
+                        break
+                    case 200...299:
+                        // Permission is either not granted or has been removed
+                        self.recoverLostRSVPPermission(event, completion: completion)
+                        break
+                    case 10:
+                        // Permission is either not granted or has been removed
+                        self.recoverLostRSVPPermission(event, completion: completion)
+                        break
+                    default:
+                        // If we can't handle it, throw error.
+                        completion(success: false, error: error)
+                        break
+                    }
+                } else {
+                    // If no error, try to unpack result and return success var
+                    guard let dict = result as? NSDictionary, success = dict["success"] as? Bool else {
+                        completion(success: false, error: error)
+                        return
+                    }
+                    completion(success: success, error: error)
+                }
+            })
+        }
+    }
+
+    private class func recoverLostRSVPPermission(event: Event, completion:(success: Bool, error: NSError?) -> Void) {
+        FacebookManager.requestPermission(["rsvp_event"], completion: { (success, error) in
+            if(!success || error != nil) {
+                completion(success: false, error: error)
+            } else {
+                FacebookManager.attentEvent(event, completion: completion)
+            }
+        })
+    }
+    
+    class func isAttendingEvent(event: Event, completion:(attending: Bool) -> Void) {
+        FacebookManager.user { (user) in
+            let path = "/\(event.id)/attending/\(user.id)"
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""])
+            graphRequest.startWithCompletionHandler({
+                (connection, result, error) -> Void in
+                guard let dict = result as? NSDictionary, data = dict["data"] as? NSArray else {
+                    completion(attending: false)
+                    return
+                }
+                
+                completion(attending: data.count > 0)
+            })
+        }
+    }
+ 
     // MARK: Helpers
     
     private class func currentDateString(format: String) -> String {
