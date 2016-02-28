@@ -90,14 +90,16 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     }
     
     private func defineLayout() {
+        let screenHeight = UIScreen.mainScreen().bounds.height
+
         mapView.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapView.superview!)
-            make.height.equalTo(mapView.superview!).multipliedBy(1.0) // 0.32
+            make.height.equalTo(screenHeight).multipliedBy(1.0)
         }
         
         mapOverlay.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapOverlay.superview!)
-            make.height.equalTo(mapView.superview!).multipliedBy(0.35)
+            make.height.equalTo(screenHeight * 0.35)
         }
         
         bottomView.snp_makeConstraints { (make) in
@@ -112,7 +114,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         eventView.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(eventView.superview!).inset(EdgeInsetsMake(0, left: 0, bottom: 7, right: 0))
             make.width.equalTo(eventView.superview!)
-            make.height.greaterThanOrEqualTo(eventView.superview!).multipliedBy(0.67)
+            make.height.greaterThanOrEqualTo(screenHeight * 0.67)
         }
         
         cancelButton.snp_makeConstraints { (make) -> Void in
