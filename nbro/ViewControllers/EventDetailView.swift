@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Mapbox
+import L360Confetti
 
 class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
  
@@ -22,6 +23,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     let eventView = EventView()
     let panGestureRecognizer = UIPanGestureRecognizer()
     let topInset: CGFloat
+
     init() {
         let screenHeight = UIScreen.mainScreen().bounds.height
         self.topInset = screenHeight * 0.32
@@ -39,7 +41,6 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         mapView.delegate = self
         
         bottomView.backgroundColor = .blackColor()
-        
         panGestureRecognizer.delegate = self
     }
     
@@ -137,11 +138,12 @@ class EventView: UIView {
     let descriptionSeparator = EventSeparator()
     let verticalSeparator = UIView()
     let attentButtonView = AttentEventButtonView()
+    let confettiView = L360ConfettiArea.confettiArea()
     
     let timeDetailView = DetailLabelView()
     let locationDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
-    
+
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .whiteColor()
@@ -158,7 +160,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator, attentButtonView]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator, attentButtonView, confettiView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -211,6 +213,15 @@ class EventView: UIView {
             make.top.equalTo(attentButtonView.snp_bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
+        
+        confettiView.snp_makeConstraints { (make) in
+            make.left.top.right.equalTo(attentButtonView)
+            make.height.equalTo(self)
+        }
+    }
+    
+    func fireConfetti() {
+        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
     }
     
     class EventSeparator: UIView {
@@ -343,5 +354,15 @@ private extension MGLMapView {
         mapView.attributionButton.hidden = true
         
         return mapView
+    }
+}
+
+private extension L360ConfettiArea {
+    static func confettiArea() -> L360ConfettiArea {
+        let confettiArea = L360ConfettiArea()
+        confettiArea.swayLength = 20.0
+        confettiArea.userInteractionEnabled = false
+        confettiArea.blastSpread = 0.4
+        return confettiArea
     }
 }
