@@ -222,6 +222,7 @@ class EventView: UIView {
     
     func fireConfetti() {
         confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
+        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
     }
     
     class EventSeparator: UIView {
