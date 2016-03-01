@@ -24,6 +24,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     var contentView = AboutView()
+    var interactor:Interactor?
+
     override func loadView() {
         super.loadView()
         view = contentView
