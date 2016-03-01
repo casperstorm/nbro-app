@@ -16,6 +16,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func loadView() {
         super.loadView()
         view = contentView
+        view.clipsToBounds = true
     }
     var events: [Event] = []
     let interactor = Interactor()
@@ -154,11 +155,17 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cellType = cellTypeForIndexPath(indexPath)
         if(cellType == .EventCell) {
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                UIView.animateWithDuration(0.25, animations: {
+                    self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                })
+                
                 let event = self.eventForIndexPath(indexPath)
                 let eventDetailViewController = EventDetailViewController(event: event)
                 eventDetailViewController.transitioningDelegate = self
                 eventDetailViewController.interactor = self.interactor
-                self.presentViewController(eventDetailViewController, animated: true, completion: nil)
+                self.presentViewController(eventDetailViewController, animated: true, completion: {
+                    self.view.transform = CGAffineTransformIdentity;
+                })
             }
         } else if(cellType == .LogoCell) {
             contentView.animateBackgroundImageCrossfadeChange()
