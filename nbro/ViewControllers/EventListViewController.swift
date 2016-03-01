@@ -33,7 +33,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let point = contentView.tableView.convertPoint(location, fromView: contentView)
         guard let indexPath = contentView.tableView.indexPathForRowAtPoint(point) else { return nil }
-        print(indexPath)
         let cellType = cellTypeForIndexPath(indexPath)
         if cellType == .EventCell {
             let event = self.eventForIndexPath(indexPath)
