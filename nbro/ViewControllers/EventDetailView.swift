@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Mapbox
 import L360Confetti
-
+import AVFoundation
 class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
  
     let cancelButton = UIButton.cancelButton()
@@ -221,6 +221,16 @@ class EventView: UIView {
     }
     
     func fireConfetti() {
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            if let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff") {
+                var mySound: SystemSoundID = 0
+                AudioServicesCreateSystemSoundID(soundURL, &mySound)
+                AudioServicesPlaySystemSound(mySound);
+            }
+        }
+        
         confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
         confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
     }
