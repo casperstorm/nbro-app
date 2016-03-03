@@ -65,6 +65,13 @@ class EventCell: UITableViewCell {
         nameTextView.attributedText = attrString
         nameTextView.setNeedsDisplay()
     }
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseOut, animations: { 
+            self.nameTextView.alpha = highlighted ? 0.6 : 1.0
+            }) { (_) in
+        }
+    }
 }
 
 private extension UILabel {
