@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import Fabric
 import Crashlytics
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FBSDKLoginManager.renewSystemCredentials {
