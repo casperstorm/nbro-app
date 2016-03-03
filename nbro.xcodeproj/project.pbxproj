@@ -318,7 +318,6 @@
 				6C3144581C71FE3D00A138EF /* Cells */,
 				6C5BADA61C8716F600A0ECD0 /* LaunchImageView.swift */,
 				6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */,
-				6C85B2521C74DC2900157C93 /* DetailLabelView.swift */,
 				D061ABD51C824DB60094CBAD /* SwitchView.swift */,
 				6C5BADAA1C87171000A0ECD0 /* DetailLabelView.swift */,
 				6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */,
@@ -380,7 +379,7 @@
 				TargetAttributes = {
 					6C9A5C251C60BF72007459A8 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 6QPB2W4T9D;
+						DevelopmentTeam = 7WLRY38JF4;
 					};
 				};
 			};
@@ -623,7 +622,7 @@
 				INFOPLIST_FILE = nbro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
+				PRODUCT_BUNDLE_IDENTIFIER = dk.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
@@ -642,7 +641,7 @@
 				INFOPLIST_FILE = nbro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
+				PRODUCT_BUNDLE_IDENTIFIER = dk.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "d8dafcc9-e3b2-449f-babc-4625262dfe7f";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
