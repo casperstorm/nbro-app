@@ -225,6 +225,14 @@ class EventView: UIView {
         }
     }
     
+    func descriptionTextWithAjustedLineHeight(text: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4.0
+        let attrString = NSMutableAttributedString(string: text)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        descriptionLabel.attributedText = attrString
+    }
+    
     func fireConfetti() {
         
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
@@ -341,7 +349,7 @@ private extension UILabel {
     static func descriptionLabel() -> UILabel {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.defaultLightFontOfSize(13)
+        label.font = UIFont.defaultLightFontOfSize(16)
         label.textColor = UIColor(hex: 0x090909)
         
         return label
