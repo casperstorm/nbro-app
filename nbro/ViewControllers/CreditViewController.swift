@@ -31,6 +31,11 @@ class CreditViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.title = "Credits".uppercaseString
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.ViewCredits)
+    }
+    
     private func setupSubviews() {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self

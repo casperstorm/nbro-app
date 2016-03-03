@@ -54,6 +54,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.ViewEventDetail)
         setupMapView()
     }
     
@@ -101,6 +102,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     }
     
     func facebookPressed() {
+        TrackingManager.trackEvent(.VisitEventInFacebook)
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
@@ -108,6 +110,9 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
 
         // blast confetti:
         contentView.eventView.fireConfetti()
+        
+        // do this when everything went well
+        // TrackingManager.trackEvent(.AttendEvent)
       
 //        startAnimatingAttendButton()
 //        FacebookManager.attentEvent(event) { (success, error) in
