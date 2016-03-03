@@ -19,6 +19,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
     let bottomView = UIView()
+    let mapBoxImageView = UIImageView.mapBoxImageView()
     private let scrollView = EventScrollView()
     let eventView = EventView()
     let panGestureRecognizer = UIPanGestureRecognizer()
@@ -84,7 +85,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     
     private func setupSubviews() {
         addGestureRecognizer(panGestureRecognizer)
-        let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
+        let subviews = [mapView, mapOverlay, bottomView, mapBoxImageView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -126,6 +127,10 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         facebookButton.snp_makeConstraints { (make) -> Void in
             make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
+        }
+        
+        mapBoxImageView.snp_makeConstraints { (make) in
+            make.bottom.left.equalTo(mapBoxImageView.superview!).inset(16)
         }
     }
 }
@@ -298,6 +303,12 @@ class EventView: UIView {
         
     }
     
+}
+
+private extension UIImageView {
+    static func mapBoxImageView() -> UIImageView {
+        return UIImageView(image: UIImage(named: "map_box_logo"))
+    }
 }
 
 class EventScrollView: UIScrollView {
