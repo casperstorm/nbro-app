@@ -219,7 +219,7 @@ private class KnobContainerView: UIView {
     private override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
         let center = self.center
         let distance = abs(hypotf(Float(center.x - point.x), Float(center.y - point.y)))
-        return distance < Float(40)
+        return distance < Float(60)
     }
 }
 
