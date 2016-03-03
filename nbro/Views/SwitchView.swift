@@ -205,6 +205,10 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         return knobContainerView.pointInside(point, withEvent: event) ? knobContainerView : nil
     }
