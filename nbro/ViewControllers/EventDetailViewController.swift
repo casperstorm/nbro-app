@@ -44,12 +44,13 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         
         setupActions()
         setupSubviews()
+        
+        evaluateAttendButton()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupMapView()
-        evaluateAttendButton()
     }
     
     override func viewDidAppear(animated: Bool) {
