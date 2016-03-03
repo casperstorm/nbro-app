@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import SnapKit
 import Mapbox
-
+import L360Confetti
+import AVFoundation
 class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
  
     let cancelButton = UIButton.cancelButton()
@@ -18,10 +19,12 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     let mapView = MGLMapView.eventMapView()
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
     let bottomView = UIView()
+    let mapBoxImageView = UIImageView.mapBoxImageView()
     private let scrollView = EventScrollView()
     let eventView = EventView()
     let panGestureRecognizer = UIPanGestureRecognizer()
     let topInset: CGFloat
+
     init() {
         let screenHeight = UIScreen.mainScreen().bounds.height
         self.topInset = screenHeight * 0.32
@@ -39,7 +42,6 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         mapView.delegate = self
         
         bottomView.backgroundColor = .blackColor()
-        
         panGestureRecognizer.delegate = self
     }
     
@@ -83,7 +85,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     
     private func setupSubviews() {
         addGestureRecognizer(panGestureRecognizer)
-        let subviews = [mapView, mapOverlay, bottomView, cancelButton, scrollView, facebookButton]
+        let subviews = [mapView, mapOverlay, bottomView, mapBoxImageView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
         
         scrollView.addSubview(eventView)
@@ -126,6 +128,10 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
             make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
+        
+        mapBoxImageView.snp_makeConstraints { (make) in
+            make.bottom.left.equalTo(mapBoxImageView.superview!).inset(16)
+        }
     }
 }
 
@@ -136,11 +142,13 @@ class EventView: UIView {
     let titleSeparator = EventSeparator()
     let descriptionSeparator = EventSeparator()
     let verticalSeparator = UIView()
+    let attentButtonView = AttentEventButtonView()
+    let confettiView = L360ConfettiArea.confettiArea()
     
     let timeDetailView = DetailLabelView()
     let locationDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
-    
+
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .whiteColor()
@@ -157,7 +165,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator, attentButtonView, confettiView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -200,11 +208,36 @@ class EventView: UIView {
             make.top.equalTo(locationDetailView.snp_bottom).offset(10)
         }
         
+        attentButtonView.snp_makeConstraints { (make) in
+            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+            make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+        }
+        
         descriptionLabel.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+            make.top.equalTo(attentButtonView.snp_bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
+        
+        confettiView.snp_makeConstraints { (make) in
+            make.left.top.right.equalTo(attentButtonView)
+            make.height.equalTo(self)
+        }
+    }
+    
+    func fireConfetti() {
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            if let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff") {
+                var mySound: SystemSoundID = 0
+                AudioServicesCreateSystemSoundID(soundURL, &mySound)
+                AudioServicesPlaySystemSound(mySound);
+            }
+        }
+        
+        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
+        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
     }
     
     class EventSeparator: UIView {
@@ -272,6 +305,12 @@ class EventView: UIView {
     
 }
 
+private extension UIImageView {
+    static func mapBoxImageView() -> UIImageView {
+        return UIImageView(image: UIImage(named: "map_box_logo"))
+    }
+}
+
 class EventScrollView: UIScrollView {
     
     var topInset: Float = 0
@@ -337,5 +376,15 @@ private extension MGLMapView {
         mapView.attributionButton.hidden = true
         
         return mapView
+    }
+}
+
+private extension L360ConfettiArea {
+    static func confettiArea() -> L360ConfettiArea {
+        let confettiArea = L360ConfettiArea()
+        confettiArea.swayLength = 20.0
+        confettiArea.userInteractionEnabled = false
+        confettiArea.blastSpread = 0.4
+        return confettiArea
     }
 }

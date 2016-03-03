@@ -16,6 +16,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func loadView() {
         super.loadView()
         view = contentView
+        view.clipsToBounds = true
     }
     var events: [Event] = []
     let interactor = Interactor()
@@ -32,7 +33,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let point = contentView.tableView.convertPoint(location, fromView: contentView)
         guard let indexPath = contentView.tableView.indexPathForRowAtPoint(point) else { return nil }
-        print(indexPath)
         let cellType = cellTypeForIndexPath(indexPath)
         if cellType == .EventCell {
             let event = self.eventForIndexPath(indexPath)
@@ -60,6 +60,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.ViewEventList)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -92,11 +93,17 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Actions
     
     func aboutButtonPressed() {
-//        let transitionManager = TransitionManager(style: .Swipe(reverse: false))
         let aboutViewController = AboutViewController()
         let navigationController = UINavigationController(rootViewController: aboutViewController)
-//        navigationController.transitioningDelegate = transitionManager
-        self.presentViewController(navigationController, animated: true, completion: nil)
+        UIView.animateWithDuration(0.25, animations: {
+            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        })
+        
+        navigationController.transitioningDelegate = self
+        aboutViewController.interactor = self.interactor
+        self.presentViewController(navigationController, animated: true, completion: {
+            self.view.transform = CGAffineTransformIdentity;
+        })
     }
     
     func shouldRefreshData() {
@@ -154,11 +161,17 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cellType = cellTypeForIndexPath(indexPath)
         if(cellType == .EventCell) {
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                UIView.animateWithDuration(0.25, animations: {
+                    self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                })
+                
                 let event = self.eventForIndexPath(indexPath)
                 let eventDetailViewController = EventDetailViewController(event: event)
                 eventDetailViewController.transitioningDelegate = self
                 eventDetailViewController.interactor = self.interactor
-                self.presentViewController(eventDetailViewController, animated: true, completion: nil)
+                self.presentViewController(eventDetailViewController, animated: true, completion: {
+                    self.view.transform = CGAffineTransformIdentity;
+                })
             }
         } else if(cellType == .LogoCell) {
             contentView.animateBackgroundImageCrossfadeChange()

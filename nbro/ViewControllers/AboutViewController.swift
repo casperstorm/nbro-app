@@ -24,6 +24,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     var contentView = AboutView()
+    var interactor:Interactor?
+
     override func loadView() {
         super.loadView()
         view = contentView
@@ -32,6 +34,11 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.ViewAbout)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,10 +101,13 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cellType = AboutCellType(rawValue: indexPath.row)!
         switch cellType {
         case .AppStoreActionCell:
+            TrackingManager.trackEvent(.VisitAppStore)
             UIApplication.sharedApplication().openURL(NSURL(string: "itms-apps://itunes.apple.com/app/id1084299725")!)
         case .FacebookActionCell:
+            TrackingManager.trackEvent(.VisitFacebook)
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/groups/108900355842020/")!)
         case .InstagramActionCell:
+            TrackingManager.trackEvent(.VisitInstagram)
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.instagram.com/nbrorunning/")!)
         case .CreditsActionCell:
             self.navigationController?.pushViewController(CreditViewController(), animated: true)

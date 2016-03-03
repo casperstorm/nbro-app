@@ -70,6 +70,7 @@ struct Event {
     let longitude: CLLocationDegrees?
     let locationName: String
     let description: String
+    let attending: Int
     
     init?(dictionary: NSDictionary) {
         let dateFormatter = NSDateFormatter()
@@ -81,7 +82,8 @@ struct Event {
             latitude = dictionary["place"]?["location"]??["latitude"] as? CLLocationDegrees,
             longitude = dictionary["place"]?["location"]??["longitude"] as? CLLocationDegrees,
             description = dictionary["description"] as? String,
-            id = dictionary["id"] as? String else {
+            id = dictionary["id"] as? String,
+            attending = dictionary["attending_count"] as? Int else {
                 return nil
         }
         
@@ -92,6 +94,7 @@ struct Event {
         self.longitude = longitude
         self.locationName = dictionary["place"]?["name"] as? String ?? "-"
         self.description = description
+        self.attending = attending
     }
     
     func formattedStartDate(dateFormat: DateFormat) -> String {

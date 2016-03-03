@@ -67,9 +67,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func tokenDidChange() {
         let accessToken = FBSDKAccessToken.currentAccessToken()
         if accessToken == nil {
-            let loginViewController = LoginViewController()
-            self.window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+            presentLoginViewController()
         }
+    }
+    
+    func presentLoginViewController() {
+        let loginViewController = LoginViewController()
+        self.window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
     }
     
     // MARK: Styling

@@ -11,5 +11,8 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <L360Confetti/L360ConfettiArea.h>
+#import <L360Confetti/L360ConfettiObject.h>
+#import <L360Confetti/L360ConfettiView.h>
 
 #endif /* Bridging_Header_h */

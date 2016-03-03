@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import CoreLocation
 import Mapbox
+import L360Confetti
 
-class EventDetailViewController: UIViewController {
+class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     var contentView = EventDetailView()
     override func loadView() {
@@ -48,10 +49,12 @@ class EventDetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupMapView()
+        evaluateAttendButton()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.ViewEventDetail)
         setupMapView()
     }
     
@@ -78,6 +81,7 @@ class EventDetailViewController: UIViewController {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
         contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
+        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -88,6 +92,7 @@ class EventDetailViewController: UIViewController {
         contentView.eventView.timeDetailView.detailLabel.text = event.formattedStartDate(.Time).uppercaseString
         contentView.eventView.locationDetailView.titleLabel.text = "Location".uppercaseString
         contentView.eventView.locationDetailView.detailLabel.text = event.locationName.uppercaseString
+        contentView.eventView.confettiView.delegate = self
     }
     
     // MARK: Actions
@@ -97,9 +102,32 @@ class EventDetailViewController: UIViewController {
     }
     
     func facebookPressed() {
+        TrackingManager.trackEvent(.VisitEventInFacebook)
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
+    func attentEvent() {
+
+        // blast confetti:
+        contentView.eventView.fireConfetti()
+        
+        // do this when everything went well
+        // TrackingManager.trackEvent(.AttendEvent)
+      
+//        startAnimatingAttendButton()
+//        FacebookManager.attentEvent(event) { (success, error) in
+//            if(success) {
+//                self.evaluateAttendButton()
+//            } else if(error != nil) {
+//                self.stopAnimatingAttendButton()
+//                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.Alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            } else {
+//                self.stopAnimatingAttendButton()
+//            }
+//        }
+    }
     
     func handleDismissGesture(sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
@@ -135,4 +163,34 @@ class EventDetailViewController: UIViewController {
         }
     }
     
+    //MARK: L360ConfettiAreaDelegate
+    
+    func colorsForConfettiArea(confettiArea: L360ConfettiArea!) -> [AnyObject]! {
+        return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
+    }
+    
+    //MARK: Helpers
+    
+    func stopAnimatingAttendButton() {
+        contentView.eventView.attentButtonView.stopAnimating()
+    }
+    
+    func startAnimatingAttendButton() {
+        contentView.eventView.attentButtonView.startAnimating()
+    }
+    
+    func evaluateAttendButton() {
+        startAnimatingAttendButton()
+        FacebookManager.isAttendingEvent(event) { (attending) in
+            self.stopAnimatingAttendButton()
+            var text: String
+            //todo
+            if(attending) {
+                text = "GOING! 🏃🏽"
+            } else {
+                text = "ARE YOU ATTENDING?"
+            }
+            self.contentView.eventView.attentButtonView.button.setTitle(text, forState: .Normal)
+        }
+    }
 }
