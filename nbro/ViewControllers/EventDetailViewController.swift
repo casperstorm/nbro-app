@@ -81,7 +81,12 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
         contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
-        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
+        contentView.eventView.attentButtonView.switchView.didSwipe = { [weak self] (isLeft: Bool) in
+            if !isLeft {
+                self?.attentEvent()
+            }
+        }
+//        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -169,28 +174,19 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
     
-    //MARK: Helpers
-    
-    func stopAnimatingAttendButton() {
-        contentView.eventView.attentButtonView.stopAnimating()
-    }
-    
-    func startAnimatingAttendButton() {
-        contentView.eventView.attentButtonView.startAnimating()
-    }
     
     func evaluateAttendButton() {
-        startAnimatingAttendButton()
-        FacebookManager.isAttendingEvent(event) { (attending) in
-            self.stopAnimatingAttendButton()
-            var text: String
-            //todo
-            if(attending) {
-                text = "GOING! 🏃🏽"
-            } else {
-                text = "ARE YOU ATTENDING?"
-            }
-            self.contentView.eventView.attentButtonView.button.setTitle(text, forState: .Normal)
-        }
+//        startAnimatingAttendButton()
+//        FacebookManager.isAttendingEvent(event) { (attending) in
+//            self.stopAnimatingAttendButton()
+//            var text: String
+//            //todo
+//            if(attending) {
+//                text = "GOING! 🏃🏽"
+//            } else {
+//                text = "ARE YOU ATTENDING?"
+//            }
+////            self.contentView.eventView.attentButtonView.button.setTitle(text, forState: .Normal)
+//        }
     }
 }

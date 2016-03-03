@@ -143,6 +143,7 @@ class EventView: UIView {
     let descriptionSeparator = EventSeparator()
     let verticalSeparator = UIView()
     let attentButtonView = AttentEventButtonView()
+    let attendSeparator = EventSeparator()
     let confettiView = L360ConfettiArea.confettiArea()
     
     let timeDetailView = DetailLabelView()
@@ -152,6 +153,7 @@ class EventView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .whiteColor()
+        attendSeparator.showDots = false
         verticalSeparator.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)
         setupSubviews()
         defineLayout()
@@ -165,7 +167,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, verticalSeparator, attentButtonView, confettiView]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -213,9 +215,14 @@ class EventView: UIView {
             make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
         }
         
+        attendSeparator.snp_makeConstraints { (make) -> Void in
+            make.leading.trailingMargin.equalTo(attendSeparator.superview!)
+            make.top.equalTo(attentButtonView.snp_bottom).offset(10)
+        }
+        
         descriptionLabel.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(attentButtonView.snp_bottom).offset(15)
+            make.top.equalTo(attendSeparator.snp_bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
         
@@ -261,6 +268,13 @@ class EventView: UIView {
         
         private let leftCircle = Circle(cornerRadius: 5)
         private let rightCircle = Circle(cornerRadius: 5)
+        
+        var showDots: Bool = true {
+            didSet {
+                leftCircle.hidden = !self.showDots
+                rightCircle.hidden = !self.showDots
+            }
+        }
         private let line: UIView = {
             let view = UIView()
             view.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)

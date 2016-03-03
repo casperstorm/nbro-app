@@ -13,13 +13,18 @@ import SnapKit
 import Shimmer
 
 class SwitchView: UIView, UIGestureRecognizerDelegate {
-    private let backgroundImageView = UIImageView(image: UIImage(named: "slider_bg")!.resizableImageWithCapInsets(UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)))
+    private let backgroundImageView = UIImageView(image: UIImage(named: "slider_bg")!.resizableImageWithCapInsets(UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30)))
     private let knobImageView = UIImageView(image: UIImage(named: "slider_man"))
     private let knobContainerView = KnobContainerView()
     private let panGestureRecognizer = UIPanGestureRecognizer()
-    private var knobOffset: CGFloat = 5
+    private var knobOffset: CGFloat = 0
     private let shimmeringView = FBShimmeringView()
-    var isLeft = true
+    var isLeft = true {
+        didSet {
+                setupText()
+            }
+    }
+    private let containerView = UIView()
     let titleLabel = UILabel.titleLabel()
     
     var knobInset: CGFloat = 0
@@ -52,15 +57,62 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         shimmeringView.shimmeringHighlightLength = 0.5
         shimmeringView.shimmeringSpeed = 150
         shimmeringView.shimmering = true
+        
+        containerView.clipsToBounds = true
+        setupText()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupText() {
+        titleLabel.alpha = 0.0
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .Center
+        
+        if self.isLeft {
+            let text = NSMutableAttributedString(string: "SLIDE TO ATTEND RUN")
+            text.addAttributes([
+                NSParagraphStyleAttributeName: paragraphStyle,
+                NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
+                NSForegroundColorAttributeName: UIColor.blackColor()
+                ], range: NSMakeRange(0, 8))
+            text.addAttributes([
+                NSParagraphStyleAttributeName: paragraphStyle,
+                NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
+                NSForegroundColorAttributeName: UIColor.blackColor()
+                ], range: NSMakeRange(8, 11))
+            self.titleLabel.attributedText = text
+        } else {
+            let text = NSMutableAttributedString(string: "YAY! SEE YOU THERE.")
+            text.addAttributes([
+                NSParagraphStyleAttributeName: paragraphStyle,
+                NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
+                NSForegroundColorAttributeName: UIColor.blackColor()
+                ], range: NSMakeRange(0, 3))
+            text.addAttributes([
+                NSParagraphStyleAttributeName: paragraphStyle,
+                NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
+                NSForegroundColorAttributeName: UIColor.blackColor()
+                ], range: NSMakeRange(3, 15))
+            self.titleLabel.attributedText = text
+            
+        }
+        
+        setNeedsUpdateConstraints()
+        updateConstraintsIfNeeded()
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.titleLabel.alpha = 1.0
+        }
+    }
+    
     private func setupSubviews() {
         shimmeringView.contentView = titleLabel
-        let subviews = [backgroundImageView, shimmeringView, knobContainerView]
+        containerView.addSubview(shimmeringView)
+        let subviews = [backgroundImageView, containerView, knobContainerView]
         subviews.forEach { addSubview($0) }
         
         knobContainerView.addSubview(knobImageView)
@@ -86,6 +138,12 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func updateConstraints() {
+        containerView.snp_updateConstraints { (make) -> Void in
+            make.top.bottom.equalTo(containerView.superview!)
+            make.right.equalTo(containerView.superview!).offset(isLeft ? 0 : -(self.frame.width - knobOffset - (knobImageView.frame.width / 2.0)) )
+            make.left.equalTo(containerView.superview!).offset(isLeft ? knobOffset + knobImageView.frame.width / 2.0 : 0)
+        }
+        
         knobContainerView.snp_updateConstraints { (make) in
             make.top.bottom.equalTo(knobContainerView.superview!)
             make.left.equalTo(knobContainerView.superview!).offset(knobOffset)
@@ -146,8 +204,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        let convertedPoint = self.convertPoint(point, toView: knobContainerView)
-        return knobContainerView.pointInside(convertedPoint, withEvent: event) ? knobContainerView : nil
+        return knobContainerView.pointInside(point, withEvent: event) ? knobContainerView : nil
     }
 }
 
@@ -163,8 +220,6 @@ private class KnobContainerView: UIView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = UIColor(hex: 0xFFB369)
-        label.textAlignment = .Center
         
         return label
     }
