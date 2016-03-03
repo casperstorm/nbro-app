@@ -81,7 +81,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
         contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
-        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
+        contentView.eventView.attentButtonView.switchView.didSwipe = { [weak self] (isLeft: Bool) in
+            if !isLeft {
+                self?.attentEvent()
+            } else {
+                self?.declinetEvent()
+            }
+        }
+//        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
@@ -107,26 +114,25 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     }
     
     func attentEvent() {
-
         // blast confetti:
         contentView.eventView.fireConfetti()
         
         // do this when everything went well
-        // TrackingManager.trackEvent(.AttendEvent)
+         TrackingManager.trackEvent(.AttendEvent)
       
-//        startAnimatingAttendButton()
-//        FacebookManager.attentEvent(event) { (success, error) in
-//            if(success) {
-//                self.evaluateAttendButton()
-//            } else if(error != nil) {
-//                self.stopAnimatingAttendButton()
-//                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.Alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-//                self.presentViewController(alert, animated: true, completion: nil)
-//            } else {
-//                self.stopAnimatingAttendButton()
-//            }
-//        }
+        FacebookManager.attentEvent(event) { (success, error) in
+            if(!success) {
+                self.contentView.eventView.attentButtonView.switchView.isLeft = true
+            }
+        }
+    }
+    
+    func declinetEvent() {
+        FacebookManager.declineEvent(event) { (success, error) -> Void in
+            if(!success) {
+                self.contentView.eventView.attentButtonView.switchView.isLeft = false
+            }
+        }
     }
     
     func handleDismissGesture(sender: UIPanGestureRecognizer) {
@@ -169,28 +175,11 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
     
-    //MARK: Helpers
-    
-    func stopAnimatingAttendButton() {
-        contentView.eventView.attentButtonView.stopAnimating()
-    }
-    
-    func startAnimatingAttendButton() {
-        contentView.eventView.attentButtonView.startAnimating()
-    }
-    
     func evaluateAttendButton() {
-        startAnimatingAttendButton()
+        contentView.eventView.attentButtonView.startAnimating()
         FacebookManager.isAttendingEvent(event) { (attending) in
-            self.stopAnimatingAttendButton()
-            var text: String
-            //todo
-            if(attending) {
-                text = "GOING! 🏃🏽"
-            } else {
-                text = "ARE YOU ATTENDING?"
-            }
-            self.contentView.eventView.attentButtonView.button.setTitle(text, forState: .Normal)
+            self.contentView.eventView.attentButtonView.switchView.isLeft = !attending
+                self.contentView.eventView.attentButtonView.stopAnimating()
         }
     }
 }

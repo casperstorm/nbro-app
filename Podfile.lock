@@ -15,6 +15,7 @@ PODS:
     - FBSDKCoreKit
   - L360Confetti (1.1.3)
   - Mapbox-iOS-SDK (3.1.2)
+  - Shimmer (1.0.2)
   - SnapKit (0.19.1)
 
 DEPENDENCIES:
@@ -23,13 +24,19 @@ DEPENDENCIES:
   - Fabric (~> 1.6)
   - FBSDKCoreKit (~> 4.9.1)
   - FBSDKLoginKit (~> 4.9.1)
-  - L360Confetti (from `/Users/csl/Documents/Repositories/Private/Forks/confetti`)
+  - L360Confetti (from `https://github.com/casperstorm/confetti`)
   - Mapbox-iOS-SDK (~> 3.1.0)
+  - Shimmer (~> 1.0.2)
   - SnapKit (~> 0.19)
 
 EXTERNAL SOURCES:
   L360Confetti:
-    :path: /Users/csl/Documents/Repositories/Private/Forks/confetti
+    :git: https://github.com/casperstorm/confetti
+
+CHECKOUT OPTIONS:
+  L360Confetti:
+    :commit: 5abf2b9eaf0312df61cd994ed150a509c389cfb8
+    :git: https://github.com/casperstorm/confetti
 
 SPEC CHECKSUMS:
   AFDateHelper: 22d6439a3529a144c89b7e6aa214ebbe4d5c2337
@@ -40,6 +47,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: ec22dc49bd372b064e93d6773df4ffefb3a552a2
   L360Confetti: 33bdb885220b6a8b9647ffa76a53be0c088d089a
   Mapbox-iOS-SDK: 0a910c2cce1aa8cff5b9ec2a990e7a32332a776a
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.38.0

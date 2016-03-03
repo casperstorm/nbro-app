@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 
 class AttentEventButtonView: UIView {
-    let button = UIButton.button()
+//    let button = UIButton.button()
+    let switchView = SwitchView()
     let activityIndicatorView = UIActivityIndicatorView.activityIndicatorView()
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .grayColor()
+        backgroundColor = .whiteColor()
         setupSubviews()
         defineLayout()
     }
@@ -25,14 +26,14 @@ class AttentEventButtonView: UIView {
     }
     
     private func setupSubviews() {
-        addSubview(button)
+        addSubview(switchView)
         addSubview(activityIndicatorView)
     }
     
     private func defineLayout() {
-        button.snp_makeConstraints { (make) in
-            make.edges.equalTo(button.superview!)
-            make.height.equalTo(55)
+        switchView.snp_makeConstraints { (make) in
+            make.edges.equalTo(switchView.superview!)
+            make.height.equalTo(44)
         }
         
         activityIndicatorView.snp_makeConstraints { (make) in
@@ -42,13 +43,19 @@ class AttentEventButtonView: UIView {
     
     func startAnimating() {
         activityIndicatorView.startAnimating()
-        button.hidden = true
+        switchView.hidden = true
     }
     
     func stopAnimating() {
         activityIndicatorView.stopAnimating()
-        button.hidden = false
+        switchView.hidden = false
     }
+    
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        let convertedPoint = self.convertPoint(point, toView: switchView)
+        return switchView.hitTest(convertedPoint, withEvent: event)
+    }
+    
 }
 
 private extension UIButton {
