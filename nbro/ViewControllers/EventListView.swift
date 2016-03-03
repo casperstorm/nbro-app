@@ -48,7 +48,7 @@ class EventListView: UIView {
         }
         
         vignetteImageView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(vignetteImageView.superview!)
+            make.edges.equalTo(vignetteImageView.superview!).inset(-1)
         }
         
         tableView.snp_makeConstraints { (make) -> Void in
