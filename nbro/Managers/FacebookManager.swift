@@ -78,8 +78,7 @@ class FacebookManager {
         return permissions.contains(permission)
     }
     
-    class func attentEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
-        let path = "/\(event.id)/attending"
+    private class func handleEventRSVP(event: Event, path: String, completion:(success: Bool, error: NSError?) -> Void) {
         let rsvp = "rsvp_event"
         let hasPermissionAccess = FacebookManager.userHasPermission(rsvp)
         
@@ -136,6 +135,17 @@ class FacebookManager {
                 }
             })
         }
+    }
+    
+    class func declineEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
+        let path = "/\(event.id)/declined"
+        FacebookManager.handleEventRSVP(event, path: path, completion: completion)
+
+    }
+    
+    class func attentEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
+        let path = "/\(event.id)/attending"
+        FacebookManager.handleEventRSVP(event, path: path, completion: completion)
     }
 
     private class func recoverLostRSVPPermission(event: Event, completion:(success: Bool, error: NSError?) -> Void) {
