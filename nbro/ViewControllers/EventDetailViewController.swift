@@ -115,15 +115,23 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     }
     
     func attentEvent() {
-        // blast confetti:
-        contentView.eventView.fireConfetti()
-        
-        // do this when everything went well
-         TrackingManager.trackEvent(.AttendEvent)
-      
-        FacebookManager.attentEvent(event) { (success, error) in
-            if(!success) {
-                self.contentView.eventView.attentButtonView.switchView.isLeft = true
+        TrackingManager.trackEvent(.AttendEvent)
+        if FacebookManager.userHasRSVPEventPermission() {
+            // blast confetti:
+            contentView.eventView.fireConfetti()
+            
+            FacebookManager.attentEvent(event) { (success, error) in
+                if(!success) {
+                    self.contentView.eventView.attentButtonView.switchView.isLeft = true
+                }
+            }
+        } else {
+            FacebookManager.attentEvent(event) { (success, error) in
+                if(success) {
+                    self.contentView.eventView.fireConfetti()
+                } else {
+                   self.contentView.eventView.attentButtonView.switchView.isLeft = true
+                }
             }
         }
     }
