@@ -78,9 +78,14 @@ class FacebookManager {
         return permissions.contains(permission)
     }
     
+    class func userHasRSVPEventPermission() -> Bool {
+        let rsvp = "rsvp_event"
+        return FacebookManager.userHasPermission(rsvp)
+    }
+    
     private class func handleEventRSVP(event: Event, path: String, completion:(success: Bool, error: NSError?) -> Void) {
         let rsvp = "rsvp_event"
-        let hasPermissionAccess = FacebookManager.userHasPermission(rsvp)
+        let hasPermissionAccess = userHasRSVPEventPermission()
         
         if !hasPermissionAccess {
             // No RSVP permission in local stored token.
