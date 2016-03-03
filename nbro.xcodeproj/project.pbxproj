@@ -24,6 +24,7 @@
 		6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144631C72128F00A138EF /* UIColor+HEX.swift */; };
 		6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C3144651C72398D00A138EF /* Exo2-Medium.ttf */; };
 		6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C402B231C7331BD00E57613 /* Array+Additions.swift */; };
+		6C4427E81C88A2A80037D609 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6C4427E71C88A2A80037D609 /* Settings.bundle */; };
 		6C5BADA11C8716C300A0ECD0 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5BADA01C8716C300A0ECD0 /* CreditCell.swift */; };
 		6C5BADA31C8716D600A0ECD0 /* UIFont+NBRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5BADA21C8716D600A0ECD0 /* UIFont+NBRO.swift */; };
 		6C5BADA51C8716E700A0ECD0 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5BADA41C8716E700A0ECD0 /* FacebookManager.swift */; };
@@ -70,6 +71,7 @@
 		6C3144651C72398D00A138EF /* Exo2-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Medium.ttf"; path = "Fonts/Exo2-Medium.ttf"; sourceTree = "<group>"; };
 		6C402B231C7331BD00E57613 /* Array+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Additions.swift"; path = "Extensions/Array+Additions.swift"; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		6C4427E71C88A2A80037D609 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		6C5BADA01C8716C300A0ECD0 /* CreditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreditCell.swift; path = Views/CreditCell.swift; sourceTree = "<group>"; };
 		6C5BADA21C8716D600A0ECD0 /* UIFont+NBRO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIFont+NBRO.swift"; path = "Extensions/UIFont+NBRO.swift"; sourceTree = "<group>"; };
 		6C5BADA41C8716E700A0ECD0 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookManager.swift; path = Managers/FacebookManager.swift; sourceTree = "<group>"; };
@@ -187,6 +189,14 @@
 			name = Managers;
 			sourceTree = "<group>";
 		};
+		6C4427E61C88A2940037D609 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				6C4427E71C88A2A80037D609 /* Settings.bundle */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		6C5BAD9F1C87168E00A0ECD0 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +286,7 @@
 		6C9A5C281C60BF72007459A8 /* nbro */ = {
 			isa = PBXGroup;
 			children = (
+				6C4427E61C88A2940037D609 /* Settings */,
 				6C5BAD9F1C87168E00A0ECD0 /* Sounds */,
 				D02E19001C6F728A00D4C3D5 /* Views */,
 				6C8AF9D91C6E8336004D4789 /* Extension */,
@@ -399,6 +410,7 @@
 				D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */,
 				D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */,
 				6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */,
+				6C4427E81C88A2A80037D609 /* Settings.bundle in Resources */,
 				6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
