@@ -14,6 +14,7 @@ PODS:
   - FBSDKLoginKit (4.9.1):
     - FBSDKCoreKit
   - Mapbox-iOS-SDK (3.1.2)
+  - Shimmer (1.0.2)
   - SnapKit (0.19.1)
 
 DEPENDENCIES:
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 4.9.1)
   - FBSDKLoginKit (~> 4.9.1)
   - Mapbox-iOS-SDK (~> 3.1.0)
+  - Shimmer (~> 1.0.2)
   - SnapKit (~> 0.19)
 
 SPEC CHECKSUMS:
@@ -33,6 +35,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: aee20b6d9855f15b618d4fddd1a5ad45f5a4a59d
   FBSDKLoginKit: ec22dc49bd372b064e93d6773df4ffefb3a552a2
   Mapbox-iOS-SDK: 0a910c2cce1aa8cff5b9ec2a990e7a32332a776a
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
 
 COCOAPODS: 0.39.0
