@@ -21,8 +21,10 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
     private let shimmeringView = FBShimmeringView()
     var isLeft = true {
         didSet {
-                setupText()
-            }
+            knobOffset = self.isLeft ? knobInset : bounds.width - knobInset - (bounds.height - 2 * knobInset)
+            setNeedsUpdateConstraints()
+            setupText()
+        }
     }
     private let containerView = UIView()
     let titleLabel = UILabel.titleLabel()
@@ -181,7 +183,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
                     didSwipe?(isLeft)
                 } else {
                     knobOffset = knobInset
-                        setNeedsUpdateConstraints()
+                    setNeedsUpdateConstraints()
                     setNeedsLayout()
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         self.layoutIfNeeded()
