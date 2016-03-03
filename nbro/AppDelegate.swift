@@ -31,9 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let eventListViewController = EventListViewController()
         let loginViewController = LoginViewController()
         let navigationController = UINavigationController(rootViewController: eventListViewController)
+        navigationController.view.backgroundColor = .clearColor()
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = navigationController
+        self.window?.backgroundColor = UIColor(hex: 0x222222)
         
         Fabric.with([Crashlytics.self])
         
