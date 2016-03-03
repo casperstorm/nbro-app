@@ -149,6 +149,7 @@ class EventView: UIView {
     let timeDetailView = DetailLabelView()
     let locationDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
+    private var sound: SystemSoundID = 0
 
     init() {
         super.init(frame: CGRect.zero)
@@ -160,6 +161,10 @@ class EventView: UIView {
         
         layer.cornerRadius = 6
         layer.masksToBounds = true
+        
+        if let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff") {
+            AudioServicesCreateSystemSoundID(soundURL, &sound)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -241,15 +246,14 @@ class EventView: UIView {
     }
     
     func fireConfetti() {
+//        if let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff") {
+//            var mySound: SystemSoundID = 0
+//            AudioServicesCreateSystemSoundID(soundURL, &mySound)
+//            AudioServicesPlaySystemSound(mySound);
+//        }
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            if let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff") {
-                var mySound: SystemSoundID = 0
-                AudioServicesCreateSystemSoundID(soundURL, &mySound)
-                AudioServicesPlaySystemSound(mySound);
-            }
-        }
+        AudioServicesPlaySystemSound(sound);
+
         
         confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
         confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
