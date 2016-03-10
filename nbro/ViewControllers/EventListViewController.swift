@@ -88,9 +88,17 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.tableView.delegate = self
         contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
         contentView.refreshControl.addTarget(self, action: Selector("shouldRefreshData"), forControlEvents: .ValueChanged)
+        contentView.notAuthenticatedView.loginButton.addTarget(self, action: "loginPressed", forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions
+    
+    dynamic private func loginPressed() {
+        let loginViewController = LoginViewController()
+        presentViewController(loginViewController, animated: true) { () -> Void in
+            self.contentView.showNotAuthenticatedView = false
+        }
+    }
     
     func aboutButtonPressed() {
         let aboutViewController = AboutViewController()
@@ -113,14 +121,18 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Data
     
     private func loadData() {
-        FacebookManager.events { (events) -> Void in
+        FacebookManager.events({ (events) -> Void in
+            self.contentView.showNotAuthenticatedView = false
             let animate = self.events.count == 0
             self.contentView.refreshControl.endRefreshing()
 
             self.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-        }
+            }, failure: {
+                self.contentView.showNotAuthenticatedView = true
+            
+        })
     }
     
     // MARK: UITableView

@@ -11,13 +11,22 @@ import UIKit
 import SnapKit
 
 class EventListView: UIView {
+    
+    var showNotAuthenticatedView = false {
+        didSet {
+            notAuthenticatedView.hidden = !showNotAuthenticatedView
+            tableView.hidden = showNotAuthenticatedView
+        }
+    }
+    
     let tableView = UITableView.tableView()
     let backgroundImageView = UIImageView.backgroundImageView()
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
     let aboutButton = UIButton.aboutButton()
     let refreshControl = UIRefreshControl.refreshControl()
-    
+    let notAuthenticatedView = NotAuthenticatedView()
+
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .clearColor()
@@ -36,6 +45,7 @@ class EventListView: UIView {
         imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
         addSubview(aboutButton)
+        addSubview(notAuthenticatedView)
 
         if refreshControl.subviews.count > 0 {
             refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
@@ -70,6 +80,11 @@ class EventListView: UIView {
         aboutButton.snp_makeConstraints { (make) in
             make.right.bottom.equalTo(aboutButton.superview!)
             make.width.height.equalTo(50)
+        }
+        
+        notAuthenticatedView.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(notAuthenticatedView.superview!)
+            make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
         }
     }
     

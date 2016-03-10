@@ -29,14 +29,16 @@ class FacebookManager {
         return FBSDKAccessToken.currentAccessToken() != nil
     }
     
-    class func events(completion: (events: [Event]) -> Void) {
+    class func events(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
 
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
-            if let r = result {
+            if let error = error {
+                failure()
+            } else if let r = result {
                 let data = r["data"] as! Array<NSDictionary>
                 var events = data.map { (dict: NSDictionary) -> Event? in
                     return Event(dictionary: dict)
