@@ -13,6 +13,7 @@ import Crashlytics
 class TrackingManager {
     enum TrackingEvent {
         case AttendEvent
+        case SkippedLogin
         
         case VisitEventInFacebook
         case VisitAppStore
@@ -55,6 +56,8 @@ class TrackingManager {
             FBSDKAppEvents.logEvent("ViewCredits")
         case .ViewLogin:
             FBSDKAppEvents.logEvent("ViewLogin")
+        case .SkippedLogin:
+            FBSDKAppEvents.logEvent("SkippedLogin")
         }
         
     }
