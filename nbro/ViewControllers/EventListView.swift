@@ -16,6 +16,14 @@ class EventListView: UIView {
         didSet {
             notAuthenticatedView.hidden = !showNotAuthenticatedView
             tableView.hidden = showNotAuthenticatedView
+            
+            if showNotAuthenticatedView && !oldValue {
+                notAuthenticatedView.alpha = 0.0
+                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                    self.notAuthenticatedView.alpha = 1.0
+                })
+
+            }
         }
     }
     
