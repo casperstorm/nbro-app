@@ -40,7 +40,7 @@ class FacebookManager {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
-            if let error = error {
+            if error != nil {
                 failure()
             } else if let r = result {
                 let data = r["data"] as! Array<NSDictionary>
