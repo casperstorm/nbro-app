@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class AboutTextCell: UITableViewCell {
-    let headerLabel = UILabel.headerLabel()
     let bodyLabel = UILabel.bodyLabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -28,34 +27,21 @@ class AboutTextCell: UITableViewCell {
     }
     
     private func setupSubviews() {
-        contentView.addSubview(headerLabel)
         contentView.addSubview(bodyLabel)
         
     }
     
     private func defineLayouts() {
-        headerLabel.snp_makeConstraints { (make) in
-            make.centerX.equalTo(headerLabel.superview!)
-            make.top.equalTo(headerLabel.superview!).inset(16)
-        }
-        
         bodyLabel.snp_makeConstraints { (make) in
             make.width.equalTo(bodyLabel.superview!).inset(40)
             make.centerX.equalTo(bodyLabel.superview!)
-            make.top.equalTo(headerLabel.snp_bottom).offset(16)
+            make.top.equalTo(bodyLabel.superview!).offset(16)
             make.bottom.equalTo(bodyLabel.superview!).inset(25)
         }
     }
 }
 
 private extension UILabel {
-    static func headerLabel() -> UILabel {
-        let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Center
-        label.font = UIFont.titleBoldFontOfSize(32)
-        return label
-    }
     static func bodyLabel() -> UILabel {
         let label = UILabel()
         label.textColor = UIColor(hex: 0x959595)

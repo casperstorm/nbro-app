@@ -41,6 +41,6 @@ class AboutLogoCell: UITableViewCell {
 
 private extension UIImageView {
     static func runnerImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "runner_logo"))
+        return UIImageView(image: UIImage(named: "nbro_logo"))
     }
 }

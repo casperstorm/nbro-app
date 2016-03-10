@@ -125,7 +125,6 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func configureTextCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("text-cell", forIndexPath: indexPath) as! AboutTextCell
-        cell.headerLabel.text = "NBRO RUNNING"
         cell.bodyLabel.text = "NBRO is a club for passionate runners with a thing for sneakers and get-togethers. NBRO is without king, territory or rules. Everyone is welcome to join the 4+ weekly training sessions."
         
         return cell
