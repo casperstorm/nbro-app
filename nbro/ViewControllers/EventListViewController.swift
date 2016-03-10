@@ -77,6 +77,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
+        
+        self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -122,7 +124,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func loadData() {
         FacebookManager.events({ (events) -> Void in
-            self.contentView.showNotAuthenticatedView = false
             let animate = self.events.count == 0
             self.contentView.refreshControl.endRefreshing()
 
@@ -130,7 +131,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
             }, failure: {
-                self.contentView.showNotAuthenticatedView = true
             
         })
     }

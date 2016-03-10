@@ -25,6 +25,10 @@ class FacebookManager {
         })
     }
     
+    class func logout() {
+        FBSDKLoginManager().logOut()
+    }
+    
     class func authenticated() -> Bool {
         return FBSDKAccessToken.currentAccessToken() != nil
     }

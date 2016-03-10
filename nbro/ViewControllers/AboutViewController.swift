@@ -34,6 +34,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        
+        contentView.logoutButton.hidden = !FacebookManager.authenticated()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +56,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func setupSubviews() {
         contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        contentView.logoutButton.addTarget(self, action: "logoutPressed", forControlEvents: .TouchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
@@ -63,6 +66,23 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     // MARK: Actions
+    
+    dynamic private func logoutPressed() {
+        let alertController = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Log out", style: .Default, handler: { (_) -> Void in
+            TrackingManager.trackEvent(.Logout)
+            FacebookManager.logout()
+            
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            })
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+            
+        }))
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
     
     func cancelPressed() {
         self.dismissViewControllerAnimated(true, completion: nil)

@@ -37,6 +37,7 @@ class EventListView: UIView {
 
     init() {
         super.init(frame: CGRect.zero)
+        notAuthenticatedView.hidden = true
         backgroundColor = .clearColor()
         setupSubviews()
         defineLayout()

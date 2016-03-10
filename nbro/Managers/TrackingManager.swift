@@ -14,6 +14,7 @@ class TrackingManager {
     enum TrackingEvent {
         case AttendEvent
         case SkippedLogin
+        case Logout
         
         case VisitEventInFacebook
         case VisitAppStore
@@ -58,6 +59,8 @@ class TrackingManager {
             FBSDKAppEvents.logEvent("ViewLogin")
         case .SkippedLogin:
             FBSDKAppEvents.logEvent("SkippedLogin")
+        case .Logout:
+            FBSDKAppEvents.logEvent("Logout")
         }
         
     }

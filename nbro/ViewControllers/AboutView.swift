@@ -12,6 +12,8 @@ import SnapKit
 
 class AboutView: UIView {
     let cancelButton = UIButton.cancelButton()
+    let logoutButton = UIButton.logoutButton()
+
     let tableView = UITableView.tableView()
     
     init() {
@@ -26,7 +28,7 @@ class AboutView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [tableView, cancelButton]
+        let subviews = [tableView, cancelButton, logoutButton]
         subviews.forEach { addSubview($0) }
     }
     
@@ -34,6 +36,11 @@ class AboutView: UIView {
         cancelButton.snp_makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
+        }
+        
+        logoutButton.snp_makeConstraints { (make) -> Void in
+            make.top.trailing.equalTo(logoutButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 15))
+            make.height.equalTo(40)
         }
         
         tableView.snp_makeConstraints { (make) in
@@ -67,6 +74,17 @@ private extension UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
         
+        return button
+    }
+    
+    static func logoutButton() -> UIButton {
+        let button = UIButton()
+        let title = "LOG OUT"
+        let attrString = NSMutableAttributedString(string: title)
+        attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, title.characters.count))
+        button.setAttributedTitle(attrString, forState: .Normal)
+        button.titleLabel?.font = UIFont.defaultMediumFontOfSize(12)
         return button
     }
 }
