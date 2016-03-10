@@ -53,6 +53,7 @@ class LoginViewController: UIViewController {
     
     func setupSubviews() {
         contentView.facebookButton.addTarget(self, action: "facebookLoginButtonPressed", forControlEvents: .TouchUpInside)
+        contentView.skipButton.addTarget(self, action: "skipLoginButtonPressed", forControlEvents: .TouchUpInside)
     }
   
     override func viewDidLayoutSubviews() {
@@ -74,5 +75,10 @@ class LoginViewController: UIViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    func skipLoginButtonPressed() {
+        TrackingManager.trackEvent(.SkippedLogin)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -13,6 +13,7 @@ import SnapKit
 class LoginView: UIView {
     let imageContainerView = UIView()
     let facebookButton = UIButton.facebookButton()
+    let skipButton = UIButton.skipButton()
     let backgroundImageView = UIImageView.backgroundImageView()
     let vignetteImageView = UIImageView.vignetteImageView()
     let logoImageView = UIImageView.logoImageView()
@@ -42,6 +43,7 @@ class LoginView: UIView {
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
         imageContainerView.addSubview(logoImageView)
+        imageContainerView.addSubview(skipButton)
         addSubview(buttonContainerView)
         buttonContainerView.addSubview(facebookButton)
         buttonContainerView.addSubview(activityIndicatorView)
@@ -74,6 +76,11 @@ class LoginView: UIView {
         
         activityIndicatorView.snp_makeConstraints { (make) in
             make.center.equalTo(activityIndicatorView.superview!)
+        }
+        
+        skipButton.snp_makeConstraints { (make) in
+            make.top.equalTo(skipButton.superview!).inset(26)
+            make.right.equalTo(skipButton.superview!).inset(15)
         }
         
     }
@@ -133,6 +140,16 @@ private extension UIButton {
         facebookButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         facebookButton.translatesAutoresizingMaskIntoConstraints = false
         return facebookButton
+    }
+    static func skipButton() -> UIButton {
+        let button = UIButton()
+        let title = "SKIP"
+        let attrString = NSMutableAttributedString(string: title)
+        attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, title.characters.count))
+        button.setAttributedTitle(attrString, forState: .Normal)
+        button.titleLabel?.font = UIFont.defaultMediumFontOfSize(15)
+        return button
     }
 }
 
