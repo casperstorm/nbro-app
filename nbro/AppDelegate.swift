@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "tokenDidChange", name: FBSDKAccessTokenDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tokenDidChange), name: FBSDKAccessTokenDidChangeNotification, object: nil)
         
         setupAdditionalStyling()
 

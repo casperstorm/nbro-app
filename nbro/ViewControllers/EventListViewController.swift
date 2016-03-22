@@ -62,8 +62,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.ViewEventList)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
 
         contentView.animateBackgroundImage()
         loadData()
@@ -88,9 +88,9 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        contentView.aboutButton.addTarget(self, action: "aboutButtonPressed", forControlEvents: .TouchUpInside)
-        contentView.refreshControl.addTarget(self, action: Selector("shouldRefreshData"), forControlEvents: .ValueChanged)
-        contentView.notAuthenticatedView.loginButton.addTarget(self, action: "loginPressed", forControlEvents: .TouchUpInside)
+        contentView.aboutButton.addTarget(self, action: #selector(aboutButtonPressed), forControlEvents: .TouchUpInside)
+        contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), forControlEvents: .ValueChanged)
+        contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions

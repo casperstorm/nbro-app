@@ -35,8 +35,8 @@ class LoginViewController: UIViewController {
         super.viewDidAppear(animated)
         
         TrackingManager.trackEvent(.ViewLogin)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
         contentView.animateBackgroundImage()
     }
     
@@ -52,8 +52,8 @@ class LoginViewController: UIViewController {
     }
     
     func setupSubviews() {
-        contentView.facebookButton.addTarget(self, action: "facebookLoginButtonPressed", forControlEvents: .TouchUpInside)
-        contentView.skipButton.addTarget(self, action: "skipLoginButtonPressed", forControlEvents: .TouchUpInside)
+        contentView.facebookButton.addTarget(self, action: #selector(facebookLoginButtonPressed), forControlEvents: .TouchUpInside)
+        contentView.skipButton.addTarget(self, action: #selector(skipLoginButtonPressed), forControlEvents: .TouchUpInside)
     }
   
     override func viewDidLayoutSubviews() {

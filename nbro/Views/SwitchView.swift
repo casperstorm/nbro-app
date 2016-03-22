@@ -50,7 +50,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         panGestureRecognizer.delegate = self
         panGestureRecognizer.minimumNumberOfTouches = 1
         panGestureRecognizer.maximumNumberOfTouches = 1
-        panGestureRecognizer.addTarget(self, action: "viewDidPan:")
+        panGestureRecognizer.addTarget(self, action: #selector(viewDidPan(_:)))
         knobContainerView.addGestureRecognizer(panGestureRecognizer)
         
         setupSubviews()

@@ -24,6 +24,7 @@ class TrackingManager {
         case ViewEventList
         case ViewEventDetail
         case ViewAbout
+        case ViewUser
         case ViewCredits
         case ViewLogin
     }
@@ -61,6 +62,8 @@ class TrackingManager {
             FBSDKAppEvents.logEvent("SkippedLogin")
         case .Logout:
             FBSDKAppEvents.logEvent("Logout")
+        case .ViewUser:
+            FBSDKAppEvents.logEvent("ViewUser")
         }
         
     }

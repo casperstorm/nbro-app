@@ -40,7 +40,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         setupActions()
         setupSubviews()
@@ -79,9 +79,9 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     }
     
     private func setupActions() {
-        contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        contentView.facebookButton.addTarget(self, action: "facebookPressed", forControlEvents: .TouchUpInside)
-        contentView.panGestureRecognizer.addTarget(self, action: "handleDismissGesture:")
+        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
+        contentView.facebookButton.addTarget(self, action: #selector(facebookPressed), forControlEvents: .TouchUpInside)
+        contentView.panGestureRecognizer.addTarget(self, action: #selector(handleDismissGesture(_:)))
         contentView.eventView.attentButtonView.switchView.didSwipe = { [weak self] (isLeft: Bool) in
             if !isLeft {
                 self?.attentEvent()

@@ -55,8 +55,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     private func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        contentView.logoutButton.addTarget(self, action: "logoutPressed", forControlEvents: .TouchUpInside)
+        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
+        contentView.logoutButton.addTarget(self, action: #selector(logoutPressed), forControlEvents: .TouchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
