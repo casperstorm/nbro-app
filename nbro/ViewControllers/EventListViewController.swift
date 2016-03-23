@@ -92,22 +92,68 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        contentView.aboutButton.addTarget(self, action: #selector(aboutButtonPressed), forControlEvents: .TouchUpInside)
         contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), forControlEvents: .ValueChanged)
         contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), forControlEvents: .TouchUpInside)
         contentView.userButtonView.button.addTarget(self, action: #selector(didPressUserButton), forControlEvents: .TouchDown)
         contentView.userButtonView.button.addTarget(self, action: #selector(didPressReleaseUserButton), forControlEvents: .TouchUpInside)
-
+        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), forControlEvents: .TouchCancel)
+        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), forControlEvents: .TouchDragExit)
+        
+        contentView.aboutButton.addTarget(self, action: #selector(didPressAboutButton), forControlEvents: .TouchDown)
+        contentView.aboutButton.addTarget(self, action: #selector(didPressReleaseAboutButton), forControlEvents: .TouchUpInside)
+        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), forControlEvents: .TouchDragExit)
+        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), forControlEvents: .TouchCancel)
     }
     
     // MARK: Actions
     
     dynamic private func didPressUserButton() {
-        print("pressed-down")
+        animateScaleTransform(self.contentView.userButtonView, sx: 0.85, 0.85)
     }
     
     dynamic private func didPressReleaseUserButton() {
-        print("pressed-release")
+        animateResetTransform(self.contentView.userButtonView)
+        
+        let userViewController = UserViewController()
+        let navigationController = UINavigationController(rootViewController: userViewController)
+        UIView.animateWithDuration(0.25, animations: {
+            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        })
+        
+        navigationController.transitioningDelegate = self
+        userViewController.interactor = self.interactor
+        self.presentViewController(navigationController, animated: true, completion: {
+            self.view.transform = CGAffineTransformIdentity;
+        })
+    }
+    
+    dynamic private func didCancelUserButton() {
+        animateResetTransform(self.contentView.userButtonView)
+    }
+    
+    dynamic private func didPressAboutButton() {
+        animateScaleTransform(self.contentView.aboutButton, sx: 0.85, 0.85)
+
+    }
+    
+    dynamic private func didPressReleaseAboutButton() {
+        animateResetTransform(self.contentView.aboutButton)
+        
+        let aboutViewController = AboutViewController()
+        let navigationController = UINavigationController(rootViewController: aboutViewController)
+        UIView.animateWithDuration(0.25, animations: {
+            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        })
+
+        navigationController.transitioningDelegate = self
+        aboutViewController.interactor = self.interactor
+        self.presentViewController(navigationController, animated: true, completion: {
+            self.view.transform = CGAffineTransformIdentity;
+        })
+    }
+    
+    dynamic private func didCancelAboutButton() {
+        animateResetTransform(self.contentView.aboutButton)
     }
     
     dynamic private func loginPressed() {
@@ -119,20 +165,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.events = []
             self.contentView.tableView.reloadData()
         }
-    }
-    
-    func aboutButtonPressed() {
-        let aboutViewController = AboutViewController()
-        let navigationController = UINavigationController(rootViewController: aboutViewController)
-        UIView.animateWithDuration(0.25, animations: {
-            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        })
-        
-        navigationController.transitioningDelegate = self
-        aboutViewController.interactor = self.interactor
-        self.presentViewController(navigationController, animated: true, completion: {
-            self.view.transform = CGAffineTransformIdentity;
-        })
     }
     
     func shouldRefreshData() {
@@ -277,6 +309,18 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         if(!self.contentView.didPresentUserButtons) {
             self.contentView.aboutButton.transform = CGAffineTransformTranslate(self.contentView.aboutButton.transform, 0, 100)
             self.contentView.userButtonView.transform = CGAffineTransformTranslate(self.contentView.userButtonView.transform, 0, 100)
+        }
+    }
+    
+    private func animateScaleTransform(view: UIView, sx: CGFloat, _ sy: CGFloat) {
+        UIView.animateWithDuration(0.1) {
+            view.transform = CGAffineTransformScale(view.transform, sx, sy)
+        }
+    }
+    
+    private func animateResetTransform(view: UIView) {
+        UIView.animateWithDuration(0.1) {
+            view.transform = CGAffineTransformIdentity
         }
     }
 }
