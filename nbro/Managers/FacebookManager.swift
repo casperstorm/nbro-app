@@ -13,7 +13,7 @@ import FBSDKCoreKit
 class FacebookManager {
     class func logInWithReadPermissions(completion: (success: Bool, error: NSError?) -> Void) {
         let loginManager = FBSDKLoginManager()
-        loginManager.logInWithReadPermissions(["public_profile"], fromViewController: nil, handler: {
+        loginManager.logInWithReadPermissions(["public_profile", "user_events"], fromViewController: nil, handler: {
             (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
             if result?.token != nil {
                 completion(success: true, error: nil)
@@ -33,7 +33,7 @@ class FacebookManager {
         return FBSDKAccessToken.currentAccessToken() != nil
     }
     
-    class func events(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
+    class func NBROEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
 
@@ -43,7 +43,28 @@ class FacebookManager {
             if error != nil {
                 failure()
             } else if let r = result {
-                let data = r["data"] as! Array<NSDictionary>
+                guard let data = r["data"] as? Array<NSDictionary> else {
+                    return
+                }
+                var events = data.map { (dict: NSDictionary) -> Event? in
+                    return Event(dictionary: dict)
+                    }.flatMap { $0 }
+                events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
+                completion(events: events)
+            }
+        })
+    }
+    
+    class func userEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(1)"])
+        graphRequest.startWithCompletionHandler({
+            (connection, result, error) -> Void in
+            if error != nil {
+                failure()
+            } else if let r = result as? NSDictionary {
+                guard let e = r["events"] as? NSDictionary, let data = e["data"] as? Array<NSDictionary> else {
+                    return
+                }
                 var events = data.map { (dict: NSDictionary) -> Event? in
                     return Event(dictionary: dict)
                     }.flatMap { $0 }

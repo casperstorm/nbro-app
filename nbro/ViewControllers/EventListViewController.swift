@@ -174,7 +174,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: Data
     
     private func loadData() {
-        FacebookManager.events({ (events) -> Void in
+        FacebookManager.NBROEvents({ (events) -> Void in
             let animate = self.events.count == 0
             self.contentView.refreshControl.endRefreshing()
 
@@ -292,15 +292,25 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     private func animateBottomButtons() {
         if(!self.contentView.didPresentUserButtons) {
             UIView.animateWithDuration(0.9,
+                                       delay: 0.1,
+                                       usingSpringWithDamping: 0.5,
+                                       initialSpringVelocity: 0.7,
+                                       options: .CurveLinear,
+                                       animations: ({
+                                        self.contentView.aboutButton.transform = CGAffineTransformIdentity
+                                       }), completion: { (Bool) in
+                                        self.contentView.didPresentUserButtons = true
+            })
+            
+            UIView.animateWithDuration(0.9,
                                        delay: 0.0,
                                        usingSpringWithDamping: 0.5,
                                        initialSpringVelocity: 0.7,
                                        options: .CurveLinear,
                                        animations: ({
-                self.contentView.aboutButton.transform = CGAffineTransformIdentity
-                self.contentView.userButtonView.transform = CGAffineTransformIdentity
-            }), completion: { (Bool) in
-                self.contentView.didPresentUserButtons = true
+                                        self.contentView.userButtonView.transform = CGAffineTransformIdentity
+                                       }), completion: { (Bool) in
+                                        self.contentView.didPresentUserButtons = true
             })
         }
     }

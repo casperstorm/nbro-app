@@ -1,15 +1,15 @@
 //
-//  AboutTextCell.swift
+//  UserTextCell.swift
 //  nbro
 //
-//  Created by Casper Storm Larsen on 15/02/16.
+//  Created by Casper Storm Larsen on 23/03/16.
 //  Copyright © 2016 Bob. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AboutTextCell: UITableViewCell {
+class UserTextCell: UITableViewCell {
     let bodyLabel = UILabel.bodyLabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
