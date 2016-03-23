@@ -13,6 +13,7 @@ class NotAuthenticatedView: UIView {
     
     let descriptionLabel = UILabel.descriptionLabel()
     let loginButton = UIButton.loginButton()
+    let logoImageView = UIImageView.logoImageView()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -22,8 +23,11 @@ class NotAuthenticatedView: UIView {
         
         addSubview(descriptionLabel)
         addSubview(loginButton)
+        addSubview(logoImageView)
+        
         descriptionLabel.snp_makeConstraints { (make) -> Void in
-            make.top.leading.trailing.equalTo(descriptionLabel.superview!).inset(10)
+            make.leading.trailing.equalTo(descriptionLabel.superview!).inset(10)
+            make.top.equalTo(logoImageView.snp_bottom).offset(20)
         }
         loginButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(30)
@@ -31,10 +35,22 @@ class NotAuthenticatedView: UIView {
             make.width.equalTo(200)
             make.height.equalTo(50)
         }
+        
+        logoImageView.snp_makeConstraints { (make) in
+            make.centerX.equalTo(logoImageView.superview!)
+            make.top.equalTo(logoImageView.superview!).inset(10)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+private extension UIImageView {
+    static func logoImageView() -> UIImageView {
+        return UIImageView(image: UIImage(named: "nbro_logo"))
     }
     
 }
@@ -59,6 +75,7 @@ private extension UIButton {
         button.titleLabel?.font = UIFont.defaultMediumFontOfSize(14)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
+        button.layer.cornerRadius = 6
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         return button

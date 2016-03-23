@@ -32,15 +32,17 @@ class EventListView: UIView {
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
     let aboutButton = UIButton.aboutButton()
+    let userButtonView = CircularUserButtonView()
     let refreshControl = UIRefreshControl.refreshControl()
     let notAuthenticatedView = NotAuthenticatedView()
+    var didPresentUserButtons = Bool()
 
     init() {
         super.init(frame: CGRect.zero)
         notAuthenticatedView.hidden = true
         backgroundColor = .clearColor()
         setupSubviews()
-        defineLayout()
+        defineLayout()        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,6 +57,7 @@ class EventListView: UIView {
         addSubview(tableView)
         addSubview(aboutButton)
         addSubview(notAuthenticatedView)
+        addSubview(userButtonView)
 
         if refreshControl.subviews.count > 0 {
             refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
@@ -85,16 +88,32 @@ class EventListView: UIView {
             make.width.equalTo(imageSize.width * factor)
             make.height.equalTo(imageSize.height * factor)
         }
-        
-        aboutButton.snp_makeConstraints { (make) in
-            make.right.bottom.equalTo(aboutButton.superview!)
-            make.width.height.equalTo(50)
-        }
-        
+
         notAuthenticatedView.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(notAuthenticatedView.superview!)
             make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
         }
+        
+        userButtonView.snp_makeConstraints { (make) in
+            make.bottom.equalTo(userButtonView.superview!).inset(20)
+            make.right.equalTo(userButtonView.superview!).inset(20)
+            make.width.height.equalTo(60)
+        }
+    }
+    
+    override func updateConstraints() {
+        aboutButton.snp_remakeConstraints { (make) in
+            if(FacebookManager.authenticated()) {
+                make.centerY.equalTo(userButtonView).offset(4)
+                make.right.equalTo(userButtonView.snp_left).offset(-10)
+            } else {
+                make.right.bottom.equalTo(aboutButton.superview!).inset(20)
+            }
+            
+            make.width.height.equalTo(47)
+        }
+        
+        super.updateConstraints()
     }
     
     // MARK : Animation

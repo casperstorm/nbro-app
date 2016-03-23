@@ -13,6 +13,7 @@
 		6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05A1C6F785300A53017 /* EventCell.swift */; };
 		6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05C1C6F80C600A53017 /* String+Additions.swift */; };
 		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
+		6C2CC9111CA1B09F00EE2CEB /* CircularUserButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2CC9101CA1B09F00EE2CEB /* CircularUserButtonView.swift */; };
 		6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C2D28F61C60C496003E5C74 /* Assets.xcassets */; };
 		6C3144531C71DEA000A138EF /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144521C71DEA000A138EF /* AboutViewController.swift */; };
 		6C3144551C71DEA800A138EF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3144541C71DEA800A138EF /* AboutView.swift */; };
@@ -63,6 +64,7 @@
 		6C0EF05A1C6F785300A53017 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventCell.swift; path = Views/EventCell.swift; sourceTree = "<group>"; };
 		6C0EF05C1C6F80C600A53017 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
 		6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6C2CC9101CA1B09F00EE2CEB /* CircularUserButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularUserButtonView.swift; sourceTree = "<group>"; };
 		6C2D28F61C60C496003E5C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C3144521C71DEA000A138EF /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		6C3144541C71DEA800A138EF /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				D061ABD51C824DB60094CBAD /* SwitchView.swift */,
 				6C5BADAA1C87171000A0ECD0 /* DetailLabelView.swift */,
 				6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */,
+				6C2CC9101CA1B09F00EE2CEB /* CircularUserButtonView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */,
 				D061ABD61C824DB60094CBAD /* SwitchView.swift in Sources */,
 				6C5BADA31C8716D600A0ECD0 /* UIFont+NBRO.swift in Sources */,
+				6C2CC9111CA1B09F00EE2CEB /* CircularUserButtonView.swift in Sources */,
 				6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */,
 				6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */,
 				6C85B2561C74E0E400157C93 /* CreditViewController.swift in Sources */,

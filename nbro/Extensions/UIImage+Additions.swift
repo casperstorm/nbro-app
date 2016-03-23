@@ -17,5 +17,21 @@ public extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         self.init(CGImage: image.CGImage!)
-    }  
+    }
+    
+    func convertToGrayScale() -> UIImage {
+        let imageRect:CGRect = CGRectMake(0, 0, size.width, size.height)
+        let colorSpace = CGColorSpaceCreateDeviceGray()
+        let width = size.width
+        let height = size.height
+        
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
+        let context = CGBitmapContextCreate(nil, Int(width), Int(height), 8, 0, colorSpace, bitmapInfo.rawValue)
+        
+        CGContextDrawImage(context, imageRect, CGImage)
+        let imageRef = CGBitmapContextCreateImage(context)
+        let newImage = UIImage(CGImage: imageRef!)
+        
+        return newImage
+    }
 }

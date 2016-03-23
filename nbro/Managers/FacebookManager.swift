@@ -54,7 +54,7 @@ class FacebookManager {
     }
     
     class func user(completion: (user: User) -> Void) {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(800)"])
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(600)"])
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
             guard let dict = result as? NSDictionary, user = User(dictionary: dict) else {

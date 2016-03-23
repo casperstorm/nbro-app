@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Nuke
 
 class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     
@@ -28,6 +29,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
             registerForPreviewingWithDelegate(self, sourceView: view)
         }
+        
+        self.prepareBottomButtonsForAnimation()
     }
     
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -77,8 +80,13 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
-        
+        self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
+        self.contentView.userButtonView.hidden = !FacebookManager.authenticated()
+        
+        if(!FacebookManager.authenticated()) {
+            self.animateBottomButtons(false)
+        }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -99,6 +107,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let loginViewController = LoginViewController()
         presentViewController(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
+            self.contentView.didPresentUserButtons = false
+            self.prepareBottomButtonsForAnimation()
         }
     }
     
@@ -130,9 +140,26 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-            }, failure: {
             
+            if(animate) {
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    self.animateBottomButtons(true)
+                }
+            }
+            }, failure: {
         })
+        
+        FacebookManager.user { (user) in
+            let request = ImageRequest(URLRequest: NSURLRequest(URL: user.imageURL))
+            Nuke.taskWith(request) { response in
+                switch response {
+                case let .Success(image, _):
+                    self.contentView.userButtonView.imageView.image = image.convertToGrayScale()
+                case .Failure(_): break
+                }
+                }.resume()
+        }
     }
     
     // MARK: UITableView
@@ -218,6 +245,33 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func eventForIndexPath(indexPath: NSIndexPath) -> Event {
         return events[indexPath.row - 1]
+    }
+    
+    private func animateBottomButtons(animated: Bool) {
+        if(!self.contentView.didPresentUserButtons && animated) {
+            UIView.animateWithDuration(0.9,
+                                       delay: 0.0,
+                                       usingSpringWithDamping: 0.5,
+                                       initialSpringVelocity: 0.7,
+                                       options: .CurveLinear,
+                                       animations: ({
+                self.contentView.aboutButton.transform = CGAffineTransformIdentity
+                self.contentView.userButtonView.transform = CGAffineTransformIdentity
+            }), completion: { (Bool) in
+                self.contentView.didPresentUserButtons = true
+            })
+        } else {
+            self.contentView.aboutButton.transform = CGAffineTransformIdentity
+            self.contentView.userButtonView.transform = CGAffineTransformIdentity
+            self.contentView.didPresentUserButtons = true
+        }
+    }
+    
+    private func prepareBottomButtonsForAnimation() {
+        if(!self.contentView.didPresentUserButtons) {
+            self.contentView.aboutButton.transform = CGAffineTransformTranslate(self.contentView.aboutButton.transform, 0, 100)
+            self.contentView.userButtonView.transform = CGAffineTransformTranslate(self.contentView.userButtonView.transform, 0, 100)
+        }
     }
 }
 
