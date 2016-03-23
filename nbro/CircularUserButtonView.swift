@@ -11,6 +11,7 @@ import UIKit
 
 class CircularUserButtonView: UIView {
     let imageView = UIImageView()
+    let button = UIButton()
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .clearColor()
@@ -33,11 +34,16 @@ class CircularUserButtonView: UIView {
     
     private func setupSubviews() {
         addSubview(imageView)
+        addSubview(button)
     }
     
     private func defineLayout() {
         imageView.snp_makeConstraints { (make) in
             make.edges.equalTo(imageView.superview!)
+        }
+        
+        button.snp_makeConstraints { (make) in
+            make.edges.equalTo(button.superview!)
         }
     }
 }

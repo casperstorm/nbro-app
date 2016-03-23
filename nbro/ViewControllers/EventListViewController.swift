@@ -83,10 +83,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
         self.contentView.userButtonView.hidden = !FacebookManager.authenticated()
-        
-        if(!FacebookManager.authenticated()) {
-            self.animateBottomButtons(false)
-        }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -99,9 +95,20 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.aboutButton.addTarget(self, action: #selector(aboutButtonPressed), forControlEvents: .TouchUpInside)
         contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), forControlEvents: .ValueChanged)
         contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), forControlEvents: .TouchUpInside)
+        contentView.userButtonView.button.addTarget(self, action: #selector(didPressUserButton), forControlEvents: .TouchDown)
+        contentView.userButtonView.button.addTarget(self, action: #selector(didPressReleaseUserButton), forControlEvents: .TouchUpInside)
+
     }
     
     // MARK: Actions
+    
+    dynamic private func didPressUserButton() {
+        print("pressed-down")
+    }
+    
+    dynamic private func didPressReleaseUserButton() {
+        print("pressed-release")
+    }
     
     dynamic private func loginPressed() {
         let loginViewController = LoginViewController()
@@ -145,9 +152,12 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.animateBottomButtons(true)
+                self.animateBottomButtons()
             }
             }, failure: {
+                if (self.isViewLoaded() && self.view.window != nil){
+                    self.animateBottomButtons()
+                }
         })
         
         FacebookManager.user { (user) in
@@ -247,8 +257,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         return events[indexPath.row - 1]
     }
     
-    private func animateBottomButtons(animated: Bool) {
-        if(!self.contentView.didPresentUserButtons && animated) {
+    private func animateBottomButtons() {
+        if(!self.contentView.didPresentUserButtons) {
             UIView.animateWithDuration(0.9,
                                        delay: 0.0,
                                        usingSpringWithDamping: 0.5,
@@ -260,10 +270,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             }), completion: { (Bool) in
                 self.contentView.didPresentUserButtons = true
             })
-        } else {
-            self.contentView.aboutButton.transform = CGAffineTransformIdentity
-            self.contentView.userButtonView.transform = CGAffineTransformIdentity
-            self.contentView.didPresentUserButtons = true
         }
     }
     
