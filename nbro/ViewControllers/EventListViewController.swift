@@ -109,6 +109,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.contentView.showNotAuthenticatedView = false
             self.contentView.didPresentUserButtons = false
             self.prepareBottomButtonsForAnimation()
+            self.events = []
+            self.contentView.tableView.reloadData()
         }
     }
     
@@ -141,11 +143,9 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
             
-            if(animate) {
-                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-                dispatch_after(delayTime, dispatch_get_main_queue()) {
-                    self.animateBottomButtons(true)
-                }
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.animateBottomButtons(true)
             }
             }, failure: {
         })
