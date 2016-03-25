@@ -39,6 +39,7 @@
 		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F81C6F99B0009015D1 /* LoginView.swift */; };
 		6C7337081C73224300744511 /* ImageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7337071C73224300744511 /* ImageCatalog.swift */; };
+		6C7CC4A01CA5B5630081586A /* UserLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7CC49F1CA5B5630081586A /* UserLoadingView.swift */; };
 		6C85B2561C74E0E400157C93 /* CreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C85B2551C74E0E400157C93 /* CreditViewController.swift */; };
 		6C85B2581C74E15A00157C93 /* CreditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C85B2571C74E15A00157C93 /* CreditView.swift */; };
 		6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */; };
@@ -94,6 +95,7 @@
 		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		6C65A1F81C6F99B0009015D1 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6C7337071C73224300744511 /* ImageCatalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCatalog.swift; path = Managers/ImageCatalog.swift; sourceTree = "<group>"; };
+		6C7CC49F1CA5B5630081586A /* UserLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserLoadingView.swift; path = nbro/Views/UserLoadingView.swift; sourceTree = SOURCE_ROOT; };
 		6C85B2551C74E0E400157C93 /* CreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditViewController.swift; sourceTree = "<group>"; };
 		6C85B2571C74E15A00157C93 /* CreditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditView.swift; sourceTree = "<group>"; };
 		6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Light.ttf"; path = "Fonts/Exo2-Light.ttf"; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			children = (
 				6CB6CC7B1CA144CC00B9CD9E /* UserViewController.swift */,
 				6CB6CC7E1CA1472600B9CD9E /* UserView.swift */,
+				6C7CC49F1CA5B5630081586A /* UserLoadingView.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
 				6C7337081C73224300744511 /* ImageCatalog.swift in Sources */,
+				6C7CC4A01CA5B5630081586A /* UserLoadingView.swift in Sources */,
 				D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */,
 				6CB6CC7C1CA144CC00B9CD9E /* UserViewController.swift in Sources */,
 				6CD06B491C804E0700351A20 /* DissmissAnimator.swift in Sources */,

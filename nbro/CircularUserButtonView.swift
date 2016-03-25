@@ -21,6 +21,7 @@ class CircularUserButtonView: UIView {
         imageView.layer.cornerRadius = 30
         imageView.backgroundColor = .clearColor()
         imageView.clipsToBounds = true
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         layer.shadowColor = UIColor.blackColor().CGColor
         layer.shadowOpacity = 1

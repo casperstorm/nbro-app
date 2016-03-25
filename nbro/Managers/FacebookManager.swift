@@ -44,6 +44,7 @@ class FacebookManager {
                 failure()
             } else if let r = result {
                 guard let data = r["data"] as? Array<NSDictionary> else {
+                    completion(events: [])
                     return
                 }
                 var events = data.map { (dict: NSDictionary) -> Event? in
@@ -56,13 +57,14 @@ class FacebookManager {
     }
     
     class func userEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(1)"])
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(100)"])
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
             if error != nil {
                 failure()
             } else if let r = result as? NSDictionary {
                 guard let e = r["events"] as? NSDictionary, let data = e["data"] as? Array<NSDictionary> else {
+                    completion(events: [])
                     return
                 }
                 var events = data.map { (dict: NSDictionary) -> Event? in

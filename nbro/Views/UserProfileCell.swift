@@ -22,8 +22,9 @@ class UserProfileCell: UITableViewCell {
         setupSubviews()
         defineLayouts()
         
-        self.userImageView.layer.cornerRadius = 45
-        self.userImageView.clipsToBounds = true
+        userImageView.layer.cornerRadius = 45
+        userImageView.clipsToBounds = true
+        userImageView.contentMode = .ScaleAspectFill
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,13 +40,13 @@ class UserProfileCell: UITableViewCell {
         userImageView.snp_makeConstraints { (make) in
             make.top.equalTo(userImageView.superview!).inset(40)
             make.centerX.equalTo(userImageView.superview!)
-            make.width.height.equalTo(90)
+            make.width.height.equalTo(90).priorityHigh()
         }
         
         userNameLabel.snp_makeConstraints { (make) in
             make.top.equalTo(userImageView.snp_bottom).offset(30)
             make.leading.trailing.equalTo(userNameLabel.superview!).inset(20)
-            make.height.equalTo(25)
+            make.height.equalTo(30)
             make.bottom.equalTo(userNameLabel.superview!)
         }
     }

@@ -79,8 +79,8 @@ class UserEventCell: UITableViewCell {
         disclousureImageView.snp_makeConstraints { (make) in
             make.centerY.equalTo(disclousureImageView.superview!)
             make.right.equalTo(-22)
-            make.width.equalTo(12)
-            make.height.equalTo(22)
+            make.width.equalTo(6)
+            make.height.equalTo(11)
         }
         
         iconImageView.snp_makeConstraints { (make) in

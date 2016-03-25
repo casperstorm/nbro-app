@@ -21,16 +21,12 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        
-        FacebookManager.userEvents({ (events) in
-            print(events)
-            }) { (Void) in
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.ViewUser)
+        self.contentView.tableView.hidden = true
         loadData()
     }
     
@@ -38,6 +34,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barStyle = .Black
         self.navigationController?.navigationBarHidden = true
+        self.contentView.tableView.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -50,10 +47,59 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func loadData() {
-        FacebookManager.NBROEvents({ (events) in
-            
-        }, failure: {
-                
+        FacebookManager.userEvents({ (userEvents) -> Void in
+            FacebookManager.NBROEvents({ (nbroEvents) -> Void in
+                for event in userEvents {
+                    let contains = nbroEvents.contains(event)
+                    if contains {
+                        self.events.append(event)
+                    }
+                }
+                self.events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
+                self.contentView.tableView.hidden = false
+                self.fadeoutLoadingIndicator()
+                self.contentView.tableView.reloadData()
+                self.animateCellsEntrance(true)
+                }, failure: {
+                    self.displayErrorMessage()
+            })
+            }, failure: {
+                self.displayErrorMessage()
+        })
+    }
+    
+    private func animateCellsEntrance(animate: Bool) {
+        if(animate) {
+            let visibleCells = contentView.tableView.visibleCells
+            for index in 0 ..< visibleCells.count {
+                let delay = (Double(index) * 0.04) + 0.3
+                let cell = visibleCells[index]
+                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.size.width - 120.0, 0)
+                cell.alpha = 0
+                UIView.animateWithDuration(0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
+                    cell.transform = CGAffineTransformIdentity
+                    cell.alpha = 1.0
+                    }, completion: nil)
+            }
+        }
+    }
+    
+    private func displayErrorMessage() {
+        contentView.tableView.hidden = true
+        fadeoutLoadingIndicator()
+        
+        UIView.animateWithDuration(0.5, animations: {
+            self.contentView.loadingView.statusLabel.alpha = 1.0
+            }, completion: { (completed) in
+        })
+    }
+    
+    private func fadeoutLoadingIndicator() {
+        UIView.animateWithDuration(0.5, animations: {
+            self.contentView.loadingView.activityIndicatorView.alpha = 0.0
+            }, completion: { (completed) in
+                self.contentView.loadingView.activityIndicatorView.stopAnimating()
+                self.contentView.loadingView.activityIndicatorView.alpha = 1.0
         })
     }
 
@@ -67,7 +113,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return events.count + 2
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -91,14 +137,10 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         FacebookManager.user { (user) in
             cell.userNameLabel.text = user.name.uppercaseString
             let request = ImageRequest(URLRequest: NSURLRequest(URL: user.imageURL))
-            cell.userImageView.alpha = 0.0
             Nuke.taskWith(request) { response in
                 switch response {
                 case let .Success(image, _):
                     cell.userImageView.image = image.convertToGrayScale()
-                    UIView.animateWithDuration(1.00, animations: {
-                        cell.userImageView.alpha = 1.0
-                    })
                 case .Failure(_): break
                 }
                 }.resume()
@@ -108,14 +150,21 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func configureUserTextCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("text-cell", forIndexPath: indexPath) as! UserTextCell
-        cell.bodyLabel.text = "has been attending 12 events from Islands Brygge, Copenhagen member since February 2017"
+        if(events.count == 0) {
+            cell.bodyLabel.text = "It looks like you don't have any upcoming events."
+
+        } else {
+            let count = events.count
+            cell.bodyLabel.text = "You have \(count) upcoming events!"
+        }
         return cell
     }
     
     func configureUserEventCell(indexPath: NSIndexPath) -> UITableViewCell {
+        let event = events[indexPath.row - 2]
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event-cell", forIndexPath: indexPath) as! UserEventCell
-        cell.setTitleText("Credits".uppercaseString)
-        cell.detailLabel.text = "Søpavillionen, København"
+        cell.setTitleText(event.name.uppercaseString)
+        cell.detailLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
         cell.iconImageView.image = UIImage(named: "about_credit_icon")
         return cell
     }

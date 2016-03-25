@@ -98,3 +98,9 @@ struct Event {
         return dateFormat.formattedStringFromDate(self.startDate)
     }
 }
+
+extension Event: Equatable {}
+
+func ==(lhs: Event, rhs: Event) -> Bool {
+    return lhs.id == rhs.id
+}

@@ -14,11 +14,12 @@ class UserView: UIView {
     let cancelButton = UIButton.cancelButton()
     let logoutButton = UIButton.logoutButton()
     let tableView = UITableView.tableView()
+    let loadingView = UserLoadingView()
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .blackColor()
         setupSubviews()
-        defineLayout()
+        defineLayout()        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,7 +27,7 @@ class UserView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [tableView, cancelButton, logoutButton]
+        let subviews = [loadingView, tableView, cancelButton, logoutButton]
         subviews.forEach { addSubview($0) }
     }
     
@@ -39,6 +40,10 @@ class UserView: UIView {
         logoutButton.snp_makeConstraints { (make) -> Void in
             make.top.trailing.equalTo(logoutButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 15))
             make.height.equalTo(40)
+        }
+        
+        loadingView.snp_makeConstraints { (make) in
+            make.edges.equalTo(loadingView.superview!)
         }
         
         tableView.snp_makeConstraints { (make) in
@@ -80,4 +85,3 @@ private extension UITableView {
         return tableView
     }
 }
-
