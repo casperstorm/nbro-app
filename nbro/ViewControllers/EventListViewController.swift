@@ -115,14 +115,12 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         animateResetTransform(self.contentView.userButtonView)
         
         let userViewController = UserViewController()
-        let navigationController = UINavigationController(rootViewController: userViewController)
         UIView.animateWithDuration(0.25, animations: {
             self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
         })
         
-        navigationController.transitioningDelegate = self
-        userViewController.interactor = self.interactor
-        self.presentViewController(navigationController, animated: true, completion: {
+        userViewController.transitioningDelegate = self
+        self.presentViewController(userViewController, animated: true, completion: {
             self.view.transform = CGAffineTransformIdentity;
         })
     }

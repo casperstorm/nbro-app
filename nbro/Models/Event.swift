@@ -63,6 +63,12 @@ struct Event {
         }
     }
     
+    enum RSVPStatus {
+        case Attending
+        case Unsure
+        case Unknown
+    }
+    
     let id: String
     let name: String
     let startDate: NSDate
@@ -70,6 +76,7 @@ struct Event {
     let longitude: CLLocationDegrees?
     let locationName: String
     let description: String
+    let rsvp: RSVPStatus?
     
     init?(dictionary: NSDictionary) {
         let dateFormatter = NSDateFormatter()
@@ -92,6 +99,18 @@ struct Event {
         self.longitude = longitude
         self.locationName = dictionary["place"]?["name"] as? String ?? "-"
         self.description = description
+        
+        if let rsvp = dictionary["rsvp_status"] as? String {
+            if(rsvp == "attending") {
+                self.rsvp = .Attending
+            } else if (rsvp == "unsure") {
+                self.rsvp = .Unsure
+            } else {
+                self.rsvp = .Unknown
+            }
+        } else {
+            self.rsvp = .Unknown
+        }
     }
     
     func formattedStartDate(dateFormat: DateFormat) -> String {

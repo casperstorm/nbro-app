@@ -86,8 +86,8 @@ class UserEventCell: UITableViewCell {
         iconImageView.snp_makeConstraints { (make) in
             make.centerY.equalTo(iconImageView.superview!)
             make.left.equalTo(22)
-            make.width.equalTo(12)
-            make.height.equalTo(18)
+            make.width.equalTo(19)
+            make.height.equalTo(17)
         }
         
     }

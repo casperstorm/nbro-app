@@ -107,6 +107,7 @@ class TextView: UITextView, NSLayoutManagerDelegate {
 
     override func drawRect(rect: CGRect) {
         var rects = [CGRect]()
+        let color = UIColor(hex: 0x76edff, alpha:  0.55) //0x76edff / 0xffdd00
         
         self.layoutManager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, self.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
             if rects.count < 2 { // Only support 2 lines
@@ -120,7 +121,7 @@ class TextView: UITextView, NSLayoutManagerDelegate {
             let usedRect = rects.first!
             
             let path = UIBezierPath(rect: CGRect(x: usedRect.origin.x - inset.left, y: 0, width: usedRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: usedRect.size.height + inset.top + inset.bottom))
-            UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+            color.setFill()
             path.fill()
         } else if rects.count == 2 {
             var topRect = rects.first!
@@ -134,19 +135,19 @@ class TextView: UITextView, NSLayoutManagerDelegate {
             
             if topRect.width > bottomRect.width {
                 let path = UIBezierPath(rect: CGRect(x: topRect.origin.x - inset.left, y: 0, width: topRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(topRect.size.height + inset.top + inset.bottom))))
-                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                color.setFill()
                 path.fill()
                 
                 let lastPath = UIBezierPath(rect: CGRect(x: bottomRect.origin.x - inset.left, y: CGFloat(Int(bottomRect.origin.y + inset.bottom)), width: bottomRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: bottomRect.size.height + inset.top))
-                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                color.setFill()
                 lastPath.fill()
             } else {
                 let path = UIBezierPath(rect: CGRect(x: topRect.origin.x - inset.left, y: 0, width: topRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(topRect.size.height + inset.top))))
-                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                color.setFill()
                 path.fill()
                 
                 let lastPath = UIBezierPath(rect: CGRect(x: bottomRect.origin.x - inset.left, y: CGFloat(Int(bottomRect.origin.y)), width: bottomRect.size.width + inset.left + inset.right + self.textContainerInset.left + self.textContainerInset.right, height: CGFloat(Int(bottomRect.size.height + inset.top + inset.bottom))))
-                UIColor(hex: 0x76edff, alpha: 0.55).setFill()
+                color.setFill()
                 lastPath.fill()
             }
             

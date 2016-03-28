@@ -10,9 +10,18 @@ import Foundation
 import Nuke
 
 class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    enum UserCellType: Int {
+        case ProfileCellType
+        case TextCellType
+        case EventCellType
+    }
+    
     var contentView = UserView()
-    var interactor:Interactor?
+    let interactor = Interactor()
     var events: [Event] = []
+    
+
     override func loadView() {
         super.loadView()
         view = contentView
@@ -21,27 +30,16 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        
+        self.contentView.tableView.hidden = true
+        loadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.ViewUser)
-        self.contentView.tableView.hidden = true
-        loadData()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .Black
-        self.navigationController?.navigationBarHidden = true
-        self.contentView.tableView.hidden = true
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
+
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -51,7 +49,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             FacebookManager.NBROEvents({ (nbroEvents) -> Void in
                 for event in userEvents {
                     let contains = nbroEvents.contains(event)
-                    if contains {
+                    let attending = event.rsvp == .Attending
+                    if contains && attending {
                         self.events.append(event)
                     }
                 }
@@ -117,16 +116,36 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.row == 0) {
+        let cellType = userCellTypeForIndexPath(indexPath)
+        if(cellType == .ProfileCellType) {
             return configureUserProfileCell(indexPath)
-        } else if(indexPath.row == 1) {
+        } else if(cellType == .TextCellType) {
             return configureUserTextCell(indexPath)
-        } else {
+        } else if(cellType == .EventCellType) {
             return configureUserEventCell(indexPath)
+        } else {
+            return UITableViewCell()
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        contentView.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let cellType = userCellTypeForIndexPath(indexPath)
+        if(cellType == .EventCellType) {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                UIView.animateWithDuration(0.25, animations: {
+                    self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                })
+                
+                let event = self.events[indexPath.row - 2]
+                let eventDetailViewController = EventDetailViewController(event: event)
+                eventDetailViewController.transitioningDelegate = self
+                eventDetailViewController.interactor = self.interactor
+                self.presentViewController(eventDetailViewController, animated: true, completion: {
+                    self.view.transform = CGAffineTransformIdentity;
+                })
+            }
+        }
 
     }
     
@@ -138,7 +157,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.userNameLabel.text = user.name.uppercaseString
             let request = ImageRequest(URLRequest: NSURLRequest(URL: user.imageURL))
             Nuke.taskWith(request) { response in
-                switch response {
+                 switch response {
                 case let .Success(image, _):
                     cell.userImageView.image = image.convertToGrayScale()
                 case .Failure(_): break
@@ -151,11 +170,12 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     func configureUserTextCell(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("text-cell", forIndexPath: indexPath) as! UserTextCell
         if(events.count == 0) {
-            cell.bodyLabel.text = "It looks like you don't have any upcoming events."
+            cell.bodyLabel.text = "It looks like you don't have any upcoming events. Remember, your commitment will be rewarded mile by mile."
 
         } else {
             let count = events.count
-            cell.bodyLabel.text = "You have \(count) upcoming events!"
+            let pluralEvent = (count == 1) ? "event" : "events"
+            cell.bodyLabel.text = "You have \(count) upcoming \(pluralEvent)!\nKeep it up, your commitment will be rewarded mile by mile."
         }
         return cell
     }
@@ -165,7 +185,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event-cell", forIndexPath: indexPath) as! UserEventCell
         cell.setTitleText(event.name.uppercaseString)
         cell.detailLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
-        cell.iconImageView.image = UIImage(named: "about_credit_icon")
+        cell.iconImageView.image = UIImage(named: "icon_event")
         return cell
     }
     
@@ -190,5 +210,27 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func cancelPressed() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: Helpers
+    
+    func userCellTypeForIndexPath(indexPath: NSIndexPath) -> UserCellType {
+        if(indexPath.row == 0) {
+            return .ProfileCellType
+        } else if (indexPath.row == 1) {
+            return .TextCellType
+        } else {
+            return .EventCellType
+        }
+    }
+}
+
+extension UserViewController: UIViewControllerTransitioningDelegate {
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
     }
 }

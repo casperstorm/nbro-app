@@ -18,8 +18,9 @@ class NotAuthenticatedView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        descriptionLabel.text = "NBRO is a club for passionate runners with a thing for sneakers and get-togethers. NBRO is without king, territory or rules. Everyone is welcome to join the 4+ weekly training sessions."
-        loginButton.setTitle("Show upcoming events".uppercaseString, forState: .Normal)
+        descriptionLabel.text = "In order to see your upcoming events, and the events you are able to participate in, we need you to login with Facebook."
+        
+        loginButton.setTitle("Go to login".uppercaseString, forState: .Normal)
         
         addSubview(descriptionLabel)
         addSubview(loginButton)
