@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */; };
 		181FC68ED212E98808EB164D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FC338CA0EF384A74A91FD /* Event.swift */; };
-		2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9C014E4848CAD8A82E5466 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05A1C6F785300A53017 /* EventCell.swift */; };
 		6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05C1C6F80C600A53017 /* String+Additions.swift */; };
 		6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */; };
@@ -54,6 +53,7 @@
 		6CD06B4B1C80501A00351A20 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B4A1C80501A00351A20 /* Interactor.swift */; };
 		6CD06B4D1C805FBC00351A20 /* AttendEventButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */; };
 		6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */; };
+		7C3FAC2CB4E2E18C784AF006 /* Pods_nbro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28A4103618D22CDAFD83965B /* Pods_nbro.framework */; };
 		D02E19051C6F793700D4C3D5 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E19041C6F793700D4C3D5 /* EventDetailViewController.swift */; };
 		D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E19061C6F794000D4C3D5 /* EventDetailView.swift */; };
 		D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */; };
@@ -63,8 +63,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07E660ECEE8004E91C4D7C6F /* Pods-nbro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nbro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nbro/Pods-nbro.debug.xcconfig"; sourceTree = "<group>"; };
 		181FC338CA0EF384A74A91FD /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
+		28A4103618D22CDAFD83965B /* Pods_nbro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nbro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C0EF05A1C6F785300A53017 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventCell.swift; path = Views/EventCell.swift; sourceTree = "<group>"; };
 		6C0EF05C1C6F80C600A53017 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Additions.swift"; path = "Extensions/String+Additions.swift"; sourceTree = "<group>"; };
 		6C2123EF1C6A753100DB7EE7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -112,15 +114,14 @@
 		6CD06B4A1C80501A00351A20 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interactor.swift; path = Managers/Interactor.swift; sourceTree = "<group>"; };
 		6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttendEventButtonView.swift; path = Views/AttendEventButtonView.swift; sourceTree = "<group>"; };
 		6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatedBackgroundView.swift; path = Views/AnimatedBackgroundView.swift; sourceTree = "<group>"; };
-		88FF588C998267B45821BDEE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9C014E4848CAD8A82E5466 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nbro.release.xcconfig"; path = "Pods/Target Support Files/Pods-nbro/Pods-nbro.release.xcconfig"; sourceTree = "<group>"; };
 		D02E19041C6F793700D4C3D5 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		D02E19061C6F794000D4C3D5 /* EventDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
 		D02E190A1C6FA6D100D4C3D5 /* Exo2-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-SemiBold.ttf"; sourceTree = "<group>"; };
 		D061ABD51C824DB60094CBAD /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwitchView.swift; path = Views/SwitchView.swift; sourceTree = "<group>"; };
 		D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthenticatedView.swift; sourceTree = "<group>"; };
 		D0B0F8FA1C74F79800955461 /* Exo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Regular.ttf"; sourceTree = "<group>"; };
-		E92275841A0C1BB365AF4F45 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F4B46A226861FCB70A3CF50 /* Pods.framework in Frameworks */,
+				7C3FAC2CB4E2E18C784AF006 /* Pods_nbro.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +302,8 @@
 			children = (
 				6C9A5C281C60BF72007459A8 /* nbro */,
 				6C9A5C271C60BF72007459A8 /* Products */,
-				D740DC55ADB0BD5D902C4B39 /* Pods */,
 				A05B29ACBF8D0F7572CDE138 /* Frameworks */,
+				8F26A26E7E050EE678753DC9 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -343,10 +344,20 @@
 			name = User;
 			sourceTree = "<group>";
 		};
+		8F26A26E7E050EE678753DC9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07E660ECEE8004E91C4D7C6F /* Pods-nbro.debug.xcconfig */,
+				C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A05B29ACBF8D0F7572CDE138 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				8E9C014E4848CAD8A82E5466 /* Pods.framework */,
+				28A4103618D22CDAFD83965B /* Pods_nbro.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -374,15 +385,6 @@
 			name = EventDetail;
 			sourceTree = "<group>";
 		};
-		D740DC55ADB0BD5D902C4B39 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				88FF588C998267B45821BDEE /* Pods.debug.xcconfig */,
-				E92275841A0C1BB365AF4F45 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,13 +392,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6C9A5C381C60BF72007459A8 /* Build configuration list for PBXNativeTarget "nbro" */;
 			buildPhases = (
-				05E1ACDE96F647C4D2790026 /* Check Pods Manifest.lock */,
+				E0061868EC26A05A31086526 /* [CP] Check Pods Manifest.lock */,
 				6C9A5C221C60BF72007459A8 /* Sources */,
 				6C9A5C231C60BF72007459A8 /* Frameworks */,
 				6C9A5C241C60BF72007459A8 /* Resources */,
-				34DC1683CDD0DBD4F1F35FE7 /* Embed Pods Frameworks */,
-				3B9D4AD1FDEFC73B288A6136 /* Copy Pods Resources */,
 				6CA29E191C7F67AC0086FE67 /* Fabric */,
+				91C20A8A6848C4C751F865BF /* [CP] Embed Pods Frameworks */,
+				193689D309A4D7DBEA36044C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -460,49 +462,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		05E1ACDE96F647C4D2790026 /* Check Pods Manifest.lock */ = {
+		193689D309A4D7DBEA36044C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		34DC1683CDD0DBD4F1F35FE7 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3B9D4AD1FDEFC73B288A6136 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nbro/Pods-nbro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6CA29E191C7F67AC0086FE67 /* Fabric */ = {
@@ -518,6 +490,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 25b0af9cb9222e07a9f9087f58cfd627ea25f281 eb4873ecef83394bf14bbf3a911da31385466ad68104591d64cf315199ca85a2";
+		};
+		91C20A8A6848C4C751F865BF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nbro/Pods-nbro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0061868EC26A05A31086526 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -658,7 +660,7 @@
 		};
 		6C9A5C391C60BF72007459A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88FF588C998267B45821BDEE /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 07E660ECEE8004E91C4D7C6F /* Pods-nbro.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -678,7 +680,7 @@
 		};
 		6C9A5C3A1C60BF72007459A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E92275841A0C1BB365AF4F45 /* Pods.release.xcconfig */;
+			baseConfigurationReference = C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
