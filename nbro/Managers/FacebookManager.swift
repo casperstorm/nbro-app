@@ -33,6 +33,19 @@ class FacebookManager {
         return FBSDKAccessToken.currentAccessToken() != nil
     }
     
+    class func detailedEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+        let params = ["fields": "attending_count, interested_count"]
+        let graphPath = event.id
+        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
+        graphRequest.startWithCompletionHandler({
+            (connection, result, error) -> Void in
+            guard let resultDict = result as? NSDictionary else {
+                return
+            }
+            completion(result: resultDict)
+        })
+    }
+    
     class func NBROEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()

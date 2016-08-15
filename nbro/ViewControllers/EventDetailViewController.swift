@@ -89,17 +89,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
                 self?.declinetEvent()
             }
         }
-//        contentView.eventView.attentButtonView.button.addTarget(self, action: "attentEvent", forControlEvents: .TouchUpInside)
     }
     
     private func setupSubviews() {
         contentView.eventView.titleLabel.text = event.name.uppercaseString
-        contentView.eventView.dateLabel.text = event.formattedStartDate(.Date(includeYear: true)).uppercaseString
+        contentView.eventView.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time)) – \(event.locationName)".uppercaseString
         contentView.eventView.descriptionTextWithAjustedLineHeight(event.description)
-        contentView.eventView.timeDetailView.titleLabel.text = "Time".uppercaseString
-        contentView.eventView.timeDetailView.detailLabel.text = event.formattedStartDate(.Time).uppercaseString
-        contentView.eventView.locationDetailView.titleLabel.text = "Location".uppercaseString
-        contentView.eventView.locationDetailView.detailLabel.text = event.locationName.uppercaseString
+
+        refreshRunnersCount()
         contentView.eventView.confettiView.delegate = self
     }
     
@@ -176,6 +173,25 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         default:
             break
         }
+    }
+    
+    //MARK: Helpers
+    
+    func refreshRunnersCount() {
+        self.contentView.eventView.attendingDetailView.titleLabel.text = "Attending".uppercaseString
+        self.contentView.eventView.interestedDetailView.titleLabel.text = "Interested".uppercaseString
+        
+        FacebookManager.detailedEvent(event) { (result) in
+            guard   let attending = result["attending_count"] as? Int,
+                    let interested = result["interested_count"] as? Int else { return }
+            
+            self.setRunnersCount(attending, interested: interested)
+        }
+    }
+    
+    func setRunnersCount(attending: Int, interested: Int) {
+        self.contentView.eventView.attendingDetailView.detailLabel.text = "\(attending)".uppercaseString
+        self.contentView.eventView.interestedDetailView.detailLabel.text = "\(interested)".uppercaseString
     }
     
     //MARK: L360ConfettiAreaDelegate

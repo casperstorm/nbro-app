@@ -50,16 +50,16 @@ class DetailLabelView: UIView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.defaultRegularFontOfSize(12)
-        label.textColor = UIColor(hex: 0x737373)
-        label.textAlignment = .Left
+        label.font = UIFont.defaultSemiBoldFontOfSize(14)
+        label.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+        label.textAlignment = .Center
         return label
     }
     static func detailLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.titleBoldFontOfSize(22)
+        label.font = UIFont.titleBoldFontOfSize(38)
         label.textColor = .blackColor()
-        label.textAlignment = .Left
+        label.textAlignment = .Center
         return label
     }
 }

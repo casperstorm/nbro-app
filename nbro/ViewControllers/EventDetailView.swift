@@ -146,8 +146,8 @@ class EventView: UIView {
     let attendSeparator = EventSeparator()
     let confettiView = L360ConfettiArea.confettiArea()
     
-    let timeDetailView = DetailLabelView()
-    let locationDetailView = DetailLabelView()
+    let attendingDetailView = DetailLabelView()
+    let interestedDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
     let soundPlayer: AVAudioPlayer = {
         let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff")
@@ -175,7 +175,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, timeDetailView, locationDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, attendingDetailView, interestedDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -194,30 +194,31 @@ class EventView: UIView {
             make.top.equalTo(dateLabel.snp_bottom).offset(15)
         }
         
-        timeDetailView.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(timeDetailView.superview!).offset(40)
+        attendingDetailView.snp_makeConstraints { (make) -> Void in
+            make.leading.equalTo(attendingDetailView.superview!).offset(40)
             make.top.equalTo(titleSeparator.snp_bottom).offset(10)
-            make.width.equalTo(50)
+            make.width.equalTo(100)
+            make.height.equalTo(60)
         }
         
         verticalSeparator.snp_makeConstraints { (make) in
-            make.leading.equalTo(timeDetailView.snp_trailing).offset(20)
+            make.centerX.equalTo(self)
             make.top.equalTo(titleSeparator.snp_bottom)
             make.width.equalTo(1)
             make.bottom.equalTo(descriptionSeparator.snp_top)
         }
         
-        locationDetailView.snp_makeConstraints { (make) -> Void in
+        interestedDetailView.snp_makeConstraints { (make) -> Void in
             make.leading.equalTo(verticalSeparator.snp_trailing).offset(20)
-            make.trailing.equalTo(locationDetailView.superview!).offset(-25)
-            make.height.top.equalTo(timeDetailView)
+            make.trailing.equalTo(interestedDetailView.superview!).offset(-25)
+            make.height.top.equalTo(attendingDetailView)
         }
         
         descriptionSeparator.snp_makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionSeparator.superview!)
-            make.top.equalTo(locationDetailView.snp_bottom).offset(10)
+            make.top.equalTo(interestedDetailView.snp_bottom).offset(10)
         }
-        
+
         attentButtonView.snp_makeConstraints { (make) in
             make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
             make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
