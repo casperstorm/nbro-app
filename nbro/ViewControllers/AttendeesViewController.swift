@@ -67,30 +67,27 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     //MARK: Data
     
     private func loadData() {
-        
         if state == .Attendees {
             FacebookManager.attendeesForEvent(event) { (result) in
                 guard let dict = result["attending"], let dataArray = dict["data"] as? [NSDictionary] else { return }
-                self.attendees = dataArray.map({ (data) -> FacebookProfile in
-                    return FacebookProfile(dictionary: data)!
-                })
-                self.contentView.tableView.hidden = false
-                self.fadeoutLoadingIndicator()
-                self.contentView.tableView.reloadData()
-                self.animateCellsEntrance(true)
+                self.handleData(dataArray)
             }
         } else if state == .Interested {
             FacebookManager.interestedForEvent(event) { (result) in
                 guard let dict = result["maybe"], let dataArray = dict["data"] as? [NSDictionary] else { return }
-                self.attendees = dataArray.map({ (data) -> FacebookProfile in
-                    return FacebookProfile(dictionary: data)!
-                })
-                self.contentView.tableView.hidden = false
-                self.fadeoutLoadingIndicator()
-                self.contentView.tableView.reloadData()
-                self.animateCellsEntrance(true)
+                self.handleData(dataArray)
             }
         }
+    }
+    
+    private func handleData(result: [NSDictionary]) {
+        self.attendees = result.map({ (data) -> FacebookProfile in
+            return FacebookProfile(dictionary: data)!
+        })
+        self.contentView.tableView.hidden = false
+        self.fadeoutLoadingIndicator()
+        self.contentView.tableView.reloadData()
+        self.animateCellsEntrance(true)
     }
     
     
@@ -128,7 +125,6 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         let attendee = attendees[indexPath.row]
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/\(attendee.id)/")!)
     }
-
     
     //MARK: Actions
     
