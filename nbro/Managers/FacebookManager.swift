@@ -46,6 +46,26 @@ class FacebookManager {
         })
     }
     
+    class func attendeesForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+        profilesForEvent(event, params: ["fields": "attending.limit(999){name,picture.width(600)}"], completion: completion)
+    }
+    
+    class func interestedForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+        profilesForEvent(event, params: ["fields": "maybe.limit(999){name,picture.width(600)}"], completion: completion)
+    }
+    
+    private class func profilesForEvent(event: Event, params: [String:String], completion: (result: NSDictionary) -> Void) {
+        let graphPath = event.id
+        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
+        graphRequest.startWithCompletionHandler({
+            (connection, result, error) -> Void in
+            guard let resultDict = result as? NSDictionary else {
+                return
+            }
+            completion(result: resultDict)
+        })
+    }
+    
     class func NBROEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
@@ -89,11 +109,11 @@ class FacebookManager {
         })
     }
     
-    class func user(completion: (user: User) -> Void) {
+    class func user(completion: (user: FacebookProfile) -> Void) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(600)"])
         graphRequest.startWithCompletionHandler({
             (connection, result, error) -> Void in
-            guard let dict = result as? NSDictionary, user = User(dictionary: dict) else {
+            guard let dict = result as? NSDictionary, user = FacebookProfile(dictionary: dict) else {
                 return
             }
             completion(user: user)

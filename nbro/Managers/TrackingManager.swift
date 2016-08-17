@@ -27,6 +27,7 @@ class TrackingManager {
         case ViewUser
         case ViewCredits
         case ViewLogin
+        case ViewAttendees
     }
     
     class func trackUser() {
@@ -64,6 +65,8 @@ class TrackingManager {
             FBSDKAppEvents.logEvent("Logout")
         case .ViewUser:
             FBSDKAppEvents.logEvent("ViewUser")
+        case .ViewAttendees:
+            FBSDKAppEvents.logEvent("ViewAttendees")
         }
         
     }

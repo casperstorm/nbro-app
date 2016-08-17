@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User {
+struct FacebookProfile {
     let id: String
     let name: String
     let imageURL: NSURL

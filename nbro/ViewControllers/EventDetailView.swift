@@ -145,10 +145,11 @@ class EventView: UIView {
     let attentButtonView = AttentEventButtonView()
     let attendSeparator = EventSeparator()
     let confettiView = L360ConfettiArea.confettiArea()
-    
     let attendingDetailView = DetailLabelView()
     let interestedDetailView = DetailLabelView()
     let descriptionLabel = UILabel.descriptionLabel()
+    let attendeesButton = UIButton.invisibleButton()
+    let interestedButton = UIButton.invisibleButton()
     let soundPlayer: AVAudioPlayer = {
         let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff")
         let data = NSData(contentsOfURL: soundURL!)
@@ -175,7 +176,7 @@ class EventView: UIView {
     }
     
     private func setupSubviews() {
-        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, attendingDetailView, interestedDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView]
+        let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, attendingDetailView, interestedDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView, attendeesButton, interestedButton]
         subviews.forEach { addSubview($0) }
     }
     
@@ -199,6 +200,20 @@ class EventView: UIView {
             make.top.equalTo(titleSeparator.snp_bottom).offset(10)
             make.width.equalTo(100)
             make.height.equalTo(60)
+        }
+        
+        attendeesButton.snp_makeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(verticalSeparator.snp_left)
+            make.top.equalTo(titleSeparator.snp_bottom)
+            make.bottom.equalTo(descriptionSeparator.snp_top)
+        }
+        
+        interestedButton.snp_makeConstraints { (make) in
+            make.right.equalTo(self)
+            make.left.equalTo(verticalSeparator.snp_right)
+            make.top.equalTo(titleSeparator.snp_bottom)
+            make.bottom.equalTo(descriptionSeparator.snp_top)
         }
         
         verticalSeparator.snp_makeConstraints { (make) in
@@ -385,6 +400,10 @@ private extension UIButton {
         button.setImage(UIImage(named: "detail_facebook_icon"), forState: .Normal)
         
         return button
+    }
+    
+    static func invisibleButton() -> UIButton {
+        return UIButton()
     }
 }
 

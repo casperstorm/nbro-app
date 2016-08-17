@@ -98,9 +98,35 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
 
         refreshRunnersCount()
         contentView.eventView.confettiView.delegate = self
+        contentView.eventView.attendeesButton.addTarget(self, action: #selector(attendeesButtonPressed), forControlEvents: .TouchUpInside)
+        contentView.eventView.interestedButton.addTarget(self, action: #selector(interestedButtonPressed), forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions
+    
+    func attendeesButtonPressed() {
+        let attendeesViewController = AttendeesViewController(event: event, state: .Attendees)
+        UIView.animateWithDuration(0.25, animations: {
+            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        })
+        
+        attendeesViewController.transitioningDelegate = self
+        self.presentViewController(attendeesViewController, animated: true, completion: {
+            self.view.transform = CGAffineTransformIdentity;
+        })
+    }
+    
+    func interestedButtonPressed() {
+        let attendeesViewController = AttendeesViewController(event: event, state: .Interested)
+        UIView.animateWithDuration(0.25, animations: {
+            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        })
+        
+        attendeesViewController.transitioningDelegate = self
+        self.presentViewController(attendeesViewController, animated: true, completion: {
+            self.view.transform = CGAffineTransformIdentity;
+        })
+    }
     
     func cancelPressed() {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -208,3 +234,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         }
     }
 }
+
+extension EventDetailViewController: UIViewControllerTransitioningDelegate {
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor!.hasStarted ? interactor : nil
+    }
+}
+
