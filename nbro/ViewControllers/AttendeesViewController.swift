@@ -125,6 +125,8 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let attendee = attendees[indexPath.row]
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/\(attendee.id)/")!)
     }
 
     

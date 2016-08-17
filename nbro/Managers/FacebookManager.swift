@@ -47,11 +47,11 @@ class FacebookManager {
     }
     
     class func attendeesForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
-        profilesForEvent(event, params: ["fields": "attending.limit(999){name,picture.width(600)}"], completion: completion)
+        profilesForEvent(event, params: ["fields": "attending.limit(999){name,picture.width(400)}"], completion: completion)
     }
     
     class func interestedForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
-        profilesForEvent(event, params: ["fields": "maybe.limit(999){name,picture.width(600)}"], completion: completion)
+        profilesForEvent(event, params: ["fields": "maybe.limit(999){name,picture.width(400)}"], completion: completion)
     }
     
     private class func profilesForEvent(event: Event, params: [String:String], completion: (result: NSDictionary) -> Void) {
