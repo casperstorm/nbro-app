@@ -64,6 +64,10 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     //MARK: Data
     
     private func loadData() {
