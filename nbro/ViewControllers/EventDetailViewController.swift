@@ -144,7 +144,9 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
             contentView.eventView.fireConfetti()
             
             FacebookManager.attentEvent(event) { (success, error) in
-                if(!success) {
+                if(success) {
+                    self.refreshRunnersCount()
+                } else {
                     self.contentView.eventView.attentButtonView.switchView.isLeft = true
                 }
             }
@@ -152,6 +154,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
             FacebookManager.attentEvent(event) { (success, error) in
                 if(success) {
                     self.contentView.eventView.fireConfetti()
+                    self.refreshRunnersCount()
                 } else {
                    self.contentView.eventView.attentButtonView.switchView.isLeft = true
                 }
@@ -161,7 +164,9 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     func declinetEvent() {
         FacebookManager.declineEvent(event) { (success, error) -> Void in
-            if(!success) {
+            if(success) {
+                self.refreshRunnersCount()
+            } else {
                 self.contentView.eventView.attentButtonView.switchView.isLeft = false
             }
         }
