@@ -35,7 +35,7 @@ class AboutActionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(topSeparatorView)
         contentView.addSubview(bottomSeparatorView)
@@ -43,7 +43,7 @@ class AboutActionCell: UITableViewCell {
         contentView.addSubview(iconImageView)
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         titleLabel.snp_makeConstraints { (make) in
             make.top.bottom.equalTo(titleLabel.superview!).inset(18)
             make.left.equalTo(iconImageView.snp_right).offset(22)
@@ -71,13 +71,13 @@ class AboutActionCell: UITableViewCell {
         }
     }
     
-    func setTitleText(title: String) {
+    func setTitleText(_ title: String) {
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
         titleLabel.attributedText = attrString
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         let color = topSeparatorView.backgroundColor
         super.setSelected(selected, animated: animated)
         
@@ -87,7 +87,7 @@ class AboutActionCell: UITableViewCell {
         }
     }
     
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         let color = topSeparatorView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
         
@@ -112,8 +112,8 @@ private extension UIImageView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Left
+        label.textColor = .white
+        label.textAlignment = .left
         label.font = UIFont.defaultMediumFontOfSize(13)
         return label
     }

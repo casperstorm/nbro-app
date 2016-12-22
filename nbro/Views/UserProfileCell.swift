@@ -16,27 +16,27 @@ class UserProfileCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clearColor()
-        selectionStyle = .None;
+        backgroundColor = .clear
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
         
         userImageView.layer.cornerRadius = 45
         userImageView.clipsToBounds = true
-        userImageView.contentMode = .ScaleAspectFill
+        userImageView.contentMode = .scaleAspectFill
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         userImageView.snp_makeConstraints { (make) in
             make.top.equalTo(userImageView.superview!).inset(40)
             make.centerX.equalTo(userImageView.superview!)
@@ -55,8 +55,8 @@ class UserProfileCell: UITableViewCell {
 private extension UILabel {
     static func userNameLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = UIColor.whiteColor()
-        label.textAlignment = .Center
+        label.textColor = UIColor.white
+        label.textAlignment = .center
         label.font = UIFont.titleBoldFontOfSize(25)
         return label
     }

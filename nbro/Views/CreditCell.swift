@@ -38,7 +38,7 @@ class CreditCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(detailLabel)
@@ -49,7 +49,7 @@ class CreditCell: UITableViewCell {
         contentView.addSubview(detailIconImageView)
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         titleLabel.snp_makeConstraints { (make) in
             make.left.top.right.equalTo(titleLabel.superview!)
             make.bottom.equalTo(detailLabel.snp_top)
@@ -91,13 +91,13 @@ class CreditCell: UITableViewCell {
         }
     }
     
-    func setTitleText(title: String) {
+    func setTitleText(_ title: String) {
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
         titleLabel.attributedText = attrString
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         let color = topSeparatorView.backgroundColor
         super.setSelected(selected, animated: animated)
         
@@ -107,7 +107,7 @@ class CreditCell: UITableViewCell {
         }
     }
     
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         let color = topSeparatorView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
         
@@ -132,15 +132,15 @@ private extension UIImageView {
 private extension UILabel {
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Left
+        label.textColor = .white
+        label.textAlignment = .left
         label.font = UIFont.defaultMediumFontOfSize(14)
         return label
     }
     static func detailLabel() -> UILabel {
         let label = UILabel()
         label.textColor = UIColor(hex: 0xa6a6a6)
-        label.textAlignment = .Left
+        label.textAlignment = .left
         label.font = UIFont.defaultLightFontOfSize(12)
         return label
     }

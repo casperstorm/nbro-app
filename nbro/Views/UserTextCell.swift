@@ -15,8 +15,8 @@ class UserTextCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clearColor()
-        selectionStyle = .None;
+        backgroundColor = .clear
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
@@ -26,12 +26,12 @@ class UserTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(bodyLabel)
         
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         bodyLabel.snp_makeConstraints { (make) in
             make.width.equalTo(bodyLabel.superview!).inset(40)
             make.centerX.equalTo(bodyLabel.superview!)
@@ -45,7 +45,7 @@ private extension UILabel {
     static func bodyLabel() -> UILabel {
         let label = UILabel()
         label.textColor = UIColor(hex: 0x959595)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.font = UIFont.defaultLightFontOfSize(15)
         label.numberOfLines = 0
         return label

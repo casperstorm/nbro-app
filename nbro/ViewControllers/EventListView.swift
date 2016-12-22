@@ -14,12 +14,12 @@ class EventListView: UIView {
     
     var showNotAuthenticatedView = false {
         didSet {
-            notAuthenticatedView.hidden = !showNotAuthenticatedView
-            tableView.hidden = showNotAuthenticatedView
+            notAuthenticatedView.isHidden = !showNotAuthenticatedView
+            tableView.isHidden = showNotAuthenticatedView
             
             if showNotAuthenticatedView && !oldValue {
                 notAuthenticatedView.alpha = 0.0
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.notAuthenticatedView.alpha = 1.0
                 })
 
@@ -39,8 +39,8 @@ class EventListView: UIView {
 
     init() {
         super.init(frame: CGRect.zero)
-        notAuthenticatedView.hidden = true
-        backgroundColor = .clearColor()
+        notAuthenticatedView.isHidden = true
+        backgroundColor = .clear
         setupSubviews()
         defineLayout()        
     }
@@ -49,7 +49,7 @@ class EventListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         tableView.addSubview(refreshControl)
         addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
@@ -64,7 +64,7 @@ class EventListView: UIView {
         }
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         imageContainerView.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(imageContainerView.superview!)
         }
@@ -120,17 +120,17 @@ class EventListView: UIView {
     
     func stopBackgroundAnimation() {
         self.backgroundImageView.layer.removeAllAnimations()
-        self.backgroundImageView.transform = CGAffineTransformIdentity
+        self.backgroundImageView.transform = CGAffineTransform.identity
     }
     
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         
-        UIView.animateWithDuration(90, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
-            self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
+        UIView.animate(withDuration: 90, delay: 0, options: [.autoreverse, .repeat, .curveLinear], animations: { () -> Void in
+            self.backgroundImageView.transform = CGAffineTransform(translationX: -offset, y: 0)
             
         }) { (finished) -> Void in
-            self.backgroundImageView.transform = CGAffineTransformIdentity
+            self.backgroundImageView.transform = CGAffineTransform.identity
         }
     }
     
@@ -146,18 +146,18 @@ class EventListView: UIView {
                 crossfade.fromValue = fromImage
                 crossfade.toValue = toImage
                 crossfade.delegate = self
-                crossfade.removedOnCompletion = true
-                backgroundImageView.layer .addAnimation(crossfade, forKey: "animateContents")
+                crossfade.isRemovedOnCompletion = true
+                backgroundImageView.layer .add(crossfade, forKey: "animateContents")
                 backgroundImageView.image = toImage;
             }
         }
     }
     
 
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         let didFinishAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
         if(!didFinishAnimating) {
-            backgroundImageView.layer.removeAnimationForKey("animateContents")
+            backgroundImageView.layer.removeAnimation(forKey: "animateContents")
         }
     }
 }
@@ -165,7 +165,7 @@ class EventListView: UIView {
 private extension UIRefreshControl {
     static func refreshControl() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .whiteColor()
+        refreshControl.tintColor = .white
         return refreshControl
     }
 }
@@ -173,10 +173,10 @@ private extension UIRefreshControl {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(EventCell.self, forCellReuseIdentifier: "event")
-        tableView.registerClass(LogoCell.self, forCellReuseIdentifier: "logo")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(EventCell.self, forCellReuseIdentifier: "event")
+        tableView.register(LogoCell.self, forCellReuseIdentifier: "logo")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
         return tableView
@@ -197,7 +197,7 @@ private extension UIImageView {
 private extension UIButton {
     static func aboutButton() -> UIButton {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "about_button"), forState: .Normal)
+        button.setBackgroundImage(UIImage(named: "about_button"), for: UIControlState())
         return button
     }
 }

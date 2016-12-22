@@ -14,8 +14,8 @@ class AboutLogoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .blackColor()
-        selectionStyle = .None;
+        backgroundColor = .black
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
@@ -25,11 +25,11 @@ class AboutLogoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(runnerLogoView)
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         runnerLogoView.snp_makeConstraints { (make) in
             make.top.equalTo(runnerLogoView.superview!).inset(30)
             make.bottom.equalTo(runnerLogoView.superview!).inset(10)

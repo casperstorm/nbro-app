@@ -13,21 +13,21 @@ import SnapKit
 class EventCell: UITableViewCell {
     let nameTextView = TextView.nameTextView()
     let dateLabel = UILabel.dateLabel()
-    private static let DefaultMargin: CGFloat = 22
+    fileprivate static let DefaultMargin: CGFloat = 22
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None;
+        backgroundColor = UIColor.clear
+        selectionStyle = .none;
 
         setupSubviews()
         defineLayouts()
         
         nameTextView.textContainerInset = UIEdgeInsets(top: 24, left: 7, bottom: 25, right: 10)
         nameTextView.font = UIFont.titleBoldFontOfSize(42)
-        nameTextView.textColor = UIColor.whiteColor()
-        nameTextView.backgroundColor = UIColor.clearColor()
+        nameTextView.textColor = UIColor.white
+        nameTextView.backgroundColor = UIColor.clear
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,7 +51,7 @@ class EventCell: UITableViewCell {
         }
     }
     
-    func nameLabelText(name: String) {
+    func nameLabelText(_ name: String) {
         let attrString = NSMutableAttributedString(string: name)
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 0.7
@@ -59,15 +59,15 @@ class EventCell: UITableViewCell {
                                                                                 name.characters.count))
         attrString.addAttribute(NSFontAttributeName, value: UIFont.titleBoldFontOfSize(42), range: NSRange(location: 0, length:
                                                                                 name.characters.count))
-        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length:
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length:
             name.characters.count))
 
         nameTextView.attributedText = attrString
         nameTextView.setNeedsDisplay()
     }
     
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
-        UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseOut, animations: { 
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: { 
             self.nameTextView.alpha = highlighted ? 0.6 : 1.0
             }) { (_) in
         }
@@ -78,7 +78,7 @@ private extension UILabel {
     static func dateLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.defaultMediumFontOfSize(14)
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.white
         return label
     }
 }
@@ -86,12 +86,12 @@ private extension UILabel {
 class TextView: UITextView, NSLayoutManagerDelegate {
     static func nameTextView() -> TextView {
         let label = TextView()
-        label.editable = false
-        label.userInteractionEnabled = false
-        label.scrollEnabled = false
+        label.isEditable = false
+        label.isUserInteractionEnabled = false
+        label.isScrollEnabled = false
         label.textContainer.maximumNumberOfLines = 2;
         label.font = UIFont.titleBoldFontOfSize(42)
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.white
         
         return label
     }
@@ -105,11 +105,11 @@ class TextView: UITextView, NSLayoutManagerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         var rects = [CGRect]()
         let color = UIColor(hex: 0x76edff, alpha:  0.55) //0x76edff / 0xffdd00
         
-        self.layoutManager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, self.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
+        self.layoutManager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, self.text.lengthOfBytes(using: String.Encoding.utf8))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
             if rects.count < 2 { // Only support 2 lines
                 rects.append(usedRect)
             }

@@ -10,27 +10,27 @@ import UIKit
 
 
 extension UIFont {
-    class func defaultLightFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultLightFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-Light", size: size)!
     }
     
-    class func defaultMediumFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultMediumFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-Medium", size: size)!
     }
     
-    class func defaultBoldFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultBoldFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-Bold", size: size)!
     }
     
-    class func defaultSemiBoldFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultSemiBoldFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-SemiBold", size: size)!
     }
     
-    class func defaultRegularFontOfSize(size: CGFloat) -> UIFont {
+    class func defaultRegularFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Exo2-Regular", size: size)!
     }
     
-    class func titleBoldFontOfSize(size: CGFloat) -> UIFont {
+    class func titleBoldFontOfSize(_ size: CGFloat) -> UIFont {
         return UIFont(name: "MyriadPro-BoldCond", size: size)!
     }
 }

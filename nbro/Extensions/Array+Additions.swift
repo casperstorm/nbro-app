@@ -9,13 +9,13 @@
 import Foundation
 
 extension Array where Element: Equatable {
-    mutating func removeObject(object: Element) {
-        if let index = self.indexOf(object) {
-            self.removeAtIndex(index)
+    mutating func removeObject(_ object: Element) {
+        if let index = self.index(of: object) {
+            self.remove(at: index)
         }
     }
     
-    mutating func removeObjectsInArray(array: [Element]) {
+    mutating func removeObjectsInArray(_ array: [Element]) {
         for object in array {
             self.removeObject(object)
         }
@@ -37,7 +37,7 @@ extension Array {
     var chooseOne: Element {
         return self[Int(arc4random_uniform(UInt32(count)))]
     }
-    func choose(n: Int) -> [Element] {
+    func choose(_ n: Int) -> [Element] {
         return Array(shuffle.prefix(n))
     }
 }

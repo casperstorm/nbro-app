@@ -20,16 +20,16 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     let mapOverlay = UIImageView(image: UIImage(named: "map_overlay"))
     let bottomView = UIView()
     let mapBoxImageView = UIImageView.mapBoxImageView()
-    private let scrollView = EventScrollView()
+    fileprivate let scrollView = EventScrollView()
     let eventView = EventView()
     let panGestureRecognizer = UIPanGestureRecognizer()
     let topInset: CGFloat
 
     init() {
-        let screenHeight = UIScreen.mainScreen().bounds.height
+        let screenHeight = UIScreen.main.bounds.height
         self.topInset = screenHeight * 0.32
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
         
@@ -41,12 +41,12 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         scrollView.delegate = self
         mapView.delegate = self
         
-        bottomView.backgroundColor = .blackColor()
+        bottomView.backgroundColor = .black
         panGestureRecognizer.delegate = self
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        let point = gestureRecognizer.locationInView(gestureRecognizer.view)
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        let point = gestureRecognizer.location(in: gestureRecognizer.view)
         let offset = scrollView.contentOffset.y + topInset
         if point.y + offset <= topInset {
             return true
@@ -55,27 +55,27 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         }
     }
     
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
             return false
         }
         
-        let velocity = panGestureRecognizer.velocityInView(gestureRecognizer.view)
+        let velocity = panGestureRecognizer.velocity(in: gestureRecognizer.view)
         
         return velocity.y > 0.0
     }
     
-    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
+    func addAnnotationAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
         let annotation = MGLPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
     
-    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
         return MGLAnnotationImage(image: UIImage(named: "pin")!, reuseIdentifier: "Pin")
     }
     
-    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return false
     }
 
@@ -83,7 +83,7 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addGestureRecognizer(panGestureRecognizer)
         let subviews = [mapView, mapOverlay, bottomView, mapBoxImageView, cancelButton, scrollView, facebookButton]
         subviews.forEach { addSubview($0) }
@@ -91,8 +91,8 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         scrollView.addSubview(eventView)
     }
     
-    private func defineLayout() {
-        let screenHeight = UIScreen.mainScreen().bounds.height
+    fileprivate func defineLayout() {
+        let screenHeight = UIScreen.main.bounds.height
 
         mapView.snp_makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapView.superview!)
@@ -151,8 +151,8 @@ class EventView: UIView {
     let attendeesButton = UIButton.invisibleButton()
     let interestedButton = UIButton.invisibleButton()
     let soundPlayer: AVAudioPlayer = {
-        let soundURL = NSBundle.mainBundle().URLForResource("pop", withExtension: "aiff")
-        let data = NSData(contentsOfURL: soundURL!)
+        let soundURL = Bundle.main.url(forResource: "pop", withExtension: "aiff")
+        let data = try? Data(contentsOf: soundURL!)
         let player = try! AVAudioPlayer(data: data!)
         player.prepareToPlay()
         
@@ -161,7 +161,7 @@ class EventView: UIView {
 
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .whiteColor()
+        backgroundColor = .white
         attendSeparator.showDots = false
         verticalSeparator.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)
         setupSubviews()
@@ -175,12 +175,12 @@ class EventView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [titleLabel, dateLabel, titleSeparator, descriptionLabel, attendingDetailView, interestedDetailView, descriptionSeparator, attendSeparator, verticalSeparator, attentButtonView, confettiView, attendeesButton, interestedButton]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         titleLabel.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.top.equalTo(titleLabel.superview!).inset(EdgeInsetsMake(25, left: 25, bottom: 0, right: 25))
         }
@@ -256,7 +256,7 @@ class EventView: UIView {
         }
     }
     
-    func descriptionTextWithAjustedLineHeight(text: String) {
+    func descriptionTextWithAjustedLineHeight(_ text: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4.0
         let attrString = NSMutableAttributedString(string: text)
@@ -268,16 +268,16 @@ class EventView: UIView {
         soundPlayer.currentTime = 0
         soundPlayer.play()
         
-        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
-        confettiView.blastFrom(CGPointMake(150, 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
+        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
+        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
     }
     
     class EventSeparator: UIView {
-        private class Circle: UIView {
+        fileprivate class Circle: UIView {
             init(cornerRadius: CGFloat) {
                 super.init(frame: CGRect.zero)
                 
-                backgroundColor = .blackColor()
+                backgroundColor = .black
                 layer.cornerRadius = cornerRadius
                 layer.masksToBounds = true
                 snp_makeConstraints { (make) -> Void in
@@ -291,16 +291,16 @@ class EventView: UIView {
             
         }
         
-        private let leftCircle = Circle(cornerRadius: 5)
-        private let rightCircle = Circle(cornerRadius: 5)
+        fileprivate let leftCircle = Circle(cornerRadius: 5)
+        fileprivate let rightCircle = Circle(cornerRadius: 5)
         
         var showDots: Bool = true {
             didSet {
-                leftCircle.hidden = !self.showDots
-                rightCircle.hidden = !self.showDots
+                leftCircle.isHidden = !self.showDots
+                rightCircle.isHidden = !self.showDots
             }
         }
-        private let line: UIView = {
+        fileprivate let line: UIView = {
             let view = UIView()
             view.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1.0)
             
@@ -318,12 +318,12 @@ class EventView: UIView {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private func setupSubviews() {
+        fileprivate func setupSubviews() {
             let subviews = [leftCircle, rightCircle, line]
             subviews.forEach { addSubview($0) }
         }
         
-        private func defineLayout() {
+        fileprivate func defineLayout() {
             leftCircle.snp_makeConstraints { (make) -> Void in
                 make.centerX.equalTo(leftCircle.superview!.snp_leading).offset(-1)
                 make.top.bottom.equalTo(leftCircle.superview!)
@@ -354,7 +354,7 @@ class EventScrollView: UIScrollView {
     
     var topInset: Float = 0
     
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         return Float(point.y) + topInset > topInset
     }
     
@@ -390,14 +390,14 @@ private extension UILabel {
 private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel"), for: UIControlState())
         
         return button
     }
     
     static func facebookButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "detail_facebook_icon"), forState: .Normal)
+        button.setImage(UIImage(named: "detail_facebook_icon"), for: UIControlState())
         
         return button
     }
@@ -412,11 +412,11 @@ private extension MGLMapView {
         // There is a bug where it needs a frame in init https://github.com/mapbox/mapbox-gl-native/issues/1572
         let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         let mapView = MGLMapView(frame: frame, styleURL: MGLStyle.darkStyleURL())
-        mapView.zoomEnabled = false
-        mapView.scrollEnabled = false
-        mapView.rotateEnabled = false
-        mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        mapView.attributionButton.hidden = true
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.attributionButton.isHidden = true
         
         return mapView
     }
@@ -426,7 +426,7 @@ private extension L360ConfettiArea {
     static func confettiArea() -> L360ConfettiArea {
         let confettiArea = L360ConfettiArea()
         confettiArea.swayLength = 20.0
-        confettiArea.userInteractionEnabled = false
+        confettiArea.isUserInteractionEnabled = false
         confettiArea.blastSpread = 0.4
         return confettiArea
     }

@@ -17,7 +17,7 @@ class UserView: UIView {
     let loadingView = UserLoadingView()
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()        
     }
@@ -26,12 +26,12 @@ class UserView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [loadingView, tableView, cancelButton, logoutButton]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         cancelButton.snp_makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
@@ -55,7 +55,7 @@ class UserView: UIView {
 private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel"), for: UIControlState())
         
         return button
     }
@@ -65,7 +65,7 @@ private extension UIButton {
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: 0xf60085), range: NSMakeRange(0, title.characters.count))
-        button.setAttributedTitle(attrString, forState: .Normal)
+        button.setAttributedTitle(attrString, for: UIControlState())
         button.titleLabel?.font = UIFont.defaultSemiBoldFontOfSize(14)
         return button
     }
@@ -74,11 +74,11 @@ private extension UIButton {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
-        tableView.registerClass(UserTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.registerClass(UserEventCell.self, forCellReuseIdentifier: "event-cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
+        tableView.register(UserTextCell.self, forCellReuseIdentifier: "text-cell")
+        tableView.register(UserEventCell.self, forCellReuseIdentifier: "event-cell")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.alwaysBounceVertical = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50

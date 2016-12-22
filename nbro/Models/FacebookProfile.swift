@@ -11,18 +11,18 @@ import Foundation
 struct FacebookProfile {
     let id: String
     let name: String
-    let imageURL: NSURL
+    let imageURL: URL
     
     init?(dictionary: NSDictionary) {
         guard let name = dictionary["name"] as? String,
-            id = dictionary["id"] as? String,
-            photo = dictionary["picture"] as? NSDictionary,
-            photoData = photo["data"] as? NSDictionary,
-            photoString = photoData["url"] as? String else {
+            let id = dictionary["id"] as? String,
+            let photo = dictionary["picture"] as? NSDictionary,
+            let photoData = photo["data"] as? NSDictionary,
+            let photoString = photoData["url"] as? String else {
                 return nil
         }
                 
-        self.imageURL = NSURL(string: photoString)!
+        self.imageURL = URL(string: photoString)!
         self.id = id
         self.name = name
     }

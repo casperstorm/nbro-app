@@ -12,11 +12,11 @@ import UIKit
 class CreditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     enum CreditCellType: Int {
-        case Casper = 0
-        case Rasmus
-        case Peter
+        case casper = 0
+        case rasmus
+        case peter
         
-        case TotalAmount
+        case totalAmount
     }
     
     var contentView = CreditView()
@@ -28,69 +28,69 @@ class CreditViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        self.title = "Credits".uppercaseString
+        self.title = "Credits".uppercased()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewCredits)
+        TrackingManager.trackEvent(.viewCredits)
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: UITableView
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CreditCellType.TotalAmount.rawValue
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return CreditCellType.totalAmount.rawValue
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellType = CreditCellType(rawValue: indexPath.row)!
         return configureCreditCell(indexPath, cellType: cellType)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let cellType = CreditCellType(rawValue: indexPath.row)!
         switch(cellType) {
-        case .Casper:
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://twitter.com/casperstorm")!)
-        case .Rasmus:
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://twitter.com/rasmusnielsen")!)
-        case .Peter:
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://twitter.com/petergam")!)
+        case .casper:
+            UIApplication.shared.openURL(URL(string: "https://twitter.com/casperstorm")!)
+        case .rasmus:
+            UIApplication.shared.openURL(URL(string: "https://twitter.com/rasmusnielsen")!)
+        case .peter:
+            UIApplication.shared.openURL(URL(string: "https://twitter.com/petergam")!)
         default: break
         }
     }
     
     //MARK: Cell creation
     
-    func configureCreditCell(indexPath: NSIndexPath, cellType: CreditCellType) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("credit-cell", forIndexPath: indexPath) as! CreditCell
+    func configureCreditCell(_ indexPath: IndexPath, cellType: CreditCellType) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "credit-cell", for: indexPath) as! CreditCell
         cell.iconImageView.image = UIImage(named: "icon_mask")
         cell.detailIconImageView.image = UIImage(named: "icon_twitter")
         switch(cellType) {
-        case .Casper:
-            cell.bottomSeparatorView.hidden = true
-            cell.titleLabel.text = "Casper Storm Larsen".uppercaseString
-            cell.detailLabel.text = "Code".uppercaseString
+        case .casper:
+            cell.bottomSeparatorView.isHidden = true
+            cell.titleLabel.text = "Casper Storm Larsen".uppercased()
+            cell.detailLabel.text = "Code".uppercased()
             return cell
-        case .Rasmus:
-            cell.bottomSeparatorView.hidden = true
-            cell.titleLabel.text = "Rasmus Nielsen".uppercaseString
-            cell.detailLabel.text = "Design".uppercaseString
+        case .rasmus:
+            cell.bottomSeparatorView.isHidden = true
+            cell.titleLabel.text = "Rasmus Nielsen".uppercased()
+            cell.detailLabel.text = "Design".uppercased()
             return cell
-        case .Peter:
-            cell.titleLabel.text = "Peter Gammelgaard".uppercaseString
-            cell.detailLabel.text = "Code".uppercaseString
-            cell.bottomSeparatorView.hidden = false
+        case .peter:
+            cell.titleLabel.text = "Peter Gammelgaard".uppercased()
+            cell.detailLabel.text = "Code".uppercased()
+            cell.bottomSeparatorView.isHidden = false
             return cell
         default:
             return cell

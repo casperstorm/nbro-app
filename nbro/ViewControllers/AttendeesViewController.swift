@@ -11,8 +11,8 @@ import UIKit
 import Nuke
 
 public enum State {
-    case Attendees
-    case Interested
+    case attendees
+    case interested
 }
 
 class AttendeesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -42,41 +42,41 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        self.contentView.tableView.hidden = true
+        self.contentView.tableView.isHidden = true
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewAttendees)
+        TrackingManager.trackEvent(.viewAttendees)
     }
     
     func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
+        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         
         switch(state) {
-            case .Attendees:
-                self.contentView.titleLabel.text = "Attending".uppercaseString
-            case .Interested:
-                self.contentView.titleLabel.text = "Interested".uppercaseString
+            case .attendees:
+                self.contentView.titleLabel.text = "Attending".uppercased()
+            case .interested:
+                self.contentView.titleLabel.text = "Interested".uppercased()
         }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK: Data
     
-    private func loadData() {
-        if state == .Attendees {
+    fileprivate func loadData() {
+        if state == .attendees {
             FacebookManager.attendeesForEvent(event) { (result) in
                 guard let dict = result["attending"], let dataArray = dict["data"] as? [NSDictionary] else { return }
                 self.handleData(dataArray)
             }
-        } else if state == .Interested {
+        } else if state == .interested {
             FacebookManager.interestedForEvent(event) { (result) in
                 guard let dict = result["maybe"], let dataArray = dict["data"] as? [NSDictionary] else { return }
                 self.handleData(dataArray)
@@ -84,11 +84,11 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    private func handleData(result: [NSDictionary]) {
+    fileprivate func handleData(_ result: [NSDictionary]) {
         self.attendees = result.map({ (data) -> FacebookProfile in
             return FacebookProfile(dictionary: data)!
         })
-        self.contentView.tableView.hidden = false
+        self.contentView.tableView.isHidden = false
         self.fadeoutLoadingIndicator()
         self.contentView.tableView.reloadData()
         self.animateCellsEntrance(true)
@@ -97,17 +97,17 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: UITableView
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return attendees.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("attendee-cell", forIndexPath: indexPath) as! AttendeeCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "attendee-cell", for: indexPath) as! AttendeeCell
         let attendee = attendees[indexPath.row]
         cell.titleLabel .text = attendee.name
         cell.profileImageView.image = nil
         
-        let request = ImageRequest(URLRequest: NSURLRequest(URL: attendee.imageURL))
+        let request = ImageRequest(URLRequest: URLRequest(URL: attendee.imageURL))
         Nuke.taskWith(request) { response in
             switch response {
             case let .Success(image, _):
@@ -118,28 +118,28 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         
         
         if(indexPath.row < attendees.count - 1) {
-            cell.bottomSeparatorView.hidden = true
+            cell.bottomSeparatorView.isHidden = true
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let attendee = attendees[indexPath.row]
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/\(attendee.id)/")!)
+        UIApplication.shared.openURL(URL(string: "https://www.facebook.com/\(attendee.id)/")!)
     }
     
     //MARK: Actions
     
     func cancelPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: Helpers
     
-    private func fadeoutLoadingIndicator() {
-        UIView.animateWithDuration(0.5, animations: {
+    fileprivate func fadeoutLoadingIndicator() {
+        UIView.animate(withDuration: 0.5, animations: {
             self.contentView.loadingView.activityIndicatorView.alpha = 0.0
             }, completion: { (completed) in
                 self.contentView.loadingView.activityIndicatorView.stopAnimating()
@@ -147,16 +147,16 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         })
     }
     
-    private func animateCellsEntrance(animate: Bool) {
+    fileprivate func animateCellsEntrance(_ animate: Bool) {
         if(animate) {
             let visibleCells = contentView.tableView.visibleCells
             for index in 0 ..< visibleCells.count {
                 let delay = (Double(index) * 0.04) + 0.3
                 let cell = visibleCells[index]
-                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.size.width - 120.0, 0)
+                cell.transform = CGAffineTransform(translationX: UIScreen.main.bounds.size.width - 120.0, y: 0)
                 cell.alpha = 0
-                UIView.animateWithDuration(0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
-                    cell.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                    cell.transform = CGAffineTransform.identity
                     cell.alpha = 1.0
                     }, completion: nil)
             }

@@ -12,22 +12,22 @@ import Crashlytics
 
 class TrackingManager {
     enum TrackingEvent {
-        case AttendEvent
-        case SkippedLogin
-        case Logout
+        case attendEvent
+        case skippedLogin
+        case logout
         
-        case VisitEventInFacebook
-        case VisitAppStore
-        case VisitInstagram
-        case VisitFacebook
+        case visitEventInFacebook
+        case visitAppStore
+        case visitInstagram
+        case visitFacebook
         
-        case ViewEventList
-        case ViewEventDetail
-        case ViewAbout
-        case ViewUser
-        case ViewCredits
-        case ViewLogin
-        case ViewAttendees
+        case viewEventList
+        case viewEventDetail
+        case viewAbout
+        case viewUser
+        case viewCredits
+        case viewLogin
+        case viewAttendees
     }
     
     class func trackUser() {
@@ -37,35 +37,35 @@ class TrackingManager {
         })
     }
     
-    class func trackEvent(event: TrackingEvent) {
+    class func trackEvent(_ event: TrackingEvent) {
         switch event {
-        case .AttendEvent:
+        case .attendEvent:
             FBSDKAppEvents.logEvent("AttendedEvent")
-        case .VisitEventInFacebook:
+        case .visitEventInFacebook:
             FBSDKAppEvents.logEvent("VisitEventInFacebook")
-        case .VisitAppStore:
+        case .visitAppStore:
             FBSDKAppEvents.logEvent("VisitAppStore")
-        case .VisitInstagram:
+        case .visitInstagram:
             FBSDKAppEvents.logEvent("VisitInstagram")
-        case .VisitFacebook:
+        case .visitFacebook:
             FBSDKAppEvents.logEvent("VisitFacebook")
-        case .ViewEventList:
+        case .viewEventList:
             FBSDKAppEvents.logEvent("ViewEventList")
-        case .ViewEventDetail:
+        case .viewEventDetail:
             FBSDKAppEvents.logEvent("ViewEventDetail")
-        case .ViewAbout:
+        case .viewAbout:
             FBSDKAppEvents.logEvent("ViewAbout")
-        case .ViewCredits:
+        case .viewCredits:
             FBSDKAppEvents.logEvent("ViewCredits")
-        case .ViewLogin:
+        case .viewLogin:
             FBSDKAppEvents.logEvent("ViewLogin")
-        case .SkippedLogin:
+        case .skippedLogin:
             FBSDKAppEvents.logEvent("SkippedLogin")
-        case .Logout:
+        case .logout:
             FBSDKAppEvents.logEvent("Logout")
-        case .ViewUser:
+        case .viewUser:
             FBSDKAppEvents.logEvent("ViewUser")
-        case .ViewAttendees:
+        case .viewAttendees:
             FBSDKAppEvents.logEvent("ViewAttendees")
         }
         

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -26,15 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tokenDidChange), name: FBSDKAccessTokenDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tokenDidChange), name: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil)
         
         setupAdditionalStyling()
 
         let eventListViewController = EventListViewController()
         let loginViewController = LoginViewController()
         let navigationController = UINavigationController(rootViewController: eventListViewController)
-        navigationController.view.backgroundColor = .clearColor()
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        navigationController.view.backgroundColor = .clear
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = navigationController
         self.window?.backgroundColor = UIColor(hex: 0x222222)
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if (!FacebookManager.authenticated()) {
             LaunchImageView.show()
-            self.window?.rootViewController?.presentViewController(loginViewController, animated: false) {
+            self.window?.rootViewController?.present(loginViewController, animated: false) {
                 LaunchImageView.hide()
             }
         } else {
@@ -53,23 +53,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(application: UIApplication,
-        openURL url: NSURL,
+    func application(_ application: UIApplication,
+        open url: URL,
         sourceApplication: String?,
-        annotation: AnyObject) -> Bool {
+        annotation: Any) -> Bool {
             return FBSDKApplicationDelegate.sharedInstance().application(
                 application,
-                openURL: url,
+                open: url,
                 sourceApplication: sourceApplication,
                 annotation: annotation)
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
     }
     
     func tokenDidChange() {
-        let accessToken = FBSDKAccessToken.currentAccessToken()
+        let accessToken = FBSDKAccessToken.current()
         if accessToken == nil {
             presentLoginViewController()
         }
@@ -77,24 +77,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func presentLoginViewController() {
         let loginViewController = LoginViewController()
-        self.window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+        self.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
     }
     
     // MARK: Styling
     
     func setupAdditionalStyling() {
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.shared.statusBarStyle = .lightContent
         
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = UIColor(hex: 0xffffff)
         navigationBarAppearace.barTintColor = UIColor(hex: 0x000000)
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
         
         let backButtonImage = UIImage(named: "back_button")
         navigationBarAppearace.backIndicatorImage = backButtonImage
         navigationBarAppearace.backIndicatorTransitionMaskImage = backButtonImage
         
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.max), forBarMetrics: .Default)
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
     }
 }
 

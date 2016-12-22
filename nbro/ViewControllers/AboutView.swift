@@ -16,7 +16,7 @@ class AboutView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
     }
@@ -25,12 +25,12 @@ class AboutView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [tableView, cancelButton]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         cancelButton.snp_makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
@@ -46,15 +46,15 @@ class AboutView: UIView {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(AboutLogoCell.self, forCellReuseIdentifier: "logo-cell")
-        tableView.registerClass(AboutTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "instagram-action-cell")
-        tableView.registerClass(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(AboutLogoCell.self, forCellReuseIdentifier: "logo-cell")
+        tableView.register(AboutTextCell.self, forCellReuseIdentifier: "text-cell")
+        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
+        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
+        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
+        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "instagram-action-cell")
+        tableView.register(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.alwaysBounceVertical = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
@@ -65,7 +65,7 @@ private extension UITableView {
 private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel"), for: UIControlState())
         
         return button
     }

@@ -20,7 +20,7 @@ class NotAuthenticatedView: UIView {
         
         descriptionLabel.text = "In order to see your upcoming events, and the events you are able to participate in, we need you to login with Facebook."
         
-        loginButton.setTitle("Go to login".uppercaseString, forState: .Normal)
+        loginButton.setTitle("Go to login".uppercased(), for: UIControlState())
         
         addSubview(descriptionLabel)
         addSubview(loginButton)
@@ -60,9 +60,9 @@ private extension UILabel {
     class func descriptionLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.defaultRegularFontOfSize(16)
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.white
         label.numberOfLines = 0
-        label.textAlignment = .Center
+        label.textAlignment = .center
         
         return label
     }
@@ -71,11 +71,11 @@ private extension UILabel {
 private extension UIButton {
     class func loginButton() -> UIButton {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(color: UIColor(hex: 0xffffff, alpha: 0.1)), forState: .Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.setBackgroundImage(UIImage(color: UIColor(hex: 0xffffff, alpha: 0.1)), for: UIControlState())
+        button.setTitleColor(UIColor.white, for: UIControlState())
         button.titleLabel?.font = UIFont.defaultMediumFontOfSize(14)
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.whiteColor().CGColor
+        button.layer.borderColor = UIColor.white.cgColor
         button.layer.cornerRadius = 6
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         

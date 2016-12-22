@@ -15,8 +15,8 @@ class LogoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None;
+        backgroundColor = UIColor.clear
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()

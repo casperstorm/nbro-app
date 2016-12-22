@@ -14,7 +14,7 @@ class CreditView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
     }
@@ -23,12 +23,12 @@ class CreditView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [tableView]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         tableView.snp_makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
         }
@@ -38,9 +38,9 @@ class CreditView: UIView {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.registerClass(CreditCell.self, forCellReuseIdentifier: "credit-cell")
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.backgroundColor = UIColor.clear
+        tableView.register(CreditCell.self, forCellReuseIdentifier: "credit-cell")
+        tableView.separatorColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
         return tableView

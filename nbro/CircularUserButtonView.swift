@@ -14,18 +14,18 @@ class CircularUserButtonView: UIView {
     let button = UIButton()
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
         setupSubviews()
         defineLayout()
         
         imageView.layer.cornerRadius = 30
-        imageView.backgroundColor = .clearColor()
+        imageView.backgroundColor = .clear
         imageView.clipsToBounds = true
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
         
-        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 1
-        layer.shadowOffset = CGSizeMake(0, 1)
+        layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowRadius = 5
     }
     
@@ -33,12 +33,12 @@ class CircularUserButtonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(imageView)
         addSubview(button)
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         imageView.snp_makeConstraints { (make) in
             make.edges.equalTo(imageView.superview!)
         }

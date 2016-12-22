@@ -12,9 +12,9 @@ import Nuke
 class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     enum UserCellType: Int {
-        case ProfileCellType
-        case TextCellType
-        case EventCellType
+        case profileCellType
+        case textCellType
+        case eventCellType
     }
     
     var contentView = UserView()
@@ -31,31 +31,31 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         setupSubviews()
         
-        self.contentView.tableView.hidden = true
+        self.contentView.tableView.isHidden = true
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewUser)
+        TrackingManager.trackEvent(.viewUser)
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
-    private func loadData() {
+    fileprivate func loadData() {
         FacebookManager.userEvents({ (userEvents) -> Void in
             FacebookManager.NBROEvents({ (nbroEvents) -> Void in
                 for event in userEvents {
                     let contains = nbroEvents.contains(event)
-                    let attending = event.rsvp == .Attending
+                    let attending = event.rsvp == .attending
                     if contains && attending {
                         self.events.append(event)
                     }
                 }
-                self.events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
-                self.contentView.tableView.hidden = false
+                self.events.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+                self.contentView.tableView.isHidden = false
                 self.fadeoutLoadingIndicator()
                 self.contentView.tableView.reloadData()
                 self.animateCellsEntrance(true)
@@ -67,34 +67,34 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    private func animateCellsEntrance(animate: Bool) {
+    fileprivate func animateCellsEntrance(_ animate: Bool) {
         if(animate) {
             let visibleCells = contentView.tableView.visibleCells
             for index in 0 ..< visibleCells.count {
                 let delay = (Double(index) * 0.04) + 0.3
                 let cell = visibleCells[index]
-                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.size.width - 120.0, 0)
+                cell.transform = CGAffineTransform(translationX: UIScreen.main.bounds.size.width - 120.0, y: 0)
                 cell.alpha = 0
-                UIView.animateWithDuration(0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
-                    cell.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                    cell.transform = CGAffineTransform.identity
                     cell.alpha = 1.0
                     }, completion: nil)
             }
         }
     }
     
-    private func displayErrorMessage() {
-        contentView.tableView.hidden = true
+    fileprivate func displayErrorMessage() {
+        contentView.tableView.isHidden = true
         fadeoutLoadingIndicator()
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.contentView.loadingView.statusLabel.alpha = 1.0
             }, completion: { (completed) in
         })
     }
     
-    private func fadeoutLoadingIndicator() {
-        UIView.animateWithDuration(0.5, animations: {
+    fileprivate func fadeoutLoadingIndicator() {
+        UIView.animate(withDuration: 0.5, animations: {
             self.contentView.loadingView.activityIndicatorView.alpha = 0.0
             }, completion: { (completed) in
                 self.contentView.loadingView.activityIndicatorView.stopAnimating()
@@ -103,46 +103,46 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
-        contentView.logoutButton.addTarget(self, action: #selector(logoutPressed), forControlEvents: .TouchUpInside)
+        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
+        contentView.logoutButton.addTarget(self, action: #selector(logoutPressed), for: .touchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
     
     // MARK: UITableView
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count + 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellType = userCellTypeForIndexPath(indexPath)
-        if(cellType == .ProfileCellType) {
+        if(cellType == .profileCellType) {
             return configureUserProfileCell(indexPath)
-        } else if(cellType == .TextCellType) {
+        } else if(cellType == .textCellType) {
             return configureUserTextCell(indexPath)
-        } else if(cellType == .EventCellType) {
+        } else if(cellType == .eventCellType) {
             return configureUserEventCell(indexPath)
         } else {
             return UITableViewCell()
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        contentView.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        contentView.tableView.deselectRow(at: indexPath, animated: true)
         let cellType = userCellTypeForIndexPath(indexPath)
-        if(cellType == .EventCellType) {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                UIView.animateWithDuration(0.25, animations: {
-                    self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        if(cellType == .eventCellType) {
+            DispatchQueue.main.async { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
                 })
                 
                 let event = self.events[indexPath.row - 2]
                 let eventDetailViewController = EventDetailViewController(event: event)
                 eventDetailViewController.transitioningDelegate = self
                 eventDetailViewController.interactor = self.interactor
-                self.presentViewController(eventDetailViewController, animated: true, completion: {
-                    self.view.transform = CGAffineTransformIdentity;
+                self.present(eventDetailViewController, animated: true, completion: {
+                    self.view.transform = CGAffineTransform.identity;
                 })
             }
         }
@@ -151,11 +151,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK : Cell Creation
     
-    func configureUserProfileCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("user-cell", forIndexPath: indexPath) as! UserProfileCell
+    func configureUserProfileCell(_ indexPath: IndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "user-cell", for: indexPath) as! UserProfileCell
         FacebookManager.user { (user) in
-            cell.userNameLabel.text = user.name.uppercaseString
-            let request = ImageRequest(URLRequest: NSURLRequest(URL: user.imageURL))
+            cell.userNameLabel.text = user.name.uppercased()
+            let request = ImageRequest(URLRequest: URLRequest(URL: user.imageURL))
             Nuke.taskWith(request) { response in
                  switch response {
                 case let .Success(image, _):
@@ -167,8 +167,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func configureUserTextCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("text-cell", forIndexPath: indexPath) as! UserTextCell
+    func configureUserTextCell(_ indexPath: IndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "text-cell", for: indexPath) as! UserTextCell
         if(events.count == 0) {
             cell.bodyLabel.text = "It looks like you don't have any upcoming events. Remember, your commitment will be rewarded mile by mile."
 
@@ -180,57 +180,57 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func configureUserEventCell(indexPath: NSIndexPath) -> UITableViewCell {
+    func configureUserEventCell(_ indexPath: IndexPath) -> UITableViewCell {
         let event = events[indexPath.row - 2]
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event-cell", forIndexPath: indexPath) as! UserEventCell
-        cell.setTitleText(event.name.uppercaseString)
-        cell.detailLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event-cell", for: indexPath) as! UserEventCell
+        cell.setTitleText(event.name.uppercased())
+        cell.detailLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercased()
         cell.iconImageView.image = UIImage(named: "icon_event")
         return cell
     }
     
     //MARK: Actions
     
-    dynamic private func logoutPressed() {
-        let alertController = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "Log out", style: .Default, handler: { (_) -> Void in
-            TrackingManager.trackEvent(.Logout)
+    dynamic fileprivate func logoutPressed() {
+        let alertController = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Log out", style: .default, handler: { (_) -> Void in
+            TrackingManager.trackEvent(.logout)
             FacebookManager.logout()
             
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
             })
         }))
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
             
         }))
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func cancelPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: Helpers
     
-    func userCellTypeForIndexPath(indexPath: NSIndexPath) -> UserCellType {
+    func userCellTypeForIndexPath(_ indexPath: IndexPath) -> UserCellType {
         if(indexPath.row == 0) {
-            return .ProfileCellType
+            return .profileCellType
         } else if (indexPath.row == 1) {
-            return .TextCellType
+            return .textCellType
         } else {
-            return .EventCellType
+            return .eventCellType
         }
     }
 }
 
 extension UserViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DismissAnimator()
     }
     
-    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor.hasStarted ? interactor : nil
     }
 }

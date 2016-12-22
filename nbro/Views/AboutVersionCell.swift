@@ -15,8 +15,8 @@ class AboutVersionCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor.blackColor()
-        selectionStyle = .None;
+        backgroundColor = UIColor.black
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
@@ -26,12 +26,12 @@ class AboutVersionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [nameLabel, versionLabel]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         nameLabel.snp_makeConstraints { (make) in
             make.top.equalTo(nameLabel.superview!).inset(16)
             make.centerX.equalTo(nameLabel.superview!)
@@ -49,16 +49,16 @@ class AboutVersionCell: UITableViewCell {
 private extension UILabel {
     static func nameLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Center
+        label.textColor = .white
+        label.textAlignment = .center
         label.font = UIFont.defaultSemiBoldFontOfSize(14)
         return label
     }
     
     static func versionLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .grayColor()
-        label.textAlignment = .Center
+        label.textColor = .gray
+        label.textAlignment = .center
         label.font = UIFont.defaultLightFontOfSize(14)
         return label
     }
