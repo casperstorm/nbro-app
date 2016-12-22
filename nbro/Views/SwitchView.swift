@@ -121,35 +121,35 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
     }
     
     fileprivate func defineLayout() {
-        backgroundImageView.snp_makeConstraints { (make) in
+        backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalTo(self).inset(1)
         }
         
-        shimmeringView.snp_makeConstraints { (make) -> Void in
+        shimmeringView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.bottom.equalTo(titleLabel.superview!)
             make.centerX.equalTo(self)
         }
         
-        knobImageView.snp_updateConstraints { (make) in
+        knobImageView.snp.updateConstraints { (make) in
             make.center.equalTo(knobImageView.superview!)
         }
     }
     
     override func updateConstraints() {
-        containerView.snp_updateConstraints { (make) -> Void in
+        containerView.snp.updateConstraints { (make) -> Void in
             make.top.bottom.equalTo(containerView.superview!)
             make.right.equalTo(containerView.superview!).offset(isLeft ? 0 : -(self.frame.width - knobOffset - (knobImageView.frame.width / 2.0)) )
             make.left.equalTo(containerView.superview!).offset(isLeft ? knobOffset + knobImageView.frame.width / 2.0 : 0)
         }
         
-        knobContainerView.snp_updateConstraints { (make) in
+        knobContainerView.snp.updateConstraints { (make) in
             make.top.bottom.equalTo(knobContainerView.superview!)
             make.left.equalTo(knobContainerView.superview!).offset(knobOffset)
-            make.width.equalTo(knobContainerView.snp_height)
+            make.width.equalTo(knobContainerView.snp.height)
             
         }
         

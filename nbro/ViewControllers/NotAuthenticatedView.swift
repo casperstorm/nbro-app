@@ -26,18 +26,18 @@ class NotAuthenticatedView: UIView {
         addSubview(loginButton)
         addSubview(logoImageView)
         
-        descriptionLabel.snp_makeConstraints { (make) -> Void in
+        descriptionLabel.snp.makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(descriptionLabel.superview!).inset(10)
-            make.top.equalTo(logoImageView.snp_bottom).offset(20)
+            make.top.equalTo(logoImageView.snp.bottom).offset(20)
         }
-        loginButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(30)
+        loginButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(30)
             make.centerX.bottom.equalTo(loginButton.superview!)
             make.width.equalTo(200)
             make.height.equalTo(50)
         }
         
-        logoImageView.snp_makeConstraints { (make) in
+        logoImageView.snp.makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
             make.top.equalTo(logoImageView.superview!).inset(10)
         }

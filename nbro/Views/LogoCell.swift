@@ -31,7 +31,7 @@ class LogoCell: UITableViewCell {
     }
     
     func defineLayouts() {
-        logoImageView.snp_makeConstraints { (make) in
+        logoImageView.snp.makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
             make.bottom.equalTo(logoImageView.superview!).inset(16)
             make.top.equalTo(logoImageView.superview!).inset(40)

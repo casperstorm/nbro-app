@@ -30,7 +30,7 @@ class AboutLogoCell: UITableViewCell {
     }
     
     fileprivate func defineLayouts() {
-        runnerLogoView.snp_makeConstraints { (make) in
+        runnerLogoView.snp.makeConstraints { (make) in
             make.top.equalTo(runnerLogoView.superview!).inset(30)
             make.bottom.equalTo(runnerLogoView.superview!).inset(10)
             make.centerX.equalTo(runnerLogoView.superview!)

@@ -65,19 +65,19 @@ class EventListView: UIView {
     }
     
     fileprivate func defineLayout() {
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(imageContainerView.superview!)
         }
         
-        vignetteImageView.snp_makeConstraints { (make) -> Void in
+        vignetteImageView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!).inset(-1)
         }
         
-        tableView.snp_makeConstraints { (make) -> Void in
+        tableView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(tableView.superview!)
         }
         
-        backgroundImageView.snp_makeConstraints { (make) -> Void in
+        backgroundImageView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             
@@ -89,12 +89,12 @@ class EventListView: UIView {
             make.height.equalTo(imageSize.height * factor)
         }
 
-        notAuthenticatedView.snp_makeConstraints { (make) -> Void in
+        notAuthenticatedView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(notAuthenticatedView.superview!)
             make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
         }
         
-        userButtonView.snp_makeConstraints { (make) in
+        userButtonView.snp.makeConstraints { (make) in
             make.bottom.equalTo(userButtonView.superview!).inset(20)
             make.right.equalTo(userButtonView.superview!).inset(20)
             make.width.height.equalTo(60)
@@ -102,10 +102,10 @@ class EventListView: UIView {
     }
     
     override func updateConstraints() {
-        aboutButton.snp_remakeConstraints { (make) in
+        aboutButton.snp.remakeConstraints { (make) in
             if(FacebookManager.authenticated()) {
                 make.centerY.equalTo(userButtonView).offset(4)
-                make.right.equalTo(userButtonView.snp_left).offset(-10)
+                make.right.equalTo(userButtonView.snp.left).offset(-10)
             } else {
                 make.right.bottom.equalTo(aboutButton.superview!).inset(20)
             }

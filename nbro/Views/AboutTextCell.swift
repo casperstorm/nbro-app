@@ -32,7 +32,7 @@ class AboutTextCell: UITableViewCell {
     }
     
     fileprivate func defineLayouts() {
-        bodyLabel.snp_makeConstraints { (make) in
+        bodyLabel.snp.makeConstraints { (make) in
             make.width.equalTo(bodyLabel.superview!).inset(40)
             make.centerX.equalTo(bodyLabel.superview!)
             make.top.equalTo(bodyLabel.superview!).offset(16)

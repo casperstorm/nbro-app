@@ -31,12 +31,12 @@ class AttentEventButtonView: UIView {
     }
     
     fileprivate func defineLayout() {
-        switchView.snp_makeConstraints { (make) in
+        switchView.snp.makeConstraints { (make) in
             make.edges.equalTo(switchView.superview!)
             make.height.equalTo(44)
         }
         
-        activityIndicatorView.snp_makeConstraints { (make) in
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.center.equalTo(activityIndicatorView.superview!)
         }
     }

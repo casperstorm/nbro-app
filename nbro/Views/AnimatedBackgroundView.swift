@@ -38,17 +38,17 @@ class AnimatedBackgroundView: UIView {
     }
     
     fileprivate func defineLayout() {
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(imageContainerView.superview!)
         }
         
-        vignetteImageView.snp_updateConstraints { (make) -> Void in
+        vignetteImageView.snp.updateConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
         }
     }
     
     override func updateConstraints() {
-        self.backgroundImageView.snp_updateConstraints { (make) -> Void in
+        self.backgroundImageView.snp.updateConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             

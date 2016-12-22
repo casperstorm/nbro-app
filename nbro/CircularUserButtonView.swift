@@ -39,11 +39,11 @@ class CircularUserButtonView: UIView {
     }
     
     fileprivate func defineLayout() {
-        imageView.snp_makeConstraints { (make) in
+        imageView.snp.makeConstraints { (make) in
             make.edges.equalTo(imageView.superview!)
         }
         
-        button.snp_makeConstraints { (make) in
+        button.snp.makeConstraints { (make) in
             make.edges.equalTo(button.superview!)
         }
     }

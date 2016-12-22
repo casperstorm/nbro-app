@@ -51,34 +51,34 @@ class LoginView: UIView {
     
     fileprivate func defineLayout() {
         
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(imageContainerView.superview!)
-            make.bottom.equalTo(buttonContainerView.snp_top).priorityLow()
+            make.bottom.equalTo(buttonContainerView.snp.top).priorityLow()
         }
 
-        vignetteImageView.snp_updateConstraints { (make) -> Void in
+        vignetteImageView.snp.updateConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
         }
         
-        logoImageView.snp_makeConstraints { (make) in
+        logoImageView.snp.makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
-            make.top.equalTo(logoImageView.superview!.snp_centerY).multipliedBy(0.24)
+            make.top.equalTo(logoImageView.superview!.snp.centerY).multipliedBy(0.24)
         }
         
-        buttonContainerView.snp_makeConstraints { (make) in
+        buttonContainerView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(buttonContainerView.superview!)
             make.height.equalTo(75).priorityRequired()
         }
         
-        facebookButton.snp_makeConstraints { (make) -> Void in
+        facebookButton.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(facebookButton.superview!)
         }
         
-        activityIndicatorView.snp_makeConstraints { (make) in
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.center.equalTo(activityIndicatorView.superview!)
         }
         
-        skipButton.snp_makeConstraints { (make) in
+        skipButton.snp.makeConstraints { (make) in
             make.top.equalTo(skipButton.superview!).inset(26)
             make.right.equalTo(skipButton.superview!).inset(15)
         }
@@ -87,7 +87,7 @@ class LoginView: UIView {
     
     override func updateConstraints() {
         
-        self.backgroundImageView.snp_updateConstraints { (make) -> Void in
+        self.backgroundImageView.snp.updateConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             

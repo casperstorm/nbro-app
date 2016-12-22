@@ -32,13 +32,13 @@ class AboutVersionCell: UITableViewCell {
     }
     
     fileprivate func defineLayouts() {
-        nameLabel.snp_makeConstraints { (make) in
+        nameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.superview!).inset(16)
             make.centerX.equalTo(nameLabel.superview!)
-            make.bottom.equalTo(versionLabel.snp_top)
+            make.bottom.equalTo(versionLabel.snp.top)
         }
         
-        versionLabel.snp_makeConstraints { (make) in
+        versionLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(versionLabel.superview!)
             make.bottom.equalTo(versionLabel.superview!).offset(-16)
         }

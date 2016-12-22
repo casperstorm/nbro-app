@@ -26,17 +26,17 @@ class DetailLabelView: UIView {
     }
     
     fileprivate func defineLayout() {
-        containerView.snp_makeConstraints { (make) -> Void in
+        containerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(containerView.superview!)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(titleLabel.superview!)
         }
         
-        detailLabel.snp_makeConstraints { (make) -> Void in
+        detailLabel.snp.makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(detailLabel.superview!)
-            make.top.equalTo(titleLabel.snp_bottom).offset(6)
+            make.top.equalTo(titleLabel.snp.bottom).offset(6)
         }
     }
     

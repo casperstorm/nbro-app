@@ -53,26 +53,26 @@ class AttendeeCell: UITableViewCell {
     
     fileprivate func defineLayouts() {
         
-        topSeparatorView.snp_makeConstraints { (make) in
+        topSeparatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(topSeparatorView.superview!)
             make.top.equalTo(topSeparatorView.superview!)
             make.height.equalTo(0.5)
         }
         
-        bottomSeparatorView.snp_makeConstraints { (make) in
+        bottomSeparatorView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(bottomSeparatorView.superview!)
             make.height.equalTo(0.5)
         }
         
-        profileImageView.snp_makeConstraints { (make) in
+        profileImageView.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(profileImageView.superview!).inset(10)
             make.left.equalTo(22)
             make.width.equalTo(45)
             make.height.equalTo(45)
         }
         
-        titleLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(profileImageView.snp_right).offset(22)
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(profileImageView.snp.right).offset(22)
             make.centerY.equalTo(titleLabel.superview!)
             make.right.lessThanOrEqualTo(profileImageView.superview!).offset(-22)
         }
@@ -102,21 +102,21 @@ class AttendeesView: UIView, UIGestureRecognizerDelegate {
     }
     
     fileprivate func defineLayout() {
-        cancelButton.snp_makeConstraints { (make) -> Void in
+        cancelButton.snp.makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
-        tableView.snp_makeConstraints { (make) in
+        tableView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(tableView.superview!)
-            make.top.equalTo(cancelButton.snp_bottom).offset(20)
+            make.top.equalTo(cancelButton.snp.bottom).offset(20)
         }
         
-        loadingView.snp_makeConstraints { (make) in
+        loadingView.snp.makeConstraints { (make) in
             make.edges.equalTo(loadingView.superview!)
         }
         
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(titleLabel.superview!)
             make.centerY.equalTo(self.cancelButton).offset(5)
         }

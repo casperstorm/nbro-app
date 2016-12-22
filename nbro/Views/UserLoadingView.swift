@@ -34,11 +34,11 @@ class UserLoadingView: UIView {
     }
     
     fileprivate func defineLayout() {
-        activityIndicatorView.snp_makeConstraints { (make) in
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.edges.equalTo(activityIndicatorView.superview!)
         }
         
-        statusLabel.snp_makeConstraints { (make) in
+        statusLabel.snp.makeConstraints { (make) in
             make.edges.equalTo(activityIndicatorView.superview!)
         }
     }

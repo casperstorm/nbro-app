@@ -29,7 +29,7 @@ class CreditView: UIView {
     }
     
     fileprivate func defineLayout() {
-        tableView.snp_makeConstraints { (make) in
+        tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
         }
     }

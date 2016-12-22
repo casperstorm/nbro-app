@@ -48,42 +48,42 @@ class UserEventCell: UITableViewCell {
     }
     
     fileprivate func defineLayouts() {
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.superview!)
             make.left.right.equalTo(titleLabel.superview!)
         }
         
-        detailLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp_bottom)
+        detailLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom)
             make.bottom.equalTo(detailLabel.superview!)
             make.left.right.equalTo(detailLabel.superview!)
         }
         
-        textContainer.snp_makeConstraints { (make) in
-            make.left.equalTo(iconImageView.snp_right).offset(22)
-            make.right.equalTo(disclousureImageView.snp_left).offset(-22)
+        textContainer.snp.makeConstraints { (make) in
+            make.left.equalTo(iconImageView.snp.right).offset(22)
+            make.right.equalTo(disclousureImageView.snp.left).offset(-22)
             make.top.bottom.equalTo(textContainer.superview!).inset(15)
         }
         
-        topSeparatorView.snp_makeConstraints { (make) in
+        topSeparatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(topSeparatorView.superview!)
             make.top.equalTo(topSeparatorView.superview!).offset(-1)
             make.height.equalTo(1)
         }
         
-        bottomSeparatorView.snp_makeConstraints { (make) in
+        bottomSeparatorView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(bottomSeparatorView.superview!)
             make.height.equalTo(1)
         }
         
-        disclousureImageView.snp_makeConstraints { (make) in
+        disclousureImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(disclousureImageView.superview!)
             make.right.equalTo(-22)
             make.width.equalTo(6)
             make.height.equalTo(11)
         }
         
-        iconImageView.snp_makeConstraints { (make) in
+        iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(iconImageView.superview!)
             make.left.equalTo(22)
             make.width.equalTo(19)

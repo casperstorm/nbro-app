@@ -94,42 +94,42 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
     fileprivate func defineLayout() {
         let screenHeight = UIScreen.main.bounds.height
 
-        mapView.snp_makeConstraints { (make) -> Void in
+        mapView.snp.makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapView.superview!)
             make.height.equalTo(screenHeight).multipliedBy(1.0)
         }
         
-        mapOverlay.snp_makeConstraints { (make) -> Void in
+        mapOverlay.snp.makeConstraints { (make) -> Void in
             make.top.leading.trailing.equalTo(mapOverlay.superview!)
             make.height.equalTo(screenHeight * 0.35)
         }
         
-        bottomView.snp_makeConstraints { (make) in
-            make.top.equalTo(mapOverlay.snp_bottom)
+        bottomView.snp.makeConstraints { (make) in
+            make.top.equalTo(mapOverlay.snp.bottom)
             make.leading.trailing.bottom.equalTo(bottomView.superview!)
         }
         
-        scrollView.snp_makeConstraints { (make) -> Void in
+        scrollView.snp.makeConstraints { (make) -> Void in
             make.leading.trailing.top.bottom.equalTo(scrollView.superview!).inset(EdgeInsetsMake(0, left: 7, bottom: 0, right: 7))
         }
         
-        eventView.snp_makeConstraints { (make) -> Void in
+        eventView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(eventView.superview!).inset(EdgeInsetsMake(0, left: 0, bottom: 7, right: 0))
             make.width.equalTo(eventView.superview!)
             make.height.greaterThanOrEqualTo(screenHeight * 0.67)
         }
         
-        cancelButton.snp_makeConstraints { (make) -> Void in
+        cancelButton.snp.makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 5, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
-        facebookButton.snp_makeConstraints { (make) -> Void in
+        facebookButton.snp.makeConstraints { (make) -> Void in
             make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
         
-        mapBoxImageView.snp_makeConstraints { (make) in
+        mapBoxImageView.snp.makeConstraints { (make) in
             make.bottom.left.equalTo(mapBoxImageView.superview!).inset(16)
         }
     }
@@ -181,76 +181,76 @@ class EventView: UIView {
     }
     
     fileprivate func defineLayout() {
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.leading.trailing.top.equalTo(titleLabel.superview!).inset(EdgeInsetsMake(25, left: 25, bottom: 0, right: 25))
         }
         
-        dateLabel.snp_makeConstraints { (make) -> Void in
+        dateLabel.snp.makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(dateLabel.superview!).inset(EdgeInsetsMake(0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(titleLabel.snp_bottom).offset(5)
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
         
-        titleSeparator.snp_makeConstraints { (make) -> Void in
+        titleSeparator.snp.makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(titleSeparator.superview!)
-            make.top.equalTo(dateLabel.snp_bottom).offset(15)
+            make.top.equalTo(dateLabel.snp.bottom).offset(15)
         }
         
-        attendingDetailView.snp_makeConstraints { (make) -> Void in
+        attendingDetailView.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(attendingDetailView.superview!).offset(40)
-            make.top.equalTo(titleSeparator.snp_bottom).offset(10)
+            make.top.equalTo(titleSeparator.snp.bottom).offset(10)
             make.width.equalTo(100)
             make.height.equalTo(60)
         }
         
-        attendeesButton.snp_makeConstraints { (make) in
+        attendeesButton.snp.makeConstraints { (make) in
             make.left.equalTo(self)
-            make.right.equalTo(verticalSeparator.snp_left)
-            make.top.equalTo(titleSeparator.snp_bottom)
-            make.bottom.equalTo(descriptionSeparator.snp_top)
+            make.right.equalTo(verticalSeparator.snp.left)
+            make.top.equalTo(titleSeparator.snp.bottom)
+            make.bottom.equalTo(descriptionSeparator.snp.top)
         }
         
-        interestedButton.snp_makeConstraints { (make) in
+        interestedButton.snp.makeConstraints { (make) in
             make.right.equalTo(self)
-            make.left.equalTo(verticalSeparator.snp_right)
-            make.top.equalTo(titleSeparator.snp_bottom)
-            make.bottom.equalTo(descriptionSeparator.snp_top)
+            make.left.equalTo(verticalSeparator.snp.right)
+            make.top.equalTo(titleSeparator.snp.bottom)
+            make.bottom.equalTo(descriptionSeparator.snp.top)
         }
         
-        verticalSeparator.snp_makeConstraints { (make) in
+        verticalSeparator.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.top.equalTo(titleSeparator.snp_bottom)
+            make.top.equalTo(titleSeparator.snp.bottom)
             make.width.equalTo(1)
-            make.bottom.equalTo(descriptionSeparator.snp_top)
+            make.bottom.equalTo(descriptionSeparator.snp.top)
         }
         
-        interestedDetailView.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(verticalSeparator.snp_trailing).offset(20)
+        interestedDetailView.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(verticalSeparator.snp.trailing).offset(20)
             make.trailing.equalTo(interestedDetailView.superview!).offset(-25)
             make.height.top.equalTo(attendingDetailView)
         }
         
-        descriptionSeparator.snp_makeConstraints { (make) -> Void in
+        descriptionSeparator.snp.makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionSeparator.superview!)
-            make.top.equalTo(interestedDetailView.snp_bottom).offset(10)
+            make.top.equalTo(interestedDetailView.snp.bottom).offset(10)
         }
 
-        attentButtonView.snp_makeConstraints { (make) in
-            make.top.equalTo(descriptionSeparator.snp_bottom).offset(15)
+        attentButtonView.snp.makeConstraints { (make) in
+            make.top.equalTo(descriptionSeparator.snp.bottom).offset(15)
             make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
         }
         
-        attendSeparator.snp_makeConstraints { (make) -> Void in
+        attendSeparator.snp.makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(attendSeparator.superview!)
-            make.top.equalTo(attentButtonView.snp_bottom).offset(10)
+            make.top.equalTo(attentButtonView.snp.bottom).offset(10)
         }
         
-        descriptionLabel.snp_makeConstraints { (make) -> Void in
+        descriptionLabel.snp.makeConstraints { (make) -> Void in
             make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
-            make.top.equalTo(attendSeparator.snp_bottom).offset(15)
+            make.top.equalTo(attendSeparator.snp.bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
         
-        confettiView.snp_makeConstraints { (make) in
+        confettiView.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(attentButtonView)
             make.height.equalTo(self)
         }
@@ -280,7 +280,7 @@ class EventView: UIView {
                 backgroundColor = .black
                 layer.cornerRadius = cornerRadius
                 layer.masksToBounds = true
-                snp_makeConstraints { (make) -> Void in
+                snp.makeConstraints { (make) -> Void in
                     make.height.width.equalTo(2 * cornerRadius)
                 }
             }
@@ -324,18 +324,18 @@ class EventView: UIView {
         }
         
         fileprivate func defineLayout() {
-            leftCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(leftCircle.superview!.snp_leading).offset(-1)
+            leftCircle.snp.makeConstraints { (make) -> Void in
+                make.centerX.equalTo(leftCircle.superview!.snp.leading).offset(-1)
                 make.top.bottom.equalTo(leftCircle.superview!)
             }
             
-            line.snp_makeConstraints { (make) -> Void in
+            line.snp.makeConstraints { (make) -> Void in
                 make.centerY.leading.trailing.equalTo(line.superview!).inset(EdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
                 make.height.equalTo(1)
             }
             
-            rightCircle.snp_makeConstraints { (make) -> Void in
-                make.centerX.equalTo(rightCircle.superview!.snp_trailing).offset(1)
+            rightCircle.snp.makeConstraints { (make) -> Void in
+                make.centerX.equalTo(rightCircle.superview!.snp.trailing).offset(1)
                 make.top.bottom.equalTo(rightCircle.superview!)
             }
         }

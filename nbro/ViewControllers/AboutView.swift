@@ -31,12 +31,12 @@ class AboutView: UIView {
     }
     
     fileprivate func defineLayout() {
-        cancelButton.snp_makeConstraints { (make) -> Void in
+        cancelButton.snp.makeConstraints { (make) -> Void in
             make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
-        tableView.snp_makeConstraints { (make) in
+        tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
         }
     }

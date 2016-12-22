@@ -44,28 +44,28 @@ class AboutActionCell: UITableViewCell {
     }
     
     fileprivate func defineLayouts() {
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(titleLabel.superview!).inset(18)
-            make.left.equalTo(iconImageView.snp_right).offset(22)
+            make.left.equalTo(iconImageView.snp.right).offset(22)
         }
         
-        topSeparatorView.snp_makeConstraints { (make) in
+        topSeparatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(topSeparatorView.superview!)
             make.top.equalTo(topSeparatorView.superview!).offset(-1)
             make.height.equalTo(1)
         }
         
-        bottomSeparatorView.snp_makeConstraints { (make) in
+        bottomSeparatorView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(bottomSeparatorView.superview!)
             make.height.equalTo(1)
         }
         
-        disclousureImageView.snp_makeConstraints { (make) in
+        disclousureImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(disclousureImageView.superview!)
             make.right.equalTo(-22)
         }
         
-        iconImageView.snp_makeConstraints { (make) in
+        iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(iconImageView.superview!)
             make.left.equalTo(22)
         }
