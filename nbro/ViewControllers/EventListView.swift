@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class EventListView: UIView {
+class EventListView: UIView, CAAnimationDelegate {
     
     var showNotAuthenticatedView = false {
         didSet {
@@ -82,7 +82,7 @@ class EventListView: UIView {
             make.left.equalTo(backgroundImageView.superview!)
             
             let imageSize = backgroundImageView.image?.size ?? CGSize.zero
-            let factor = CGRectGetHeight(UIScreen.mainScreen().bounds) / imageSize.height
+            let factor = UIScreen.main.bounds.height / imageSize.height
             //todo maybe not use uiscreen? but problem is we dont have height at this point of superview.
             
             make.width.equalTo(imageSize.width * factor)
@@ -154,7 +154,7 @@ class EventListView: UIView {
     }
     
 
-    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         let didFinishAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
         if(!didFinishAnimating) {
             backgroundImageView.layer.removeAnimation(forKey: "animateContents")

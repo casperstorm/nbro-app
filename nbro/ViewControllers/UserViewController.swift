@@ -155,14 +155,16 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "user-cell", for: indexPath) as! UserProfileCell
         FacebookManager.user { (user) in
             cell.userNameLabel.text = user.name.uppercased()
-            let request = ImageRequest(URLRequest: URLRequest(URL: user.imageURL))
-            Nuke.taskWith(request) { response in
-                 switch response {
-                case let .Success(image, _):
+            Manager.shared.loadImage(with: user.imageURL, token: nil) { result in
+                switch result {
+                case .success(let image):
                     cell.userImageView.image = image.convertToGrayScale()
-                case .Failure(_): break
+                case .failure(let error):
+                    print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
                 }
-                }.resume()
+                
+                
+            }
         }
         return cell
     }
@@ -184,7 +186,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         let event = events[indexPath.row - 2]
         let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event-cell", for: indexPath) as! UserEventCell
         cell.setTitleText(event.name.uppercased())
-        cell.detailLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercased()
+        cell.detailLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
         cell.iconImageView.image = UIImage(named: "icon_event")
         return cell
     }

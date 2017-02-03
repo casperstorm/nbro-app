@@ -18,7 +18,7 @@ struct Event {
         
         func formattedStringFromDate(_ date: Foundation.Date) -> String {
             switch self {
-            case date(_):
+            case .date(_):
                 return dateString(date, dateFormat: self)
             case .time:
                 return dateString(date, dateFormat: self)
@@ -85,8 +85,9 @@ struct Event {
         
         guard let name = dictionary["name"] as? String,
             let startDate = dateFormatter.date(from: startDateString),
-            let latitude = dictionary["place"]?["location"]??["latitude"] as? CLLocationDegrees,
-            let longitude = dictionary["place"]?["location"]??["longitude"] as? CLLocationDegrees,
+            
+            let latitude = dictionary.value(forKeyPath: "place.location.latitude") as? CLLocationDegrees,
+            let longitude = dictionary.value(forKeyPath: "place.location.longitude") as? CLLocationDegrees,
             let description = dictionary["description"] as? String,
             let id = dictionary["id"] as? String else {
                 return nil
@@ -97,7 +98,7 @@ struct Event {
         self.startDate = startDate
         self.latitude = latitude
         self.longitude = longitude
-        self.locationName = dictionary["place"]?["name"] as? String ?? "-"
+        self.locationName = dictionary.value(forKeyPath: "place.name") as? String ?? "-"
         self.description = description
         
         if let rsvp = dictionary["rsvp_status"] as? String {

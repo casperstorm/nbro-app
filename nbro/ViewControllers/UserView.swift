@@ -33,12 +33,12 @@ class UserView: UIView {
     
     fileprivate func defineLayout() {
         cancelButton.snp.makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
         logoutButton.snp.makeConstraints { (make) -> Void in
-            make.top.trailing.equalTo(logoutButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 15))
+            make.top.trailing.equalTo(logoutButton.superview!).inset(UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15))
             make.height.equalTo(40)
         }
         

@@ -73,12 +73,12 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate func loadData() {
         if state == .attendees {
             FacebookManager.attendeesForEvent(event) { (result) in
-                guard let dict = result["attending"], let dataArray = dict["data"] as? [NSDictionary] else { return }
+                guard let dict = result["attending"] as? NSDictionary, let dataArray = dict["data"] as? [NSDictionary] else { return }
                 self.handleData(dataArray)
             }
         } else if state == .interested {
             FacebookManager.interestedForEvent(event) { (result) in
-                guard let dict = result["maybe"], let dataArray = dict["data"] as? [NSDictionary] else { return }
+                guard let dict = result["maybe"] as? NSDictionary, let dataArray = dict["data"] as? [NSDictionary] else { return }
                 self.handleData(dataArray)
             }
         }
@@ -107,15 +107,14 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
         cell.titleLabel .text = attendee.name
         cell.profileImageView.image = nil
         
-        let request = ImageRequest(URLRequest: URLRequest(URL: attendee.imageURL))
-        Nuke.taskWith(request) { response in
-            switch response {
-            case let .Success(image, _):
+        Manager.shared.loadImage(with: attendee.imageURL, token: nil) { (result) in
+            switch result {
+            case .success(let image):
                 cell.profileImageView.image = image.convertToGrayScale()
-            case .Failure(_): break
+            case .failure(let error):
+                print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
             }
-            }.resume()
-        
+        }
         
         if(indexPath.row < attendees.count - 1) {
             cell.bottomSeparatorView.isHidden = true

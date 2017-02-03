@@ -22,9 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        FBSDKLoginManager.renewSystemCredentials {
-            (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
-        }
+        FBSDKLoginManager.renewSystemCredentials { _, _ in }
         
         NotificationCenter.default.addObserver(self, selector: #selector(tokenDidChange), name: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil)
         

@@ -191,14 +191,14 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         })
         
         FacebookManager.user { (user) in
-            let request = ImageRequest(URLRequest: URLRequest(URL: user.imageURL))
-            Nuke.taskWith(request) { response in
-                switch response {
-                case let .Success(image, _):
+            Manager.shared.loadImage(with: user.imageURL, token: nil) { (result) in
+                switch result {
+                case .success(let image):
                     self.contentView.userButtonView.imageView.image = image.convertToGrayScale()
-                case .Failure(_): break
+                case .failure(let error):
+                    print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
                 }
-                }.resume()
+            }
         }
     }
     
@@ -263,7 +263,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath) as! EventCell
         let event = eventForIndexPath(indexPath)
         cell.nameLabelText(event.name.uppercased())
-        cell.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercased()
+        cell.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
 
         return cell
     }

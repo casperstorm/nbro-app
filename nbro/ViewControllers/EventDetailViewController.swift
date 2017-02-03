@@ -93,7 +93,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     fileprivate func setupSubviews() {
         contentView.eventView.titleLabel.text = event.name.uppercased()
-        contentView.eventView.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time)) – \(event.locationName)".uppercased()
+        contentView.eventView.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time)) – \(event.locationName)".uppercased()
         contentView.eventView.descriptionTextWithAjustedLineHeight(event.description)
 
         refreshRunnersCount()
@@ -227,7 +227,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     //MARK: L360ConfettiAreaDelegate
     
-    func colors(for confettiArea: L360ConfettiArea!) -> [AnyObject]! {
+    private func colors(for confettiArea: L360ConfettiArea!) -> [AnyObject]! {
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
     

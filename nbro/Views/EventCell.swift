@@ -46,7 +46,7 @@ class EventCell: UITableViewCell {
         }
         
         dateLabel.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalTo(dateLabel.superview!).inset(EdgeInsets(top: 0, left: 35, bottom: 20, right: 22))
+            make.left.bottom.right.equalTo(dateLabel.superview!).inset(UIEdgeInsets(top: 0, left: 35, bottom: 20, right: 22))
             make.top.equalTo(nameTextView.snp.bottom).offset(-25)
         }
     }

@@ -3,7 +3,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target "nbro" do
-  	pod 'Nuke', '~> 4.1'
+  	pod 'Nuke', '~> 5.0.0'
   	pod 'AFDateHelper', '~> 3.5' 
   	pod 'SnapKit', '~> 3.0'
 	  pod 'Crashlytics', '~> 3.8'

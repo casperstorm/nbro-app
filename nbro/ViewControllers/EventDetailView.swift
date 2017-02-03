@@ -110,22 +110,22 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         }
         
         scrollView.snp.makeConstraints { (make) -> Void in
-            make.leading.trailing.top.bottom.equalTo(scrollView.superview!).inset(EdgeInsetsMake(0, left: 7, bottom: 0, right: 7))
+            make.leading.trailing.top.bottom.equalTo(scrollView.superview!).inset(UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7))
         }
         
         eventView.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(eventView.superview!).inset(EdgeInsetsMake(0, left: 0, bottom: 7, right: 0))
+            make.edges.equalTo(eventView.superview!).inset(UIEdgeInsets(top: 0, left: 0, bottom: 7, right: 0))
             make.width.equalTo(eventView.superview!)
             make.height.greaterThanOrEqualTo(screenHeight * 0.67)
         }
         
         cancelButton.snp.makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 5, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 5, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
         facebookButton.snp.makeConstraints { (make) -> Void in
-            make.top.trailing.equalTo(facebookButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 5))
+            make.top.trailing.equalTo(facebookButton.superview!).inset(UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
         
@@ -182,11 +182,11 @@ class EventView: UIView {
     
     fileprivate func defineLayout() {
         titleLabel.snp.makeConstraints { (make) -> Void in
-            make.leading.trailing.top.equalTo(titleLabel.superview!).inset(EdgeInsetsMake(25, left: 25, bottom: 0, right: 25))
+            make.leading.trailing.top.equalTo(titleLabel.superview!).inset(UIEdgeInsets(top: 25, left: 25, bottom: 0, right: 25))
         }
         
         dateLabel.snp.makeConstraints { (make) -> Void in
-            make.leading.trailing.equalTo(dateLabel.superview!).inset(EdgeInsetsMake(0, left: 25, bottom: 0, right: 25))
+            make.leading.trailing.equalTo(dateLabel.superview!).inset(UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
         
@@ -236,7 +236,7 @@ class EventView: UIView {
 
         attentButtonView.snp.makeConstraints { (make) in
             make.top.equalTo(descriptionSeparator.snp.bottom).offset(15)
-            make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+            make.leading.trailingMargin.equalTo(attentButtonView.superview!).inset(UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
         }
         
         attendSeparator.snp.makeConstraints { (make) -> Void in
@@ -245,7 +245,7 @@ class EventView: UIView {
         }
         
         descriptionLabel.snp.makeConstraints { (make) -> Void in
-            make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(EdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
+            make.leading.trailingMargin.equalTo(descriptionLabel.superview!).inset(UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25))
             make.top.equalTo(attendSeparator.snp.bottom).offset(15)
             make.bottom.lessThanOrEqualTo(descriptionLabel.superview!).offset(-25)
         }
@@ -330,7 +330,7 @@ class EventView: UIView {
             }
             
             line.snp.makeConstraints { (make) -> Void in
-                make.centerY.leading.trailing.equalTo(line.superview!).inset(EdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+                make.centerY.leading.trailing.equalTo(line.superview!).inset(UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
                 make.height.equalTo(1)
             }
             

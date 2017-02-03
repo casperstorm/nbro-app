@@ -11,16 +11,16 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 
 class FacebookManager {
-    class func logInWithReadPermissions(_ completion: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
+    class func logInWithReadPermissions(_ completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         let loginManager = FBSDKLoginManager()
         loginManager.logIn(withReadPermissions: ["public_profile", "user_events"], from: nil, handler: {
-            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+            (result: FBSDKLoginManagerLoginResult?, error: Error?) -> Void in
             if result?.token != nil {
-                completion(success: true, error: nil)
+                completion(true, nil)
             } else if error != nil {
-                completion(success: false, error: error)
+                completion(false, error)
             } else {
-                completion(success: false, error: nil)
+                completion(false, nil)
             }
         })
     }
@@ -75,7 +75,7 @@ class FacebookManager {
             (connection, result, error) -> Void in
             if error != nil {
                 failure()
-            } else if let r = result {
+            } else if let r = result as? NSDictionary {
                 guard let data = r["data"] as? Array<NSDictionary> else {
                     completion([])
                     return
@@ -84,7 +84,7 @@ class FacebookManager {
                     return Event(dictionary: dict)
                     }.flatMap { $0 }
                 events.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
-                completion(events: events)
+                completion(events)
             }
         })
     }
@@ -120,17 +120,17 @@ class FacebookManager {
         })
     }
     
-    class func requestPermission(_ permissions: Array<String>, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void) {
+    class func requestPermission(_ permissions: Array<String>, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         let loginManager = FBSDKLoginManager()
         loginManager.logIn(withPublishPermissions: permissions, from: nil, handler: {
-            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+            (result: FBSDKLoginManagerLoginResult?, error: Error?) -> Void in
             
             if result?.token != nil {
-                completion(success: true, error: nil)
+                completion(true, nil)
             } else if error != nil {
-                completion(success: false, error: error)
+                completion(false, error)
             } else {
-                completion(success: false, error: nil)
+                completion(false, nil)
             }
         })
     }
@@ -145,7 +145,7 @@ class FacebookManager {
         return FacebookManager.userHasPermission(rsvp)
     }
     
-    fileprivate class func handleEventRSVP(_ event: Event, path: String, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void) {
+    fileprivate class func handleEventRSVP(_ event: Event, path: String, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         let rsvp = "rsvp_event"
         let hasPermissionAccess = userHasRSVPEventPermission()
         
@@ -169,7 +169,7 @@ class FacebookManager {
                 if(error != nil) {
                     // Error codes are based on: https://developers.facebook.com/docs/graph-api/using-graph-api#errors
                     // Unpack the graph-error-code
-                    guard let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
+                    guard let error = error as? NSError, let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
                         return
                     }
                     
@@ -204,18 +204,18 @@ class FacebookManager {
         }
     }
     
-    class func declineEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void)  {
+    class func declineEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void)  {
         let path = "/\(event.id)/declined"
         FacebookManager.handleEventRSVP(event, path: path, completion: completion)
 
     }
     
-    class func attentEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void)  {
+    class func attentEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void)  {
         let path = "/\(event.id)/attending"
         FacebookManager.handleEventRSVP(event, path: path, completion: completion)
     }
 
-    fileprivate class func recoverLostRSVPPermission(_ event: Event, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void) {
+    fileprivate class func recoverLostRSVPPermission(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         FacebookManager.requestPermission(["rsvp_event"], completion: { (success, error) in
             if(!success || error != nil) {
                 completion(false, error)

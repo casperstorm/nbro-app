@@ -32,7 +32,7 @@ class AboutView: UIView {
     
     fileprivate func defineLayout() {
         cancelButton.snp.makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
