@@ -28,13 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupAdditionalStyling()
 
-        let eventListViewController = EventListViewController()
-        let loginViewController = LoginViewController()
-        let navigationController = UINavigationController(rootViewController: eventListViewController)
-        navigationController.view.backgroundColor = .clear
+        let loginViewController = LoginViewController()        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = RootViewController()
         self.window?.backgroundColor = UIColor(hex: 0x222222)
         
         Fabric.with([Crashlytics.self])
