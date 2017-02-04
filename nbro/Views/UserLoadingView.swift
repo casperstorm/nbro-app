@@ -17,9 +17,7 @@ class UserLoadingView: UIView {
         super.init(frame: CGRect.zero)
         backgroundColor = .clear
         setupSubviews()
-        defineLayout()
-        
-        activityIndicatorView.startAnimating()
+        defineLayout()        
         statusLabel.alpha = 0.0
         statusLabel.text = "Something went 🐴💩"
     }

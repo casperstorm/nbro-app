@@ -78,12 +78,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Styling
     
     func setupAdditionalStyling() {
-        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .default
         
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = UIColor(hex: 0xffffff)
-        navigationBarAppearace.barTintColor = UIColor(hex: 0x000000)
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+        navigationBarAppearace.barTintColor = UIColor(hex: 0xffffff)
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
         
         let backButtonImage = UIImage(named: "back_button")
         navigationBarAppearace.backIndicatorImage = backButtonImage
@@ -92,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
         UIBarButtonItem.appearance().setTitleTextAttributes([
             NSFontAttributeName: UIFont.defaultSemiBoldFontOfSize(14),
-            NSForegroundColorAttributeName: UIColor(hex: 0xf60085),
+            NSForegroundColorAttributeName: UIColor(hex: 0x000000),
             NSKernAttributeName: 1.0
             ], for: .normal)
     }

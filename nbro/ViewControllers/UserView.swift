@@ -11,6 +11,21 @@ import UIKit
 import SnapKit
 
 class UserView: UIView {
+    var showNotAuthenticatedView = false {
+        didSet {
+            notAuthenticatedView.isHidden = !showNotAuthenticatedView
+            tableView.isHidden = showNotAuthenticatedView
+            
+            if showNotAuthenticatedView && !oldValue {
+                notAuthenticatedView.alpha = 0.0
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    self.notAuthenticatedView.alpha = 1.0
+                })
+                
+            }
+        }
+    }
+    let notAuthenticatedView = NotAuthenticatedView()
     let tableView = UITableView.tableView()
     let loadingView = UserLoadingView()
     init() {
@@ -25,7 +40,7 @@ class UserView: UIView {
     }
     
     fileprivate func setupSubviews() {
-        let subviews = [loadingView, tableView]
+        let subviews = [loadingView, tableView, notAuthenticatedView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -36,6 +51,10 @@ class UserView: UIView {
         
         tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
+        }
+        notAuthenticatedView.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(notAuthenticatedView.superview!)
+            make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
         }
     }
 }
