@@ -56,14 +56,10 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let viewControllers = [ControllerType.event.associatedViewController(),
-                               ControllerType.image.associatedViewController(),
-                               ControllerType.profile.associatedViewController(),
-                               ControllerType.about.associatedViewController()]
-        
+        let viewControllers: [ControllerType] = [.event, .image, .profile, .about]
         let tabBarController = UITabBarController(nibName: nil, bundle: nil)
         tabBarController.tabBar.isTranslucent = false
-        tabBarController.viewControllers = viewControllers.map { return UINavigationController(rootViewController: $0) }
+        tabBarController.viewControllers = viewControllers.map { return UINavigationController(rootViewController: $0.associatedViewController()) }
 
         showContentController(tabBarController)
     }
