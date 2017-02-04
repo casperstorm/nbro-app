@@ -28,16 +28,39 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         
         let eventListViewController = EventListViewController()
-        let navigationController = UINavigationController(rootViewController: eventListViewController)
-        navigationController.view.backgroundColor = .clear
+        let enc = UINavigationController(rootViewController: eventListViewController)
+        enc.view.backgroundColor = .clear
+        enc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_events").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_events").withRenderingMode(.alwaysOriginal))
+        enc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
         
+        let profileViewController = UserViewController()
+        let pnc = UINavigationController(rootViewController: profileViewController)
+        pnc.view.backgroundColor = .clear
+        pnc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "icon_mask").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "icon_mask").withRenderingMode(.alwaysOriginal))
+        pnc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        
+        let aboutViewController = AboutViewController()
+        let anc = UINavigationController(rootViewController: aboutViewController)
+        anc.view.backgroundColor = .clear
+        anc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_about").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_about").withRenderingMode(.alwaysOriginal))
+        anc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        
+        let imageViewController = UIViewController()
+        let inc = UINavigationController(rootViewController: imageViewController)
+        inc.view.backgroundColor = .clear
+        inc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_image").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_image").withRenderingMode(.alwaysOriginal))
+        inc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+
         let tabBarController = UITabBarController(nibName: nil, bundle: nil)
         tabBarController.tabBar.isTranslucent = false
         tabBarController.viewControllers = [
-            navigationController,
-            UIViewController(),
-            UIViewController()
+            enc,
+            inc,
+            pnc,
+            anc
         ]
+        
+        
         
         showContentController(tabBarController)
     }
