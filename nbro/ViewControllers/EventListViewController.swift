@@ -29,8 +29,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         if traitCollection.forceTouchCapability == UIForceTouchCapability.available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        
-        self.prepareBottomButtonsForAnimation()
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -82,7 +80,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.isNavigationBarHidden = true
         self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
-        self.contentView.userButtonView.isHidden = !FacebookManager.authenticated()
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -94,72 +91,15 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.tableView.delegate = self
         contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), for: .valueChanged)
         contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didPressUserButton), for: .touchDown)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didPressReleaseUserButton), for: .touchUpInside)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), for: .touchCancel)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), for: .touchDragExit)
-        
-        contentView.aboutButton.addTarget(self, action: #selector(didPressAboutButton), for: .touchDown)
-        contentView.aboutButton.addTarget(self, action: #selector(didPressReleaseAboutButton), for: .touchUpInside)
-        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), for: .touchDragExit)
-        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), for: .touchCancel)
     }
     
     // MARK: Actions
-    
-    dynamic fileprivate func didPressUserButton() {
-        animateScaleTransform(self.contentView.userButtonView, sx: 0.85, 0.85)
-    }
-    
-    dynamic fileprivate func didPressReleaseUserButton() {
-        animateResetTransform(self.contentView.userButtonView)
-        
-        let userViewController = UserViewController()
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
-        })
-        
-        userViewController.transitioningDelegate = self
-        self.present(userViewController, animated: true, completion: {
-            self.view.transform = CGAffineTransform.identity;
-        })
-    }
-    
-    dynamic fileprivate func didCancelUserButton() {
-        animateResetTransform(self.contentView.userButtonView)
-    }
-    
-    dynamic fileprivate func didPressAboutButton() {
-        animateScaleTransform(self.contentView.aboutButton, sx: 0.85, 0.85)
-
-    }
-    
-    dynamic fileprivate func didPressReleaseAboutButton() {
-        animateResetTransform(self.contentView.aboutButton)
-        
-        let aboutViewController = AboutViewController()
-        let navigationController = UINavigationController(rootViewController: aboutViewController)
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
-        })
-
-        navigationController.transitioningDelegate = self
-        aboutViewController.interactor = self.interactor
-        self.present(navigationController, animated: true, completion: {
-            self.view.transform = CGAffineTransform.identity;
-        })
-    }
-    
-    dynamic fileprivate func didCancelAboutButton() {
-        animateResetTransform(self.contentView.aboutButton)
-    }
     
     dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
             self.contentView.didPresentUserButtons = false
-            self.prepareBottomButtonsForAnimation()
             self.events = []
             self.contentView.tableView.reloadData()
         }
@@ -179,27 +119,8 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-            
-            let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-            DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                self.animateBottomButtons()
-            }
             }, failure: {
-                if (self.isViewLoaded && self.view.window != nil){
-                    self.animateBottomButtons()
-                }
         })
-        
-        FacebookManager.user { (user) in
-            Manager.shared.loadImage(with: user.imageURL, token: nil) { (result) in
-                switch result {
-                case .success(let image):
-                    self.contentView.userButtonView.imageView.image = image.convertToGrayScale()
-                case .failure(let error):
-                    print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
-                }
-            }
-        }
     }
     
     // MARK: UITableView
@@ -285,39 +206,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     fileprivate func eventForIndexPath(_ indexPath: IndexPath) -> Event {
         return events[indexPath.row - 1]
-    }
-    
-    fileprivate func animateBottomButtons() {
-        if(!self.contentView.didPresentUserButtons) {
-            UIView.animate(withDuration: 0.9,
-                                       delay: 0.1,
-                                       usingSpringWithDamping: 0.5,
-                                       initialSpringVelocity: 0.7,
-                                       options: .curveLinear,
-                                       animations: ({
-                                        self.contentView.aboutButton.transform = CGAffineTransform.identity
-                                       }), completion: { (Bool) in
-                                        self.contentView.didPresentUserButtons = true
-            })
-            
-            UIView.animate(withDuration: 0.9,
-                                       delay: 0.0,
-                                       usingSpringWithDamping: 0.5,
-                                       initialSpringVelocity: 0.7,
-                                       options: .curveLinear,
-                                       animations: ({
-                                        self.contentView.userButtonView.transform = CGAffineTransform.identity
-                                       }), completion: { (Bool) in
-                                        self.contentView.didPresentUserButtons = true
-            })
-        }
-    }
-    
-    fileprivate func prepareBottomButtonsForAnimation() {
-        if(!self.contentView.didPresentUserButtons) {
-            self.contentView.aboutButton.transform = self.contentView.aboutButton.transform.translatedBy(x: 0, y: 100)
-            self.contentView.userButtonView.transform = self.contentView.userButtonView.transform.translatedBy(x: 0, y: 100)
-        }
     }
     
     fileprivate func animateScaleTransform(_ view: UIView, sx: CGFloat, _ sy: CGFloat) {

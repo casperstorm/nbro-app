@@ -31,8 +31,14 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         setupSubviews()
         
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationItem.title = "Profile".uppercased()
         self.contentView.tableView.isHidden = true
         loadData()
+        
+        let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
+        self.navigationItem.rightBarButtonItem = logoutBarButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,8 +109,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
-        contentView.logoutButton.addTarget(self, action: #selector(logoutPressed), for: .touchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
@@ -208,10 +212,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         }))
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    func cancelPressed() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: Helpers

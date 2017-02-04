@@ -33,7 +33,10 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()        
+        setupSubviews()
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationItem.title = "About".uppercased()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,31 +44,13 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         TrackingManager.trackEvent(.viewAbout)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
     fileprivate func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
-    }
-    
-    // MARK: Actions
-    
-    func cancelPressed() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: UITableView
