@@ -11,7 +11,6 @@ import UIKit
 import SnapKit
 
 class AboutView: UIView {
-    let cancelButton = UIButton.cancelButton()
     let tableView = UITableView.tableView()
     
     init() {
@@ -26,16 +25,11 @@ class AboutView: UIView {
     }
     
     fileprivate func setupSubviews() {
-        let subviews = [tableView, cancelButton]
+        let subviews = [tableView]
         subviews.forEach { addSubview($0) }
     }
     
-    fileprivate func defineLayout() {
-        cancelButton.snp.makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0))
-            make.width.height.equalTo(40)
-        }
-        
+    fileprivate func defineLayout() {        
         tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
         }

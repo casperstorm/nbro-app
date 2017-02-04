@@ -90,6 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.backIndicatorTransitionMaskImage = backButtonImage
         
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSFontAttributeName: UIFont.defaultSemiBoldFontOfSize(14),
+            NSForegroundColorAttributeName: UIColor(hex: 0xf60085),
+            NSKernAttributeName: 1.0
+            ], for: .normal)
     }
 }
 

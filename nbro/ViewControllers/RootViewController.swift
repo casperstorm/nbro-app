@@ -27,16 +27,12 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let eventListViewController = EventListViewController()
-        let navigationController = UINavigationController(rootViewController: eventListViewController)
-        navigationController.view.backgroundColor = .clear
-        
         let tabBarController = UITabBarController(nibName: nil, bundle: nil)
         tabBarController.tabBar.isTranslucent = false
         tabBarController.viewControllers = [
-            navigationController,
-            UIViewController(),
-            UIViewController()
+            UINavigationController(rootViewController: EventListViewController()),
+            UINavigationController(rootViewController: UserViewController()),
+            UINavigationController(rootViewController: AboutViewController())
         ]
         
         showContentController(tabBarController)

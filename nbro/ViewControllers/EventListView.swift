@@ -31,8 +31,6 @@ class EventListView: UIView, CAAnimationDelegate {
     let backgroundImageView = UIImageView.backgroundImageView()
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
-    let aboutButton = UIButton.aboutButton()
-    let userButtonView = CircularUserButtonView()
     let refreshControl = UIRefreshControl.refreshControl()
     let notAuthenticatedView = NotAuthenticatedView()
     var didPresentUserButtons = Bool()
@@ -55,9 +53,7 @@ class EventListView: UIView, CAAnimationDelegate {
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
-        addSubview(aboutButton)
         addSubview(notAuthenticatedView)
-        addSubview(userButtonView)
 
         if refreshControl.subviews.count > 0 {
             refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
@@ -93,27 +89,6 @@ class EventListView: UIView, CAAnimationDelegate {
             make.centerY.equalTo(notAuthenticatedView.superview!)
             make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
         }
-        
-        userButtonView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(userButtonView.superview!).inset(20)
-            make.right.equalTo(userButtonView.superview!).inset(20)
-            make.width.height.equalTo(60)
-        }
-    }
-    
-    override func updateConstraints() {
-        aboutButton.snp.remakeConstraints { (make) in
-            if(FacebookManager.authenticated()) {
-                make.centerY.equalTo(userButtonView).offset(4)
-                make.right.equalTo(userButtonView.snp.left).offset(-10)
-            } else {
-                make.right.bottom.equalTo(aboutButton.superview!).inset(20)
-            }
-            
-            make.width.height.equalTo(47)
-        }
-        
-        super.updateConstraints()
     }
     
     // MARK : Animation
