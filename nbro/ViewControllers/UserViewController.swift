@@ -33,7 +33,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barStyle = .black
-        self.title = "Profile".uppercased()
+        self.navigationItem.title = "Profile".uppercased()
         self.contentView.tableView.isHidden = true
         loadData()
         

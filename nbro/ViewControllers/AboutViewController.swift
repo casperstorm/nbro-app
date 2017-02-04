@@ -36,7 +36,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
         setupSubviews()
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barStyle = .black
-        self.title = "About".uppercased()
+        self.navigationItem.title = "About".uppercased()
     }
     
     override func viewDidAppear(_ animated: Bool) {
