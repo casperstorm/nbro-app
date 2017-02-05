@@ -68,13 +68,13 @@
 		D061ABD61C824DB60094CBAD /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061ABD51C824DB60094CBAD /* SwitchView.swift */; };
 		D0AF55261E462C4200789AA3 /* background_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF55251E462C4200789AA3 /* background_image.jpg */; };
 		D0AF55281E462E2A00789AA3 /* icecream.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF55271E462E2A00789AA3 /* icecream.svg */; };
-		D0AF552C1E46971800789AA3 /* fist.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF552B1E46971800789AA3 /* fist.svg */; };
 		D0AF55301E46AA1B00789AA3 /* midweek_madness.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF552F1E46AA1B00789AA3 /* midweek_madness.svg */; };
 		D0AF55341E46AC7400789AA3 /* hood.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF55331E46AC7400789AA3 /* hood.svg */; };
 		D0AF55361E46ACF800789AA3 /* on_the_run.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF55351E46ACF800789AA3 /* on_the_run.svg */; };
 		D0AF55401E46B8C200789AA3 /* StickerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553D1E46B8C200789AA3 /* StickerContainerView.swift */; };
 		D0AF55411E46B8C200789AA3 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553E1E46B8C200789AA3 /* StickerView.swift */; };
 		D0AF55421E46B8C200789AA3 /* StickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553F1E46B8C200789AA3 /* StickerViewController.swift */; };
+		D0AF55441E46BE8900789AA3 /* fist.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0AF55431E46BE8900789AA3 /* fist.svg */; };
 		D0B0A7171C9212250061D062 /* NotAuthenticatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */; };
 		D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0B0F8FA1C74F79800955461 /* Exo2-Regular.ttf */; };
 /* End PBXBuildFile section */
@@ -147,13 +147,13 @@
 		D061ABD51C824DB60094CBAD /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwitchView.swift; path = Views/SwitchView.swift; sourceTree = "<group>"; };
 		D0AF55251E462C4200789AA3 /* background_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_image.jpg; sourceTree = SOURCE_ROOT; };
 		D0AF55271E462E2A00789AA3 /* icecream.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = icecream.svg; sourceTree = SOURCE_ROOT; };
-		D0AF552B1E46971800789AA3 /* fist.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fist.svg; path = ../../../../../../../var/folders/4t/pq8swr990r151mvfyvbtyyrm0000gn/T/com.apple.iChat/Messages/Transfers/fist.svg; sourceTree = "<group>"; };
 		D0AF552F1E46AA1B00789AA3 /* midweek_madness.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = midweek_madness.svg; sourceTree = SOURCE_ROOT; };
 		D0AF55331E46AC7400789AA3 /* hood.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = hood.svg; sourceTree = "<group>"; };
 		D0AF55351E46ACF800789AA3 /* on_the_run.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = on_the_run.svg; sourceTree = SOURCE_ROOT; };
 		D0AF553D1E46B8C200789AA3 /* StickerContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerContainerView.swift; sourceTree = "<group>"; };
 		D0AF553E1E46B8C200789AA3 /* StickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		D0AF553F1E46B8C200789AA3 /* StickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerViewController.swift; sourceTree = "<group>"; };
+		D0AF55431E46BE8900789AA3 /* fist.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fist.svg; sourceTree = SOURCE_ROOT; };
 		D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthenticatedView.swift; sourceTree = "<group>"; };
 		D0B0F8FA1C74F79800955461 /* Exo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -365,8 +365,8 @@
 				D0AF55271E462E2A00789AA3 /* icecream.svg */,
 				D0AF552F1E46AA1B00789AA3 /* midweek_madness.svg */,
 				D0AF55331E46AC7400789AA3 /* hood.svg */,
+				D0AF55431E46BE8900789AA3 /* fist.svg */,
 				D0AF55351E46ACF800789AA3 /* on_the_run.svg */,
-				D0AF552B1E46971800789AA3 /* fist.svg */,
 				D0AF55251E462C4200789AA3 /* background_image.jpg */,
 				6C9A5C291C60BF72007459A8 /* AppDelegate.swift */,
 				6C9A5C351C60BF72007459A8 /* Info.plist */,
@@ -530,8 +530,8 @@
 				6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */,
 				D0AF55341E46AC7400789AA3 /* hood.svg in Resources */,
 				6C5BADAD1C87171D00A0ECD0 /* pop.aiff in Resources */,
-				D0AF552C1E46971800789AA3 /* fist.svg in Resources */,
 				D0AF55361E46ACF800789AA3 /* on_the_run.svg in Resources */,
+				D0AF55441E46BE8900789AA3 /* fist.svg in Resources */,
 				D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */,
 				D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */,
 				6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */,
