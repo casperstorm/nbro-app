@@ -26,7 +26,7 @@ class RootViewController: UIViewController {
                 vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
                 return vc
             case .image:
-                let vc = UIViewController()
+                let vc = ImagePickerViewController()
                 vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_image").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_image_selected").withRenderingMode(.alwaysOriginal))
                 vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
                 return vc
