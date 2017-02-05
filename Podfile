@@ -9,6 +9,7 @@ target "nbro" do
 	  pod 'Crashlytics', '~> 3.8'
     pod 'FBSDKCoreKit', '~> 4.18'
     pod 'FBSDKLoginKit', '~> 4.18'
+    pod 'SVGKit', :git => 'https://github.com/dcflow/SVGKit.git', :branch => '2.x'
 
   	pod 'Mapbox-iOS-SDK', '~> 3.1.0'
   	pod 'Fabric', '~> 1.6'
