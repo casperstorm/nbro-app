@@ -32,6 +32,7 @@ class TrackingManager {
     
     class func trackUser() {
         FacebookManager.user({ (user) in
+            guard let user = user else { return }
             Crashlytics.sharedInstance().setUserIdentifier(user.id)
             Crashlytics.sharedInstance().setUserName(user.name)
         })

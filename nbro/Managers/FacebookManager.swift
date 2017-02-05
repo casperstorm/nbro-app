@@ -109,14 +109,14 @@ class FacebookManager {
         })
     }
     
-    class func user(_ completion: @escaping (_ user: FacebookProfile) -> Void) {
+    class func user(_ completion: @escaping (_ user: FacebookProfile?) -> Void) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(600)"])
-        graphRequest.start(completionHandler: {
-            (connection, result, error) -> Void in
-            guard let dict = result as? NSDictionary, let user = FacebookProfile(dictionary: dict) else {
-                return
+        graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+            if let dict = result as? NSDictionary, let user = FacebookProfile(dictionary: dict) {
+                completion(user)
+            } else {
+                completion(nil)
             }
-            completion(user)
         })
     }
     
@@ -227,6 +227,7 @@ class FacebookManager {
     
     class func isAttendingEvent(_ event: Event, completion:@escaping (_ attending: Bool) -> Void) {
         FacebookManager.user { (user) in
+            guard let user = user else { return }
             let path = "/\(event.id)/attending/\(user.id)"
             let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""])
             graphRequest.start(completionHandler: {

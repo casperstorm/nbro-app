@@ -9,19 +9,44 @@
 import Foundation
 import Nuke
 
-class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    enum UserCellType: Int {
-        case profileCellType
-        case textCellType
-        case eventCellType
+fileprivate class ViewModel {
+    enum TableData: Int {
+        case profile, information, event
     }
     
+    var events: [Event] = []
+    var user: FacebookProfile?
+  
+    func loadUser(_ completion: @escaping (_ user: FacebookProfile?) -> Void) {
+        FacebookManager.user(completion)
+    }
+    
+    func loadEvents(_ completion: @escaping (Bool, [Event]?) -> Void) {
+        FacebookManager.userEvents({ userEvents in
+            FacebookManager.NBROEvents({ nbroEvents in
+                let attendingEvents: [Event] = userEvents.filter({ event -> Bool in
+                    let contains = nbroEvents.contains(event)
+                    let attending = event.rsvp == .attending
+                    return attending && contains
+                })
+                
+                var sortedEvents = attendingEvents
+                sortedEvents.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+                completion(true, sortedEvents)
+            }, failure: {
+                completion(false, nil)
+            })
+        }, failure: {
+            completion(false, nil)
+        })
+    }
+}
+
+class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    fileprivate let viewModel = ViewModel()
     var contentView = UserView()
     let interactor = Interactor()
-    var events: [Event] = []
     
-
     override func loadView() {
         super.loadView()
         view = contentView
@@ -30,118 +55,96 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationItem.title = "Profile".uppercased()
-        self.contentView.tableView.isHidden = true
-        loadData()
-        
-        let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
-        self.navigationItem.rightBarButtonItem = logoutBarButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.viewUser)
+        prepareToLoadData()
     }
 
+    
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
     }
-    
-    fileprivate func loadData() {
-        FacebookManager.userEvents({ (userEvents) -> Void in
-            FacebookManager.NBROEvents({ (nbroEvents) -> Void in
-                for event in userEvents {
-                    let contains = nbroEvents.contains(event)
-                    let attending = event.rsvp == .attending
-                    if contains && attending {
-                        self.events.append(event)
-                    }
-                }
-                self.events.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
-                self.contentView.tableView.isHidden = false
-                self.fadeoutLoadingIndicator()
-                self.contentView.tableView.reloadData()
-                self.animateCellsEntrance(true)
-                }, failure: {
-                    self.displayErrorMessage()
-            })
-            }, failure: {
-                self.displayErrorMessage()
-        })
-    }
-    
-    fileprivate func animateCellsEntrance(_ animate: Bool) {
-        if(animate) {
-            let visibleCells = contentView.tableView.visibleCells
-            for index in 0 ..< visibleCells.count {
-                let delay = (Double(index) * 0.04) + 0.3
-                let cell = visibleCells[index]
-                cell.transform = CGAffineTransform(translationX: UIScreen.main.bounds.size.width - 120.0, y: 0)
-                cell.alpha = 0
-                UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-                    cell.transform = CGAffineTransform.identity
-                    cell.alpha = 1.0
-                    }, completion: nil)
-            }
-        }
-    }
-    
-    fileprivate func displayErrorMessage() {
-        contentView.tableView.isHidden = true
-        fadeoutLoadingIndicator()
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.contentView.loadingView.statusLabel.alpha = 1.0
-            }, completion: { (completed) in
-        })
-    }
-    
-    fileprivate func fadeoutLoadingIndicator() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.contentView.loadingView.activityIndicatorView.alpha = 0.0
-            }, completion: { (completed) in
-                self.contentView.loadingView.activityIndicatorView.stopAnimating()
-                self.contentView.loadingView.activityIndicatorView.alpha = 1.0
-        })
-    }
 
-    func setupSubviews() {
+    func setupSubviews() {        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barStyle = .black
+        navigationItem.title = "Profile".uppercased()
+        
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
     }
     
-    // MARK: UITableView
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count + 2
+        let staticCells: [ViewModel.TableData] = [.profile, .information]
+        let events = viewModel.events
+        
+        return staticCells.count + events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellType = userCellTypeForIndexPath(indexPath)
-        if(cellType == .profileCellType) {
-            return configureUserProfileCell(indexPath)
-        } else if(cellType == .textCellType) {
-            return configureUserTextCell(indexPath)
-        } else if(cellType == .eventCellType) {
-            return configureUserEventCell(indexPath)
+        switch tableDataRow(indexPath) {
+        case .profile:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "user-cell", for: indexPath) as! UserProfileCell
+            viewModel.loadUser({ user in
+                guard let user = user else { return }
+                cell.userNameLabel.text = user.name.uppercased()
+                Manager.shared.loadImage(with: user.imageURL, token: nil) { result in
+                    switch result {
+                    case .success(let image):
+                        cell.userImageView.image = image.convertToGrayScale()
+                    case .failure(let error):
+                        print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
+                    }
+                }
+            })
+            return cell
+        case .information:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "text-cell", for: indexPath) as! UserTextCell
+            let events = viewModel.events
+            if(events.count == 0) {
+                cell.bodyLabel.text = "It looks like you don't have any upcoming events. Remember, your commitment will be rewarded mile by mile."
+                
+            } else {
+                let count = events.count
+                let pluralEvent = (count == 1) ? "event" : "events"
+                cell.bodyLabel.text = "You have \(count) upcoming \(pluralEvent)!\nKeep it up, your commitment will be rewarded mile by mile."
+            }
+            return cell
+        case .event:
+            let event = viewModel.events[indexPath.row - 2]
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event-cell", for: indexPath) as! UserEventCell
+            cell.setTitleText(event.name.uppercased())
+            cell.detailLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
+            cell.iconImageView.image = UIImage(named: "icon_event")
+            return cell
+        }
+
+    }
+    
+    fileprivate func tableDataRow(_ indexPath: IndexPath) -> ViewModel.TableData {
+        if(indexPath.row == 0) {
+            return .profile
+        } else if (indexPath.row == 1) {
+            return .information
         } else {
-            return UITableViewCell()
+            return .event
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         contentView.tableView.deselectRow(at: indexPath, animated: true)
-        let cellType = userCellTypeForIndexPath(indexPath)
-        if(cellType == .eventCellType) {
+        let data = tableDataRow(indexPath)
+        switch data {
+        case .event:
             DispatchQueue.main.async { () -> Void in
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
                 })
                 
-                let event = self.events[indexPath.row - 2]
+                let event = self.viewModel.events[indexPath.row - 2]
                 let eventDetailViewController = EventDetailViewController(event: event)
                 eventDetailViewController.transitioningDelegate = self
                 eventDetailViewController.interactor = self.interactor
@@ -149,53 +152,18 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.view.transform = CGAffineTransform.identity;
                 })
             }
+        default: break;
         }
+    }
+}
 
-    }
-    
-    // MARK : Cell Creation
-    
-    func configureUserProfileCell(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "user-cell", for: indexPath) as! UserProfileCell
-        FacebookManager.user { (user) in
-            cell.userNameLabel.text = user.name.uppercased()
-            Manager.shared.loadImage(with: user.imageURL, token: nil) { result in
-                switch result {
-                case .success(let image):
-                    cell.userImageView.image = image.convertToGrayScale()
-                case .failure(let error):
-                    print("Oh noes. Image could not be loaded: \(error.localizedDescription)")
-                }
-                
-                
-            }
+extension UserViewController {
+    dynamic fileprivate func loginPressed() {
+        let loginViewController = LoginViewController()
+        present(loginViewController, animated: true) { () -> Void in
+            self.contentView.showNotAuthenticatedView = false
         }
-        return cell
     }
-    
-    func configureUserTextCell(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "text-cell", for: indexPath) as! UserTextCell
-        if(events.count == 0) {
-            cell.bodyLabel.text = "It looks like you don't have any upcoming events. Remember, your commitment will be rewarded mile by mile."
-
-        } else {
-            let count = events.count
-            let pluralEvent = (count == 1) ? "event" : "events"
-            cell.bodyLabel.text = "You have \(count) upcoming \(pluralEvent)!\nKeep it up, your commitment will be rewarded mile by mile."
-        }
-        return cell
-    }
-    
-    func configureUserEventCell(_ indexPath: IndexPath) -> UITableViewCell {
-        let event = events[indexPath.row - 2]
-        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event-cell", for: indexPath) as! UserEventCell
-        cell.setTitleText(event.name.uppercased())
-        cell.detailLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
-        cell.iconImageView.image = UIImage(named: "icon_event")
-        return cell
-    }
-    
-    //MARK: Actions
     
     dynamic fileprivate func logoutPressed() {
         let alertController = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .alert)
@@ -208,22 +176,87 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
-            
         }))
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    //MARK: Helpers
-    
-    func userCellTypeForIndexPath(_ indexPath: IndexPath) -> UserCellType {
-        if(indexPath.row == 0) {
-            return .profileCellType
-        } else if (indexPath.row == 1) {
-            return .textCellType
-        } else {
-            return .eventCellType
+}
+
+extension UserViewController {
+    func prepareToLoadData() {
+        let events = viewModel.events
+        if events.count == 0 {
+            contentView.tableView.isHidden = true
+            presentLoadingAnimation()
         }
+        
+        let authenticated = FacebookManager.authenticated()
+        contentView.notAuthenticatedView.isHidden = authenticated
+        if(authenticated) {
+            let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
+            navigationItem.rightBarButtonItem = logoutBarButtonItem
+            
+            loadData()
+        }
+    }
+    
+    func loadData() {
+        viewModel.loadEvents { [weak self] success, events in
+            guard let strongSelf = self else { return }
+            if(success) {
+                guard let events = events else { return }
+                let shouldAnimateEntrance = strongSelf.viewModel.events.count == 0
+                strongSelf.viewModel.events = events
+                strongSelf.contentView.tableView.isHidden = false
+                strongSelf.hideLoadingAnimation()
+                strongSelf.contentView.tableView.reloadData()
+                strongSelf.animateCellsEntrance(shouldAnimateEntrance)
+            } else {
+                strongSelf.presentErrorView()
+            }
+        }
+    }
+}
+
+extension UserViewController {
+    fileprivate func animateCellsEntrance(_ animate: Bool) {
+        if(animate) {
+            let visibleCells = contentView.tableView.visibleCells
+            for index in 0 ..< visibleCells.count {
+                let delay = (Double(index) * 0.04) + 0.3
+                let cell = visibleCells[index]
+                cell.transform = CGAffineTransform(translationX: UIScreen.main.bounds.size.width - 120.0, y: 0)
+                cell.alpha = 0
+                UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                    cell.transform = CGAffineTransform.identity
+                    cell.alpha = 1.0
+                }, completion: nil)
+            }
+        }
+    }
+    
+    fileprivate func presentErrorView() {
+        contentView.tableView.isHidden = true
+        hideLoadingAnimation()
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.contentView.loadingView.statusLabel.alpha = 1.0
+            }, completion: { (completed) in
+        })
+    }
+
+    
+    fileprivate func presentLoadingAnimation() {
+        contentView.loadingView.activityIndicatorView.startAnimating()
+    }
+    
+    fileprivate func hideLoadingAnimation() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.contentView.loadingView.activityIndicatorView.alpha = 0.0
+            }, completion: { (completed) in
+                self.contentView.loadingView.activityIndicatorView.stopAnimating()
+                self.contentView.loadingView.activityIndicatorView.alpha = 1.0
+        })
     }
 }
 

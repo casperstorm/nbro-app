@@ -54,6 +54,11 @@
 		6CD06B491C804E0700351A20 /* DissmissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B481C804E0700351A20 /* DissmissAnimator.swift */; };
 		6CD06B4B1C80501A00351A20 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B4A1C80501A00351A20 /* Interactor.swift */; };
 		6CD06B4D1C805FBC00351A20 /* AttendEventButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */; };
+		6CDA76841E46790000A170F5 /* StickerBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA76831E46790000A170F5 /* StickerBrowserViewController.swift */; };
+		6CDA76861E46791A00A170F5 /* StickerBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA76851E46791A00A170F5 /* StickerBrowserView.swift */; };
+		6CDA76881E46819E00A170F5 /* StickerBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA76871E46819E00A170F5 /* StickerBrowserCell.swift */; };
+		6CDA768A1E46A36900A170F5 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA76891E46A36900A170F5 /* ImagePickerViewController.swift */; };
+		6CDA768C1E46A37B00A170F5 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */; };
 		6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */; };
 		7C3FAC2CB4E2E18C784AF006 /* Pods_nbro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28A4103618D22CDAFD83965B /* Pods_nbro.framework */; };
 		D00F9F6B1E454C15003667B4 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F9F6A1E454C15003667B4 /* RootViewController.swift */; };
@@ -127,6 +132,11 @@
 		6CD06B481C804E0700351A20 /* DissmissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DissmissAnimator.swift; path = Managers/DissmissAnimator.swift; sourceTree = "<group>"; };
 		6CD06B4A1C80501A00351A20 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interactor.swift; path = Managers/Interactor.swift; sourceTree = "<group>"; };
 		6CD06B4C1C805FBC00351A20 /* AttendEventButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AttendEventButtonView.swift; path = Views/AttendEventButtonView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		6CDA76831E46790000A170F5 /* StickerBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerBrowserViewController.swift; sourceTree = "<group>"; };
+		6CDA76851E46791A00A170F5 /* StickerBrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerBrowserView.swift; sourceTree = "<group>"; };
+		6CDA76871E46819E00A170F5 /* StickerBrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerBrowserCell.swift; sourceTree = "<group>"; };
+		6CDA76891E46A36900A170F5 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
+		6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AnimatedBackgroundView.swift; path = Views/AnimatedBackgroundView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8E9C014E4848CAD8A82E5466 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nbro.release.xcconfig"; path = "Pods/Target Support Files/Pods-nbro/Pods-nbro.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,7 +173,7 @@
 		181FC285B7EFE73C3057C11A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D0AF551F1E4623E800789AA3 /* Sticker */,
+				6CDA76821E4678DD00A170F5 /* Sticker */,
 				D00F9F691E454BDB003667B4 /* Root */,
 				6C85B2541C74E0B700157C93 /* Credit */,
 				6C3144511C71DE7900A138EF /* About */,
@@ -386,6 +396,18 @@
 			name = Attendees;
 			sourceTree = "<group>";
 		};
+		6CDA76821E4678DD00A170F5 /* Sticker */ = {
+			isa = PBXGroup;
+			children = (
+				6CDA76831E46790000A170F5 /* StickerBrowserViewController.swift */,
+				6CDA76851E46791A00A170F5 /* StickerBrowserView.swift */,
+				6CDA76871E46819E00A170F5 /* StickerBrowserCell.swift */,
+				6CDA76891E46A36900A170F5 /* ImagePickerViewController.swift */,
+				6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */,
+			);
+			name = Sticker;
+			sourceTree = "<group>";
+		};
 		8F26A26E7E050EE678753DC9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +620,7 @@
 			files = (
 				6CB7E5711D645501009B9D66 /* AttendeesView.swift in Sources */,
 				6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */,
+				6CDA76841E46790000A170F5 /* StickerBrowserViewController.swift in Sources */,
 				6C3144551C71DEA800A138EF /* AboutView.swift in Sources */,
 				6CA29E1B1C7F70F50086FE67 /* FacebookProfile.swift in Sources */,
 				D0AF552A1E46363E00789AA3 /* StickerView.swift in Sources */,
@@ -606,11 +629,13 @@
 				D061ABD61C824DB60094CBAD /* SwitchView.swift in Sources */,
 				6C5BADA31C8716D600A0ECD0 /* UIFont+NBRO.swift in Sources */,
 				6C2CC9111CA1B09F00EE2CEB /* CircularUserButtonView.swift in Sources */,
+				6CDA76881E46819E00A170F5 /* StickerBrowserCell.swift in Sources */,
 				6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */,
 				6C31445E1C71FEFC00A138EF /* AboutLogoCell.swift in Sources */,
 				6C85B2561C74E0E400157C93 /* CreditViewController.swift in Sources */,
 				D00F9F6B1E454C15003667B4 /* RootViewController.swift in Sources */,
 				6C5BADA51C8716E700A0ECD0 /* FacebookManager.swift in Sources */,
+				6CDA768C1E46A37B00A170F5 /* ImagePickerView.swift in Sources */,
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */,
 				6C5BADA91C8716FF00A0ECD0 /* LogoCell.swift in Sources */,
@@ -619,6 +644,7 @@
 				6C3144571C71E23400A138EF /* UIImage+Additions.swift in Sources */,
 				6C4134E41CA2AEBE00704797 /* UserProfileCell.swift in Sources */,
 				6C5BADAB1C87171000A0ECD0 /* DetailLabelView.swift in Sources */,
+				6CDA76861E46791A00A170F5 /* StickerBrowserView.swift in Sources */,
 				6C3144601C71FF4200A138EF /* AboutTextCell.swift in Sources */,
 				D0B0A7171C9212250061D062 /* NotAuthenticatedView.swift in Sources */,
 				6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */,
@@ -641,6 +667,7 @@
 				6C3144531C71DEA000A138EF /* AboutViewController.swift in Sources */,
 				D0AF55211E46240500789AA3 /* StickerViewController.swift in Sources */,
 				6CB7E56E1D6454E4009B9D66 /* AttendeesViewController.swift in Sources */,
+				6CDA768A1E46A36900A170F5 /* ImagePickerViewController.swift in Sources */,
 				D0AF55231E46247400789AA3 /* StickerContainerView.swift in Sources */,
 				181FC68ED212E98808EB164D /* Event.swift in Sources */,
 				6CA29E1D1C7F74FD0086FE67 /* TrackingManager.swift in Sources */,
