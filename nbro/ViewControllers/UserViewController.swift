@@ -192,11 +192,14 @@ extension UserViewController {
         
         let authenticated = FacebookManager.authenticated()
         contentView.notAuthenticatedView.isHidden = authenticated
+        contentView.tableView.isHidden = !authenticated
         if(authenticated) {
             let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
             navigationItem.rightBarButtonItem = logoutBarButtonItem
             
             loadData()
+        } else {
+            contentView.loadingView.activityIndicatorView.stopAnimating()
         }
     }
     
