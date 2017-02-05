@@ -12,7 +12,6 @@ import SVGKit
 class StickerContainerView: UIView {
     fileprivate let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .yellow
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "background_image.jpg")
         
@@ -22,9 +21,9 @@ class StickerContainerView: UIView {
     fileprivate var stickers = [StickerView]()
     fileprivate var selectedSticker: StickerView?
     
-    init() {
+    init(image: UIImage) {
         super.init(frame: .zero)
-        
+        imageView.image = image
         setupSubviews()
         defineLayout()
         setupGestures()
@@ -122,27 +121,42 @@ fileprivate extension StickerContainerView {
 }
 
 extension StickerContainerView {
-    func setupTestData() {
-        let images = [
-//            SVGKImage(named: "icecream.svg")!,
-            SVGKImage(named: "fist.svg")!,
-            SVGKImage(named: "hood.svg")!,
-            SVGKImage(named: "on_the_run.svg")!,
-        ]
-                
+    
+    func add(image: SVGKImage) {
         let imageFrame = self.imageFrame()
-        images.forEach { (image) in
-            let stickerView = StickerView(view: SVGKFastImageView(svgkImage: image), boundTo: imageFrame)
-            addSubview(stickerView)
-            let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
-            let maximum: CGFloat = 500
-            let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
-            let height = aspectRatio <= 1 ? maximum : maximum * aspectRatio
-            stickerView.frame.size = CGSize(width: width, height: height)
-            stickerView.center = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
-            
-            self.stickers.append(stickerView)
-        }
+        let stickerView = StickerView(view: SVGKFastImageView(svgkImage: image), boundTo: imageFrame)
+        addSubview(stickerView)
+        let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
+        let maximum: CGFloat = 500
+        let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
+        let height = aspectRatio <= 1 ? maximum : maximum * aspectRatio
+        stickerView.frame.size = CGSize(width: width, height: height)
+        stickerView.center = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
+        
+        self.stickers.append(stickerView)
     }
+//    
+//    func setupTestData() {
+//        let images = [
+////            SVGKImage(named: "icecream.svg")!,
+//            SVGKImage(named: "fist.svg")!,
+//            SVGKImage(named: "hood.svg")!,
+//            SVGKImage(named: "on_the_run.svg")!,
+//        ]
+//                
+//        let imageFrame = self.imageFrame()
+//        images.forEach { (image) in
+//            let stickerView = StickerView(view: SVGKFastImageView(svgkImage: image), boundTo: imageFrame)
+//            addSubview(stickerView)
+//            let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
+//            let maximum: CGFloat = 500
+//            let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
+//            let height = aspectRatio <= 1 ? maximum : maximum * aspectRatio
+//            stickerView.frame.size = CGSize(width: width, height: height)
+//            stickerView.center = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
+//            
+//            self.stickers.append(stickerView)
+//        }
+//    }
 
 }

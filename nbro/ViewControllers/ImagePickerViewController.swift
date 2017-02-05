@@ -46,8 +46,8 @@ extension ImagePickerViewController {
 extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            let imageHandlerViewController = ImageHandlerViewController(image: image)
-//            navigationController?.pushViewController(imageHandlerViewController, animated: true)
+            let stickerViewController = StickerViewController(image: image)
+            navigationController?.pushViewController(stickerViewController, animated: true)
         }
 
         self.dismiss(animated: true, completion: nil)

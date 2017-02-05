@@ -8,31 +8,22 @@
 
 import Foundation
 import UIKit
+import SVGKit
+
 fileprivate class ViewModel {
-    let stickers: [UIImage]
+    let stickers: [SVGKImage]
     
     init() {
-        stickers = [ #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny"),
-                     #imageLiteral(resourceName: "sticker_bunny") ]
+        stickers = [
+            SVGKImage(named: "fist.svg")!,
+            SVGKImage(named: "hood.svg")!,
+            SVGKImage(named: "on_the_run.svg")!
+        ]
     }
 }
 
 class StickerBrowserViewController: UIViewController {
-    var actionHandler: ((UIImage) -> ())?
+    var actionHandler: ((SVGKImage) -> ())?
     var contentView = StickerBrowserView()
     fileprivate let viewModel = ViewModel()
     override func loadView() {
@@ -65,7 +56,7 @@ extension StickerBrowserViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sticker-cell", for: indexPath) as! StickerBrowserCell
-        cell.imageView.image = viewModel.stickers[indexPath.row]
+        cell.imageView.image = viewModel.stickers[indexPath.row].uiImage
         return cell
     }
 }
