@@ -83,7 +83,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 
     fileprivate func setupSubviews() {
