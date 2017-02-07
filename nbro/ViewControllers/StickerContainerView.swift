@@ -19,7 +19,7 @@ class StickerContainerView: UIView {
     
     let image: UIImage
     var scale: Float = 1
-    var stickers: [Sticker] {
+    var stickers: [StickerModel] {
         return stickerViews.map { $0.sticker }
     }
     fileprivate var stickerViews = [StickerView]()
@@ -128,7 +128,7 @@ fileprivate extension StickerContainerView {
 extension StickerContainerView {
     
     func add(image: SVGKImage) {
-        let sticker = Sticker(image: image)
+        let sticker = StickerModel(image: image)
         let imageFrame = self.imageFrame()
         let stickerView = StickerView(sticker: sticker, boundTo: imageFrame)
         addSubview(stickerView)

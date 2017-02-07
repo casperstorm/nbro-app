@@ -9,7 +9,7 @@
 import Foundation
 import SVGKit
 
-class Sticker {
+class StickerModel {
     let image: SVGKImage
     var rotation: Float = 0
     var position: CGPoint = .zero
@@ -38,7 +38,7 @@ class ShareImageViewController: UIViewController {
         return imageView
     }()
     
-    init(image: UIImage, stickers: [Sticker], scale: Float) {
+    init(image: UIImage, stickers: [StickerModel], scale: Float) {
         self.generator = ImageGenerator(image: image, stickers: stickers, scale: scale)
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,10 +61,10 @@ class ShareImageViewController: UIViewController {
 
 class ImageGenerator {
     let image: UIImage
-    let stickers: [Sticker]
+    let stickers: [StickerModel]
     let scale: Float
     
-    init(image: UIImage, stickers: [Sticker], scale: Float) {
+    init(image: UIImage, stickers: [StickerModel], scale: Float) {
         self.image = image
         self.stickers = stickers
         self.scale = scale

@@ -11,12 +11,12 @@ import SVGKit
 
 class StickerView: UIView {
     let imageView: UIView
-    let sticker: Sticker
+    let sticker: StickerModel
     fileprivate let boundingRect: CGRect
     fileprivate var rotated: CGFloat = 0
     fileprivate var scale: CGFloat = 1
     
-    init(sticker: Sticker, boundTo: CGRect) {
+    init(sticker: StickerModel, boundTo: CGRect) {
         self.sticker = sticker
         imageView = SVGKFastImageView(svgkImage: sticker.image)
         boundingRect = boundTo
