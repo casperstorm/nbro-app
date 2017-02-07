@@ -33,7 +33,7 @@ class ImagePickerView: UIView {
         return label
     }()
     let imageView: UIImageView = {
-        return UIImageView(image: #imageLiteral(resourceName: "camera_icon"))
+        return UIImageView(image: #imageLiteral(resourceName: "canvas_icon"))
     }()
     
     init() {

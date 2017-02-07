@@ -19,7 +19,6 @@ class NotAuthenticatedView: UIView {
         super.init(frame: CGRect.zero)
         
         descriptionLabel.text = "In order to see your upcoming events, and the events you are able to participate in, we need you to login with Facebook."
-        
         loginButton.setTitle("Go to login".uppercased(), for: UIControlState())
         
         addSubview(descriptionLabel)
@@ -53,7 +52,6 @@ private extension UIImageView {
     static func logoImageView() -> UIImageView {
         return UIImageView(image: UIImage(named: "nbro_logo"))
     }
-    
 }
 
 private extension UILabel {
