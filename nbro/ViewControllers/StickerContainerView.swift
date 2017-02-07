@@ -18,10 +18,16 @@ class StickerContainerView: UIView {
         return imageView
     }()
     
-    fileprivate var stickers = [StickerView]()
+    let image: UIImage
+    var scale: Float = 1
+    var stickers: [Sticker] {
+        return stickerViews.map { $0.sticker }
+    }
+    fileprivate var stickerViews = [StickerView]()
     fileprivate var selectedSticker: StickerView?
     
     init(image: UIImage) {
+        self.image = image
         super.init(frame: .zero)
         imageView.image = image
         setupSubviews()
@@ -94,7 +100,7 @@ fileprivate extension StickerContainerView {
             }
             let location = gesture.location(in: self)
             
-            for stickerView in stickers {
+            for stickerView in stickerViews {
                 if stickerView.frame.contains(location) {
                     self.selectedSticker = stickerView
                     return stickerView
@@ -123,17 +129,18 @@ fileprivate extension StickerContainerView {
 extension StickerContainerView {
     
     func add(image: SVGKImage) {
+        let sticker = Sticker(image: image)
         let imageFrame = self.imageFrame()
-        let stickerView = StickerView(view: SVGKFastImageView(svgkImage: image), boundTo: imageFrame)
+        let stickerView = StickerView(sticker: sticker, boundTo: imageFrame)
         addSubview(stickerView)
-        let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
-        let maximum: CGFloat = 500
-        let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
-        let height = aspectRatio <= 1 ? maximum : maximum * aspectRatio
-        stickerView.frame.size = CGSize(width: width, height: height)
-        stickerView.center = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
+        let size = sticker.size()
+        stickerView.frame.size = size
+        let position = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
+        stickerView.center = position
+        sticker.position = CGPoint(x: position.x, y: imageFrame.height / 2)
         
-        self.stickers.append(stickerView)
+        self.stickerViews.append(stickerView)
+        self.scale = Float(self.image.size.width / imageFrame.width)
     }
 //    
 //    func setupTestData() {

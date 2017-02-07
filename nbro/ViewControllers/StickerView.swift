@@ -11,19 +11,21 @@ import SVGKit
 
 class StickerView: UIView {
     let imageView: UIView
+    let sticker: Sticker
     fileprivate let boundingRect: CGRect
     fileprivate var rotated: CGFloat = 0
     fileprivate var scale: CGFloat = 1
     
-    init(view: UIView, boundTo: CGRect) {
-        imageView = view
+    init(sticker: Sticker, boundTo: CGRect) {
+        self.sticker = sticker
+        imageView = SVGKFastImageView(svgkImage: sticker.image)
         boundingRect = boundTo
         
         super.init(frame: .zero)
         
         setupSubviews()        
         DispatchQueue.main.async {
-            self.transform = CGAffineTransform(scaleX: 0.35, y: 0.35)
+//            self.transform = CGAffineTransform(scaleX: 0.35, y: 0.35)
         }
     }
     
@@ -48,6 +50,10 @@ extension StickerView {
         
         if gesture.state == .changed {
             view.transform = view.transform.translatedBy(x: translate.x, y: translate.y)
+            
+            sticker.transform = view.transform
+            sticker.position = CGPoint(x: sticker.position.x + (translate.x * CGFloat(sticker.scale)), y: sticker.position.y + (translate.y * CGFloat(sticker.scale)))
+            print("\(sticker.position)")
             gesture.setTranslation(CGPoint.zero, in: self)
         }
     }
@@ -64,7 +70,10 @@ extension StickerView {
             let minimum: CGFloat = 0.4
             let new: CGFloat = max(min(1 - (scale - gesture.scale), maximum / current), minimum / current)
             view.transform = view.transform.scaledBy(x: new, y: new)
-            scale = gesture.scale
+            scale = scale * new
+            
+            sticker.transform = view.transform
+            sticker.scale = sticker.scale * Float(new)
         }
     }
     
@@ -74,5 +83,8 @@ extension StickerView {
         view.transform = view.transform.rotated(by: gesture.rotation)
         rotated += gesture.rotation
         gesture.rotation = 0
+        
+        sticker.rotation = Float(rotated)
+        sticker.transform = view.transform
     }
 }

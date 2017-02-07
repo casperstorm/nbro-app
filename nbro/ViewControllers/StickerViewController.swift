@@ -33,7 +33,8 @@ class StickerViewController: UIViewController {
         }
         
         let addBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addStickerPressed))
-        navigationItem.rightBarButtonItem = addBarButtonItem
+        let shareBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(sharePressed))
+        navigationItem.rightBarButtonItems = [addBarButtonItem, shareBarButtonItem]
     }
     
     dynamic private func addStickerPressed() {
@@ -43,5 +44,13 @@ class StickerViewController: UIViewController {
             self?.stickerView.add(image: image)
         }
         present(UINavigationController(rootViewController: stickerBrowserViewController), animated: true, completion: nil)
+    }
+    
+    dynamic private func sharePressed() {
+        let stickers = stickerView.stickers
+        let image = stickerView.image
+        let scale = stickerView.scale
+        let shareImageViewController = ShareImageViewController(image: image, stickers: stickers, scale: scale)
+        navigationController?.pushViewController(shareImageViewController, animated: true)
     }
 }
