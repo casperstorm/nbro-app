@@ -29,7 +29,6 @@ class ImagePickerView: UIView {
         label.textColor = UIColor.white
         label.numberOfLines = 0
         label.textAlignment = .center
-//        label.text = "In order to see your upcoming events, and the events you are able to participate in, we need you to login with Facebook."
         label.text = "Choose a image and decorate it with awesome NBRO stickers. You'll never run alone."
         return label
     }()

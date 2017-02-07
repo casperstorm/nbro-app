@@ -75,6 +75,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
+        contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -161,7 +162,6 @@ extension UserViewController {
     dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
-            self.contentView.showNotAuthenticatedView = false
         }
     }
     
@@ -184,22 +184,26 @@ extension UserViewController {
 
 extension UserViewController {
     func prepareToLoadData() {
-        let events = viewModel.events
-        if events.count == 0 {
-            contentView.tableView.isHidden = true
-            presentLoadingAnimation()
-        }
-        
         let authenticated = FacebookManager.authenticated()
-        contentView.notAuthenticatedView.isHidden = authenticated
-        contentView.tableView.isHidden = !authenticated
-        if(authenticated) {
+        let events = viewModel.events
+        
+        if (authenticated) {
+            let empty = (events.count == 0)
+            contentView.tableView.isHidden = empty
+            contentView.notAuthenticatedView.isHidden = true
+            
             let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
             navigationItem.rightBarButtonItem = logoutBarButtonItem
             
+            if empty {
+                presentLoadingAnimation()
+            }
+            
             loadData()
-        } else {
-            contentView.loadingView.activityIndicatorView.stopAnimating()
+        }else {
+            contentView.notAuthenticatedView.isHidden = false
+            contentView.tableView.isHidden = true
+            navigationItem.rightBarButtonItem = nil
         }
     }
     

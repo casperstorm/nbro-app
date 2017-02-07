@@ -13,7 +13,6 @@ class StickerContainerView: UIView {
     fileprivate let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "background_image.jpg")
         
         return imageView
     }()

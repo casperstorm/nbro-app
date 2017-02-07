@@ -11,13 +11,19 @@ import UIKit
 import SVGKit
 
 fileprivate class ViewModel {
-    let stickers: [SVGKImage]
+    enum ColorState {
+        case white
+        case black
+    }
+    
+    let stickers: [Sticker]
+    var state: ColorState
     
     init() {
+        state = .white
         stickers = [
-            SVGKImage(named: "fist.svg")!,
-            SVGKImage(named: "hood.svg")!,
-            SVGKImage(named: "on_the_run.svg")!
+            Sticker(blackSVG: SVGKImage(named: "sticker_nbro_black.svg")!, whiteSVG: SVGKImage(named: "sticker_nbro_white.svg")!, blackPNG: #imageLiteral(resourceName: "sticker_nbro_black"), whitePNG: #imageLiteral(resourceName: "sticker_nbro_white")),
+            Sticker(blackSVG: SVGKImage(named: "sticker_nbro_alt_black.svg")!, whiteSVG: SVGKImage(named: "sticker_nbro_alt_white.svg")!, blackPNG: #imageLiteral(resourceName: "sticker_nbro_alt_black"), whitePNG: #imageLiteral(resourceName: "sticker_nbro_alt_white"))
         ]
     }
 }
@@ -25,6 +31,9 @@ fileprivate class ViewModel {
 class StickerBrowserViewController: UIViewController {
     var actionHandler: ((SVGKImage) -> ())?
     var contentView = StickerBrowserView()
+    var colorButton: UIBarButtonItem?
+    var cancelButton: UIBarButtonItem?
+    
     fileprivate let viewModel = ViewModel()
     override func loadView() {
         super.loadView()
@@ -38,14 +47,22 @@ class StickerBrowserViewController: UIViewController {
 }
 
 extension StickerBrowserViewController {
-    fileprivate func setupSubviews() {        
+    fileprivate func setupSubviews() {
+        navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barStyle = .black
         navigationItem.title = "Stickers".uppercased()
         
         contentView.collectionView.register(StickerBrowserCell.self, forCellWithReuseIdentifier: "sticker-cell")
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
+        
+        colorButton = UIBarButtonItem(image: #imageLiteral(resourceName: "color_button"), style: .plain, target: self, action: #selector(colorButtonTapped))
+        colorButton?.tintColor = .black
+        self.navigationItem.rightBarButtonItem = colorButton
+        
+        cancelButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_cancel"), style: .plain, target: self, action: #selector(dismissTapped))
+        cancelButton?.tintColor = .black
+        self.navigationItem.leftBarButtonItem = cancelButton
     }
 }
 
@@ -56,7 +73,13 @@ extension StickerBrowserViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sticker-cell", for: indexPath) as! StickerBrowserCell
-        cell.imageView.image = viewModel.stickers[indexPath.row].uiImage
+        let sticker = viewModel.stickers[indexPath.row]
+        switch viewModel.state {
+        case .white:
+            cell.imageView.image = sticker.blackPNG
+        case .black:
+            cell.imageView.image = sticker.whitePNG
+        }
         return cell
     }
 }
@@ -71,7 +94,42 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let image = viewModel.stickers[indexPath.row]
-        actionHandler?(image)
+        let sticker = viewModel.stickers[indexPath.row]
+        switch viewModel.state {
+        case .white:
+            actionHandler?(sticker.blackSVG)
+        case .black:
+            actionHandler?(sticker.whiteSVG)
+        }
+    }
+}
+
+extension StickerBrowserViewController {
+    func colorButtonTapped() {
+        switch viewModel.state {
+        case .white:
+            navigationController?.navigationBar.barStyle = .black
+            navigationController?.navigationBar.barTintColor = .black
+            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+            contentView.backgroundColor = .black
+            colorButton?.tintColor = .white
+            cancelButton?.tintColor = .white
+            self.viewModel.state = .black
+            self.contentView.collectionView.reloadData()
+        case .black:
+            navigationController?.navigationBar.barStyle = .default
+            navigationController?.navigationBar.barTintColor = .white
+            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+            contentView.backgroundColor = .white
+            colorButton?.tintColor = .black
+            cancelButton?.tintColor = .black
+
+            self.viewModel.state = .white
+            self.contentView.collectionView.reloadData()
+        }
+    }
+    
+    func dismissTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
