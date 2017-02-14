@@ -52,6 +52,8 @@ class ToolsView: UIView {
 
 extension ToolsView {
     fileprivate func setupSubviews() {
+        backgroundColor = .black
+        
         addSubview(container)
         addSubview(button)
         container.addSubview(titleLabel)

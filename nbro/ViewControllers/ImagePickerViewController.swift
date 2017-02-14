@@ -40,6 +40,9 @@ extension ImagePickerViewController {
 extension ImagePickerViewController {
     func buttonPressed() {
         let pickerController = UIImagePickerController()
+        pickerController.navigationBar.barTintColor = .white
+        pickerController.navigationBar.tintColor = .black
+        pickerController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(19)]
         pickerController.delegate = self;
         pickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
         
