@@ -16,7 +16,12 @@ class StickerContainerView: UIView {
         
         return imageView
     }()
-    
+    let toolsView: ToolsView = {
+        let view = ToolsView()
+        view.backgroundColor = .black
+        return view
+    }()
+        
     let image: UIImage
     var scale: Float = 1
     var stickers: [StickerModel] {
@@ -39,13 +44,19 @@ class StickerContainerView: UIView {
     }
     
     private func setupSubviews() {
-        addSubview(imageView)
+        [imageView, toolsView].forEach { addSubview($0) }
         backgroundColor = .black
     }
     
     private func defineLayout() {
         imageView.snp.makeConstraints { (make) in
-            make.edges.equalTo(imageView.superview!)
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(toolsView.snp.bottom)
+        }
+        
+        toolsView.snp.makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
@@ -79,6 +90,19 @@ fileprivate extension StickerContainerView {
     dynamic func pan(gesture: UIPanGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
         stickerView.pan(gesture: gesture)
+    
+        if gesture.state == .changed {
+            
+            let point = convert(stickerView.sticker.position, to: self)
+            let bool = toolsView.frame.contains(point)
+            if(bool) {
+                toolsView.changeState(.delete)
+            } else {
+//                toolsView.backgroundColor = .green
+                toolsView.changeState(.dragging)
+            }
+//
+        }
     }
     
     dynamic func pinch(gesture: UIPinchGestureRecognizer) {

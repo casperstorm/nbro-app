@@ -53,7 +53,7 @@ extension StickerView {
             
             sticker.transform = view.transform
             sticker.position = CGPoint(x: sticker.position.x + (translate.x * CGFloat(sticker.scale)), y: sticker.position.y + (translate.y * CGFloat(sticker.scale)))
-            print("\(sticker.position)")
+//            print("\(sticker.position)")
             gesture.setTranslation(CGPoint.zero, in: self)
         }
     }
