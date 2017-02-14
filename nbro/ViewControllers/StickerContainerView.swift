@@ -18,7 +18,6 @@ class StickerContainerView: UIView {
     }()
     let toolsView: ToolsView = {
         let view = ToolsView()
-        view.backgroundColor = .black
         return view
     }()
         
