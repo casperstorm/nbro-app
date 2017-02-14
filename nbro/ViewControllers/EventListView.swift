@@ -154,6 +154,7 @@ private extension UITableView {
         tableView.separatorColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
+        tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         return tableView
     }
 }

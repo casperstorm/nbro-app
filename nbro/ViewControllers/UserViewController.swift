@@ -199,7 +199,7 @@ extension UserViewController {
             }
             
             loadData()
-        }else {
+        } else {
             contentView.notAuthenticatedView.isHidden = false
             contentView.tableView.isHidden = true
             navigationItem.rightBarButtonItem = nil
