@@ -104,7 +104,7 @@ extension StickerBrowserViewController {
         self.navigationItem.rightBarButtonItem = colorButton
         self.navigationItem.leftBarButtonItem = cancelButton
 
-        switchToState(state: .white)
+        switchToState(state: .black)
     }
 }
 
