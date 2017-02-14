@@ -21,6 +21,10 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     var events: [Event] = []
     let interactor = Interactor()
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,10 +84,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
 //        self.navigationController?.isNavigationBarHidden = true
         self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
-    }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .default
     }
 
     fileprivate func setupSubviews() {

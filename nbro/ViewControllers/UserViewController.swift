@@ -47,6 +47,10 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     var contentView = UserView()
     let interactor = Interactor()
     
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func loadView() {
         super.loadView()
         view = contentView
@@ -61,11 +65,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.viewUser)
         prepareToLoadData()
-    }
-
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
     }
 
     func setupSubviews() {        

@@ -16,7 +16,7 @@ class RootViewController: UIViewController {
             switch self {
             case .event:
                 let vc = EventListViewController()
-                vc.view.backgroundColor = .clear
+//                vc.view.backgroundColor = .clear
                 vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_events").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_events_selected").withRenderingMode(.alwaysOriginal))
                 vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
                 return vc
@@ -40,28 +40,31 @@ class RootViewController: UIViewController {
     }
     
     private var contentController: UIViewController?
+    private let tabBarViewController = UITabBarController(nibName: nil, bundle: nil)
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let selectedViewController = tabBarViewController.selectedViewController else { return super.preferredStatusBarStyle }
+        guard let child = selectedViewController.childViewControllers.first else { return selectedViewController.preferredStatusBarStyle }
+        return child.preferredStatusBarStyle
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        
+        let viewControllers: [ControllerType] = [.event, .image, .profile, .about]
+        
+        tabBarViewController.tabBar.isTranslucent = false
+        tabBarViewController.viewControllers = viewControllers.map { return UINavigationController(rootViewController: $0.associatedViewController()) }
+        
+        showContentController(tabBarViewController)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .default
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let viewControllers: [ControllerType] = [.event, .image, .profile, .about]
-        let tabBarController = UITabBarController(nibName: nil, bundle: nil)
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.viewControllers = viewControllers.map { return UINavigationController(rootViewController: $0.associatedViewController()) }
-
-        showContentController(tabBarController)
     }
     
     private func showContentController(_ controller: UIViewController) {

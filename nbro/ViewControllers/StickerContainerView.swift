@@ -88,19 +88,31 @@ extension StickerContainerView: UIGestureRecognizerDelegate {
 fileprivate extension StickerContainerView {
     dynamic func pan(gesture: UIPanGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
+        
+        selectedSticker = stickerView
         stickerView.pan(gesture: gesture)
     
+        let imageFrame = self.imageFrame()
+        let converted = CGPoint(x: stickerView.sticker.position.x + imageFrame.minX, y: stickerView.sticker.position.y + imageFrame.minY)
+        let point = convert(converted, to: toolsView)
+        let contains = toolsView.frame.contains(point)
+        
         if gesture.state == .changed {
-            
-            let point = convert(stickerView.sticker.position, to: self)
-            let bool = toolsView.frame.contains(point)
-            if(bool) {
+            stickerView.alpha = contains ? 0.5 : 1
+            if(contains) {
                 toolsView.changeState(.delete)
             } else {
-//                toolsView.backgroundColor = .green
                 toolsView.changeState(.dragging)
             }
-//
+        } else if gesture.state == .cancelled || gesture.state == .ended || gesture.state == .failed {
+            if contains {
+                stickerView.removeFromSuperview()
+                self.stickerViews.removeObject(stickerView)
+            }
+            
+            stickerView.alpha = 1
+            selectedSticker = nil
+            toolsView.changeState(.sticker)
         }
     }
     
@@ -115,23 +127,14 @@ fileprivate extension StickerContainerView {
     }
     
     fileprivate func stickerView(for gesture: UIGestureRecognizer) -> StickerView? {
-        if gesture.state == .ended || gesture.state == .cancelled || gesture.state == .failed {
-            selectedSticker = nil
-        } else {
-            if let selectedSticker = self.selectedSticker {
-                return selectedSticker
-            }
-            let location = gesture.location(in: self)
-            
-            for stickerView in stickerViews {
-                if stickerView.frame.contains(location) {
-                    self.selectedSticker = stickerView
-                    return stickerView
-                }
-            }
+        if let selectedSticker = self.selectedSticker {
+            return selectedSticker
         }
+        let location = gesture.location(in: self)
         
-        return nil
+        return stickerViews.filter { $0.frame.contains(location) }
+            .sorted { $0.0.sticker.scale > $0.1.sticker.scale }
+            .first
     }
 }
 

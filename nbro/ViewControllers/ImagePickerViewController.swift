@@ -11,6 +11,11 @@ import UIKit
 
 class ImagePickerViewController: UIViewController {
     var contentView = ImagePickerView()
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func loadView() {
         super.loadView()
         view = contentView
