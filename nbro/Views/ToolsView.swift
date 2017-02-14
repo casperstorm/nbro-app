@@ -11,7 +11,7 @@ import UIKit
 
 class ToolsView: UIView {
     enum State {
-        case sticker, dragging, delete
+        case sticker, dragging, delete, loading
     }
     
     let container = UIView()
@@ -20,7 +20,6 @@ class ToolsView: UIView {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.defaultLightFontOfSize(15)
-        label.text = "Press here to bla bla".uppercased()
         return label
     }()
     let button: UIButton = {
@@ -32,6 +31,14 @@ class ToolsView: UIView {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.hidesWhenStopped = true
+        activity.color = .white
+        return activity
+    }()
+    
     init() {
         super.init(frame: CGRect.zero)
         setupSubviews()
@@ -49,6 +56,7 @@ extension ToolsView {
         addSubview(button)
         container.addSubview(titleLabel)
         container.addSubview(imageView)
+        container.addSubview(activityIndicatorView)
         
         changeState(.sticker)
     }
@@ -69,6 +77,10 @@ extension ToolsView {
             make.height.equalTo(20)
         }
         
+        activityIndicatorView.snp.makeConstraints { (make) in
+            make.center.equalTo(imageView)
+        }
+        
         button.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -82,14 +94,22 @@ extension ToolsView {
             imageView.image = #imageLiteral(resourceName: "open_trash")
             titleLabel.text = "Let go to remove the sticker"
             button.isEnabled = false
+            activityIndicatorView.stopAnimating()
         case .dragging:
             imageView.image = #imageLiteral(resourceName: "closed_trash")
             titleLabel.text = "Drag sticker here to remove it"
             button.isEnabled = false
+            activityIndicatorView.stopAnimating()
         case .sticker:
             imageView.image = #imageLiteral(resourceName: "stickers_navbar")
             titleLabel.text = "Press to find a sticker"
             button.isEnabled = true
+            activityIndicatorView.stopAnimating()
+        case .loading:
+            imageView.image = nil
+            titleLabel.text = "Preparing your image"
+            button.isEnabled = false
+            activityIndicatorView.startAnimating()
         }
     }
 }
