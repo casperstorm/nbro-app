@@ -32,7 +32,7 @@ class RootViewController: UIViewController {
                 return vc
             case .profile:
                 let vc = UserViewController()
-                vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "icon_mask").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "icon_mask").withRenderingMode(.alwaysOriginal))
+                vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_profile").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_profile_selected").withRenderingMode(.alwaysOriginal))
                 vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
                 return vc
             }

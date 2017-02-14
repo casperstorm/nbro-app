@@ -77,7 +77,7 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
         self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
     }
@@ -197,15 +197,19 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK : Helper
     
     fileprivate func cellTypeForIndexPath(_ indexPath: IndexPath) -> EventListType {
-        if(indexPath.row == 0) {
-            return EventListType.logoCell
-        } else {
-            return EventListType.eventCell
-        }
+//        if(indexPath.row == 0) {
+//            return EventListType.logoCell
+//        } else {
+//            return EventListType.eventCell
+//        }
+        
+        return EventListType.eventCell
+
     }
     
     fileprivate func eventForIndexPath(_ indexPath: IndexPath) -> Event {
-        return events[indexPath.row - 1]
+//        return events[indexPath.row - 1]
+        return events[indexPath.row]
     }
     
     fileprivate func animateScaleTransform(_ view: UIView, sx: CGFloat, _ sy: CGFloat) {

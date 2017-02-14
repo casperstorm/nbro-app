@@ -99,12 +99,12 @@ extension StickerBrowserViewController {
         contentView.collectionView.dataSource = self
         
         colorButton = UIBarButtonItem(image: #imageLiteral(resourceName: "color_button"), style: .plain, target: self, action: #selector(colorButtonTapped))
-        colorButton?.tintColor = .black
-        self.navigationItem.rightBarButtonItem = colorButton
-        
         cancelButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_cancel"), style: .plain, target: self, action: #selector(dismissTapped))
-        cancelButton?.tintColor = .black
+        
+        self.navigationItem.rightBarButtonItem = colorButton
         self.navigationItem.leftBarButtonItem = cancelButton
+
+        switchToState(state: .white)
     }
 }
 
@@ -150,6 +150,19 @@ extension StickerBrowserViewController {
     func colorButtonTapped() {
         switch viewModel.state {
         case .white:
+            switchToState(state: .black)
+        case .black:
+            switchToState(state: .white)
+        }
+    }
+    
+    func dismissTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func switchToState(state: ViewModel.ColorState) {
+        switch state {
+        case .black:
             navigationController?.navigationBar.barStyle = .black
             navigationController?.navigationBar.barTintColor = .black
             navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
@@ -158,20 +171,16 @@ extension StickerBrowserViewController {
             cancelButton?.tintColor = .white
             self.viewModel.state = .black
             self.contentView.collectionView.reloadData()
-        case .black:
+        case .white:
             navigationController?.navigationBar.barStyle = .default
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
             contentView.backgroundColor = .white
             colorButton?.tintColor = .black
             cancelButton?.tintColor = .black
-
+            
             self.viewModel.state = .white
             self.contentView.collectionView.reloadData()
         }
-    }
-    
-    func dismissTapped() {
-        self.dismiss(animated: true, completion: nil)
     }
 }

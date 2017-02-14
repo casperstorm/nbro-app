@@ -40,6 +40,7 @@ class StickerContainerView: UIView {
     
     private func setupSubviews() {
         addSubview(imageView)
+        backgroundColor = .black
     }
     
     private func defineLayout() {

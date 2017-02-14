@@ -23,6 +23,7 @@ class StickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "NOOB"
         
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
@@ -32,9 +33,13 @@ class StickerViewController: UIViewController {
             make.edges.equalTo(stickerView.superview!)
         }
         
-        let addBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addStickerPressed))
-        let shareBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(sharePressed))
-        navigationItem.rightBarButtonItems = [addBarButtonItem, shareBarButtonItem]
+        let addBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "stickers_navbar"), style: .plain, target: self, action: #selector(addStickerPressed))
+        let shareBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "share_navbar"), style: .plain, target: self, action: #selector(sharePressed))
+        
+        addBarButtonItem.tintColor = .white
+        shareBarButtonItem.tintColor = .white
+        
+        navigationItem.rightBarButtonItems = [addBarButtonItem, shareBarButtonItem]        
     }
     
     dynamic private func addStickerPressed() {

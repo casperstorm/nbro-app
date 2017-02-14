@@ -81,10 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = .default
         
         let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.tintColor = UIColor(hex: 0x000000)
-        navigationBarAppearace.barTintColor = UIColor(hex: 0xffffff)
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+        navigationBarAppearace.tintColor = .white
+        navigationBarAppearace.barTintColor = .black
+        navigationBarAppearace.isTranslucent = false
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(19)]
         
+        UITabBar.appearance().tintColor = .black
+        UITabBar.appearance().barTintColor = .black
+
         let backButtonImage = #imageLiteral(resourceName: "back_button")
         
         navigationBarAppearace.backIndicatorImage = backButtonImage
