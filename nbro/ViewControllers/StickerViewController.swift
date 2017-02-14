@@ -15,6 +15,8 @@ class StickerViewController: UIViewController {
         stickerView = StickerContainerView(image: image)
         
         super.init(nibName: nil, bundle: nil)
+        
+        self.hidesBottomBarWhenPushed = true
     }
     
     required init?(coder aDecoder: NSCoder) {

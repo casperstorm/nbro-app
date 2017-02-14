@@ -25,7 +25,9 @@ class StickerView: UIView {
         
         setupSubviews()        
         DispatchQueue.main.async {
-//            self.transform = CGAffineTransform(scaleX: 0.35, y: 0.35)
+            let startScale: Float = 0.35
+            self.transform = CGAffineTransform(scaleX: CGFloat(startScale), y: CGFloat(startScale))
+            self.sticker.scale = startScale
         }
     }
     
