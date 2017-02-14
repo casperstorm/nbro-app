@@ -95,7 +95,7 @@ fileprivate extension StickerContainerView {
         let imageFrame = self.imageFrame()
         let converted = CGPoint(x: stickerView.sticker.position.x + imageFrame.minX, y: stickerView.sticker.position.y + imageFrame.minY)
         let point = convert(converted, to: toolsView)
-        let contains = toolsView.frame.contains(point)
+        let contains = point.y <= toolsView.frame.maxY
         
         if gesture.state == .changed {
             stickerView.alpha = contains ? 0.5 : 1
