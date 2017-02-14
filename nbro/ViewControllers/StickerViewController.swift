@@ -49,10 +49,12 @@ class StickerViewController: UIViewController {
     }
     
     dynamic private func sharePressed() {
-        let stickers = stickerView.stickers
-        let image = stickerView.image
-        let scale = stickerView.scale
-        let shareImageViewController = ShareImageViewController(image: image, stickers: stickers, scale: scale)
-        navigationController?.pushViewController(shareImageViewController, animated: true)
+        let imageGenerator = ImageGenerator(image: stickerView.image, stickers: stickerView.stickers, scale: stickerView.scale)
+        imageGenerator.generate { (image) in
+            guard let image = image else { return }
+            
+            let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
 }
