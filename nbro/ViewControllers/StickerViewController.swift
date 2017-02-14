@@ -29,6 +29,8 @@ class StickerViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         
+        title = "ADD STICKERS"
+        
         view.addSubview(stickerView)
         stickerView.snp.makeConstraints { (make) in
             make.edges.equalTo(stickerView.superview!)
