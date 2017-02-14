@@ -50,7 +50,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .default
+        return .lightContent
     }
     
     // MARK: UITableView
