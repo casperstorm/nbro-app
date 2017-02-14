@@ -24,7 +24,7 @@ class StickerModel {
         let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
         let maximum: CGFloat = 500
         let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
-        let height = aspectRatio <= 1 ? maximum : maximum * aspectRatio
+        let height = aspectRatio <= 1 ? maximum : maximum * (1 / aspectRatio)
         return CGSize(width: width, height: height)
     }
 }
