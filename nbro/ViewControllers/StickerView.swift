@@ -49,11 +49,11 @@ extension StickerView {
         let translate = gesture.translation(in: self)
         
         if gesture.state == .changed {
-            view.transform = view.transform.translatedBy(x: translate.x, y: translate.y)
             
+            view.transform = view.transform.translatedBy(x: translate.x, y: translate.y)
+            let rotated = translate.applying(CGAffineTransform(rotationAngle: self.rotated))
             sticker.transform = view.transform
-            sticker.position = CGPoint(x: sticker.position.x + (translate.x * CGFloat(sticker.scale)), y: sticker.position.y + (translate.y * CGFloat(sticker.scale)))
-            print("\(sticker.position)")
+            sticker.position = CGPoint(x: sticker.position.x + (rotated.x * CGFloat(sticker.scale)), y: sticker.position.y + (rotated.y * CGFloat(sticker.scale)))
             gesture.setTranslation(CGPoint.zero, in: self)
         }
     }
