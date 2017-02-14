@@ -191,7 +191,7 @@ extension UserViewController {
             contentView.tableView.isHidden = empty
             contentView.notAuthenticatedView.isHidden = true
             
-            let logoutBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
+            let logoutBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "logout"), style: .plain, target: self, action: #selector(logoutPressed))
             navigationItem.rightBarButtonItem = logoutBarButtonItem
             
             if empty {
