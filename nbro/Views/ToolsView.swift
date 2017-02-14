@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class ToolsView: UIView {
+    fileprivate var currentState: State = .sticker
+    
     enum State {
         case sticker, dragging, delete, loading
     }
@@ -20,6 +22,7 @@ class ToolsView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "add_stickers_icon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -71,23 +74,48 @@ extension ToolsView {
 
 extension ToolsView {
     func changeState(_ state: State) {
+        guard state != currentState else { return }
+        currentState = state
+        let newImage: UIImage?
         switch state {
         case .delete:
-            imageView.image = #imageLiteral(resourceName: "open_trash")
+            startWiggle()
+            newImage = #imageLiteral(resourceName: "open_trash")
             button.isEnabled = false
             activityIndicatorView.stopAnimating()
         case .dragging:
-            imageView.image = #imageLiteral(resourceName: "closed_trash")
+            stopWiggle()
+            newImage = #imageLiteral(resourceName: "closed_trash")
             button.isEnabled = false
             activityIndicatorView.stopAnimating()
         case .sticker:
-            imageView.image = #imageLiteral(resourceName: "add_stickers_icon")
+            stopWiggle()
+            newImage = #imageLiteral(resourceName: "add_stickers_icon")
             button.isEnabled = true
             activityIndicatorView.stopAnimating()
         case .loading:
-            imageView.image = nil
+            stopWiggle()
+            newImage = nil
             button.isEnabled = false
             activityIndicatorView.startAnimating()
         }
+        
+        UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            self.imageView.image = newImage
+        }, completion: nil)
+    }
+    
+    func startWiggle() {
+        let transformAnim  = CAKeyframeAnimation(keyPath:"transform")
+        let angle: CGFloat = 0.08
+        transformAnim.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)),NSValue(caTransform3D: CATransform3DMakeRotation(-angle , 0, 0, 1))]
+        transformAnim.autoreverses = true
+        transformAnim.duration  = 0.115
+        transformAnim.repeatCount = Float.infinity
+        imageView.layer.add(transformAnim, forKey: "transform")
+    }
+    
+    func stopWiggle() {
+        imageView.layer.removeAnimation(forKey: "transform")
     }
 }
