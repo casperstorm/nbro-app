@@ -6,13 +6,7 @@
 import UIKit
 import Nuke
 
-class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
-    
-    enum EventListType {
-        case logoCell
-        case eventCell
-    }
-    
+class EventListViewController: UIViewController {
     var contentView = EventListView()
     override func loadView() {
         super.loadView()
@@ -32,22 +26,6 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if traitCollection.forceTouchCapability == UIForceTouchCapability.available {
             registerForPreviewing(with: self, sourceView: view)
-        }
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let point = contentView.tableView.convert(location, from: contentView)
-        guard let indexPath = contentView.tableView.indexPathForRow(at: point) else { return nil }
-        let cellType = cellTypeForIndexPath(indexPath)
-        if cellType == .eventCell {
-            let event = self.eventForIndexPath(indexPath)
-            let eventDetailViewController = EventDetailViewController(event: event)
-            eventDetailViewController.transitioningDelegate = self
-            eventDetailViewController.interactor = self.interactor
-            
-            return eventDetailViewController
-        } else {
-            return nil
         }
     }
     
@@ -92,9 +70,9 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), for: .valueChanged)
         contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
     }
-    
-    // MARK: Actions
-    
+}
+
+extension EventListViewController {
     dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
@@ -104,42 +82,27 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.contentView.tableView.reloadData()
         }
     }
-    
+}
+
+extension EventListViewController {
     func shouldRefreshData() {
         loadData()
     }
-    
-    // MARK: Data
     
     fileprivate func loadData() {
         FacebookManager.NBROEvents({ (events) -> Void in
             let animate = self.events.count == 0
             self.contentView.refreshControl.endRefreshing()
-
+            
             self.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-            }, failure: {
+        }, failure: {
         })
     }
-    
-    // MARK: UITableView
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellType = cellTypeForIndexPath(indexPath)
-        
-        switch cellType {
-        case .logoCell:
-            return configureLogoCell(indexPath)
-        case .eventCell:
-            return configureEventCell(indexPath)
-        }
-    }
-    
+}
+
+extension EventListViewController {
     fileprivate func animateCellsEntrance(_ animate: Bool) {
         if(animate) {
             let visibleCells = contentView.tableView.visibleCells
@@ -151,77 +114,43 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
                 UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
                     cell.transform = CGAffineTransform.identity
                     cell.alpha = 1.0
-                    }, completion: nil)
+                }, completion: nil)
             }
         }
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // iOS still contains weird bug where presenting something from didSelectRow can take a while
-        let cellType = cellTypeForIndexPath(indexPath)
-        if(cellType == .eventCell) {
-            DispatchQueue.main.async { () -> Void in
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
-                })
-                
-                let event = self.eventForIndexPath(indexPath)
-                let eventDetailViewController = EventDetailViewController(event: event)
-                eventDetailViewController.transitioningDelegate = self
-                eventDetailViewController.interactor = self.interactor
-                self.present(eventDetailViewController, animated: true, completion: {
-                    self.view.transform = CGAffineTransform.identity;
-                })
-            }
-        } else if(cellType == .logoCell) {
-            contentView.animateBackgroundImageCrossfadeChange()
-        }
+}
+
+extension EventListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return events.count
     }
     
-    // MARK : Cell Creation
-    
-    fileprivate func configureEventCell(_ indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath) as! EventCell
-        let event = eventForIndexPath(indexPath)
+        let event = events[indexPath.row]
         cell.nameLabelText(event.name.uppercased())
         cell.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
-
-        return cell
-    }
-    
-    fileprivate func configureLogoCell(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "logo", for: indexPath) as! LogoCell
-        return cell
-    }
-    
-    // MARK : Helper
-    
-    fileprivate func cellTypeForIndexPath(_ indexPath: IndexPath) -> EventListType {
-//        if(indexPath.row == 0) {
-//            return EventListType.logoCell
-//        } else {
-//            return EventListType.eventCell
-//        }
         
-        return EventListType.eventCell
+        return cell
+    }
+}
 
-    }
-    
-    fileprivate func eventForIndexPath(_ indexPath: IndexPath) -> Event {
-//        return events[indexPath.row - 1]
-        return events[indexPath.row]
-    }
-    
-    fileprivate func animateScaleTransform(_ view: UIView, sx: CGFloat, _ sy: CGFloat) {
-        UIView.animate(withDuration: 0.1, animations: {
-            view.transform = view.transform.scaledBy(x: sx, y: sy)
-        }) 
-    }
-    
-    fileprivate func animateResetTransform(_ view: UIView) {
-        UIView.animate(withDuration: 0.1, animations: {
-            view.transform = CGAffineTransform.identity
-        }) 
+extension EventListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // iOS still contains weird bug where presenting something from didSelectRow can take a while
+        DispatchQueue.main.async { () -> Void in
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
+            })
+            
+            let event = self.events[indexPath.row]
+            let eventDetailViewController = EventDetailViewController(event: event)
+            eventDetailViewController.transitioningDelegate = self
+            eventDetailViewController.interactor = self.interactor
+            self.present(eventDetailViewController, animated: true, completion: {
+                self.view.transform = CGAffineTransform.identity;
+            })
+        }
     }
 }
 
@@ -232,6 +161,19 @@ extension EventListViewController: UIViewControllerTransitioningDelegate {
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor.hasStarted ? interactor : nil
+    }
+}
+
+extension EventListViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let point = contentView.tableView.convert(location, from: contentView)
+        guard let indexPath = contentView.tableView.indexPathForRow(at: point) else { return nil }
+        let event = events[indexPath.row]
+        let eventDetailViewController = EventDetailViewController(event: event)
+        eventDetailViewController.transitioningDelegate = self
+        eventDetailViewController.interactor = self.interactor
+        
+        return eventDetailViewController
     }
 }
 
