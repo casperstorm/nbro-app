@@ -19,6 +19,7 @@ class AnimatedBackgroundView: UIView {
         setupSubviews()
         defineLayout()
 
+        //TODO: needed?
         setNeedsLayout()
         layoutIfNeeded()
         setNeedsUpdateConstraints()
