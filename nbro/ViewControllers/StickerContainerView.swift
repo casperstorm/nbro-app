@@ -49,13 +49,13 @@ class StickerContainerView: UIView {
     
     private func defineLayout() {
         imageView.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(toolsView.snp.bottom)
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(toolsView.snp.top)
         }
         
         toolsView.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(100)
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(80)
         }
     }
     

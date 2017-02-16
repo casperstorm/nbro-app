@@ -29,7 +29,7 @@ class StickerViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         
-        title = "ADD STICKERS"
+        title = "EDIT"
         
         view.addSubview(stickerView)
         stickerView.snp.makeConstraints { (make) in
