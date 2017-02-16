@@ -29,7 +29,7 @@ class ImagePickerView: UIView {
         label.textColor = UIColor.white
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "Choose a image and decorate it with awesome NBRO stickers. You'll never run alone."
+        label.text = "Choose an image and decorate it with awesome NBRO stickers. You'll never run alone."
         return label
     }()
     let imageView: UIImageView = {
