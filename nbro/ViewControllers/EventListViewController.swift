@@ -5,15 +5,24 @@
 
 import UIKit
 import Nuke
+fileprivate class ViewModel {
+    var events: [Event] = []
+    
+    fileprivate func loadData(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
+        FacebookManager.NBROEvents(completion, failure: failure)
+    }
+
+}
 
 class EventListViewController: UIViewController {
     var contentView = EventListView()
+    fileprivate let viewModel = ViewModel()
+    
     override func loadView() {
         super.loadView()
         view = contentView
         view.clipsToBounds = true
     }
-    var events: [Event] = []
     let interactor = Interactor()
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -28,11 +37,7 @@ class EventListViewController: UIViewController {
             registerForPreviewing(with: self, sourceView: view)
         }
     }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        self.present(viewControllerToCommit, animated: true, completion: nil)
-    }
-    
+
     func applicationWillEnterForeground() {
         self.contentView.animateBackgroundImage()
     }
@@ -67,7 +72,7 @@ class EventListViewController: UIViewController {
     fileprivate func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), for: .valueChanged)
+        contentView.refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
     }
 }
@@ -78,27 +83,22 @@ extension EventListViewController {
         present(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
             self.contentView.didPresentUserButtons = false
-            self.events = []
+            self.viewModel.events = []
             self.contentView.tableView.reloadData()
         }
     }
 }
 
 extension EventListViewController {
-    func shouldRefreshData() {
-        loadData()
-    }
-    
-    fileprivate func loadData() {
-        FacebookManager.NBROEvents({ (events) -> Void in
-            let animate = self.events.count == 0
+    func loadData() {
+        viewModel.loadData({ events in
+            let animate = self.viewModel.events.count == 0
             self.contentView.refreshControl.endRefreshing()
-            
-            self.events = events
+
+            self.viewModel.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-        }, failure: {
-        })
+        }) { }
     }
 }
 
@@ -122,12 +122,12 @@ extension EventListViewController {
 
 extension EventListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        return viewModel.events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath) as! EventCell
-        let event = events[indexPath.row]
+        let event = viewModel.events[indexPath.row]
         cell.nameLabelText(event.name.uppercased())
         cell.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
         
@@ -143,7 +143,7 @@ extension EventListViewController: UITableViewDelegate {
                 self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
             })
             
-            let event = self.events[indexPath.row]
+            let event = self.viewModel.events[indexPath.row]
             let eventDetailViewController = EventDetailViewController(event: event)
             eventDetailViewController.transitioningDelegate = self
             eventDetailViewController.interactor = self.interactor
@@ -168,12 +168,16 @@ extension EventListViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let point = contentView.tableView.convert(location, from: contentView)
         guard let indexPath = contentView.tableView.indexPathForRow(at: point) else { return nil }
-        let event = events[indexPath.row]
+        let event = viewModel.events[indexPath.row]
         let eventDetailViewController = EventDetailViewController(event: event)
         eventDetailViewController.transitioningDelegate = self
         eventDetailViewController.interactor = self.interactor
         
         return eventDetailViewController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.present(viewControllerToCommit, animated: true, completion: nil)
     }
 }
 
