@@ -65,7 +65,7 @@ extension ImagePickerViewController {
         navigationController?.navigationBar.barStyle = .black
         navigationItem.title = "Select image".uppercased()
         
-        contentView.button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        contentView.informationView.button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
     
     fileprivate func checkStatus() {
@@ -135,15 +135,19 @@ extension ImagePickerView {
     func setupPermission(for status: PHAuthorizationStatus) {
         switch status {
         case .denied, .restricted:
-            button.setTitle("Open settings".uppercased(), for: .normal)
-            container.isHidden = false
+            informationView.titleLabel.font = UIFont.titleBoldFontOfSize(42)
+            informationView.titleLabel.text = "Open settings".uppercased()
+            informationView.descriptionLabel.text = "Photos permission was declined. Open settings and allow it to continue."
+            informationView.isHidden = false
             collectionView.isHidden = true
         case .notDetermined:
-            button.setTitle("Allow access".uppercased(), for: .normal)
-            container.isHidden = false
+            informationView.titleLabel.font = UIFont.titleBoldFontOfSize(44)
+            informationView.titleLabel.text = "Allow access".uppercased()
+            informationView.descriptionLabel.text = "Use stickers to decorate your photos. Allow access to start."
+            informationView.isHidden = false
             collectionView.isHidden = true
         case .authorized:
-            container.isHidden = true
+            informationView.isHidden = true
             collectionView.isHidden = false
         }
     }

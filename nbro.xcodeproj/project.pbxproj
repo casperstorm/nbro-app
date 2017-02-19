@@ -95,7 +95,7 @@
 		D0AF55401E46B8C200789AA3 /* StickerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553D1E46B8C200789AA3 /* StickerContainerView.swift */; };
 		D0AF55411E46B8C200789AA3 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553E1E46B8C200789AA3 /* StickerView.swift */; };
 		D0AF55421E46B8C200789AA3 /* StickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF553F1E46B8C200789AA3 /* StickerViewController.swift */; };
-		D0B0A7171C9212250061D062 /* NotAuthenticatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */; };
+		D0B0A7171C9212250061D062 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0A7161C9212250061D062 /* InformationView.swift */; };
 		D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0B0F8FA1C74F79800955461 /* Exo2-Regular.ttf */; };
 		D0CD768F1E59AEC6005B08EE /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD768E1E59AEC6005B08EE /* ImagePickerViewModel.swift */; };
 		D0CD76921E59AFC9005B08EE /* ImagePickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD76911E59AFC9005B08EE /* ImagePickerCollectionViewCell.swift */; };
@@ -196,7 +196,7 @@
 		D0AF553D1E46B8C200789AA3 /* StickerContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerContainerView.swift; sourceTree = "<group>"; };
 		D0AF553E1E46B8C200789AA3 /* StickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		D0AF553F1E46B8C200789AA3 /* StickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerViewController.swift; sourceTree = "<group>"; };
-		D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthenticatedView.swift; sourceTree = "<group>"; };
+		D0B0A7161C9212250061D062 /* InformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		D0B0F8FA1C74F79800955461 /* Exo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Regular.ttf"; sourceTree = "<group>"; };
 		D0CD768E1E59AEC6005B08EE /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
 		D0CD76911E59AFC9005B08EE /* ImagePickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -325,7 +325,7 @@
 			children = (
 				181FC69C072EEB0317D5CFC2 /* EventListViewController.swift */,
 				6C65A1F31C6F8A05009015D1 /* EventListView.swift */,
-				D0B0A7161C9212250061D062 /* NotAuthenticatedView.swift */,
+				D0B0A7161C9212250061D062 /* InformationView.swift */,
 			);
 			name = EventList;
 			sourceTree = "<group>";
@@ -740,7 +740,7 @@
 				6C5BADAB1C87171000A0ECD0 /* DetailLabelView.swift in Sources */,
 				6CDA76861E46791A00A170F5 /* StickerBrowserView.swift in Sources */,
 				6C3144601C71FF4200A138EF /* AboutTextCell.swift in Sources */,
-				D0B0A7171C9212250061D062 /* NotAuthenticatedView.swift in Sources */,
+				D0B0A7171C9212250061D062 /* InformationView.swift in Sources */,
 				6C0EF05D1C6F80C600A53017 /* String+Additions.swift in Sources */,
 				6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
