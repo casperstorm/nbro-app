@@ -73,6 +73,7 @@ class RootViewController: UIViewController {
         view.addSubview(controller.view)
         controller.didMove(toParentViewController: self)
         contentController = controller
+        controller.view.frame = view.bounds
     }
     
     fileprivate func removeCurrentContentController() {
