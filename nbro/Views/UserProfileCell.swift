@@ -40,7 +40,7 @@ class UserProfileCell: UITableViewCell {
         userImageView.snp.makeConstraints { (make) in
             make.top.equalTo(userImageView.superview!).inset(40)
             make.centerX.equalTo(userImageView.superview!)
-            make.width.height.equalTo(90).priorityHigh()
+            make.width.height.equalTo(90).priority(750)
         }
         
         userNameLabel.snp.makeConstraints { (make) in

@@ -29,11 +29,20 @@ class ImagePickerView: UIView {
         label.textColor = UIColor.white
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "Choose an image and decorate it with awesome NBRO stickers. You'll never run alone."
+        label.text = "Allow access to your images to decorate them with awesome NBRO stickers. You'll never run alone."
         return label
     }()
     let imageView: UIImageView = {
         return UIImageView(image: #imageLiteral(resourceName: "canvas_icon"))
+    }()
+    
+    let layout = UICollectionViewFlowLayout()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+        collectionView.alwaysBounceVertical = true
+        
+        return collectionView
     }()
     
     init() {
@@ -48,8 +57,9 @@ class ImagePickerView: UIView {
     
     fileprivate func setupSubviews() {
         backgroundColor = UIColor(hex:0x000000)
+        
         [ label, imageView, button ].forEach { container.addSubview($0) }
-        [ container ].forEach { addSubview($0) }
+        [ collectionView, container ].forEach { addSubview($0) }
     }
     
     fileprivate func defineLayout() {
@@ -71,6 +81,10 @@ class ImagePickerView: UIView {
         container.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(50)
+        }
+        
+        collectionView.snp.makeConstraints { (make) in
+            make.edges.equalTo(collectionView.superview!)
         }
     }
 }
