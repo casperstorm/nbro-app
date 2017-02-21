@@ -98,7 +98,8 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImagePickerCollectionViewCell
         
-        let size = contentView.layout.itemSize
+        let scale = UIScreen.main.scale
+        let size = CGSize(width: contentView.layout.itemSize.width * scale, height: contentView.layout.itemSize.height * scale)
         viewModel.requestImage(for: indexPath, size: size) { image in
             cell.imageView.image = image
         }
