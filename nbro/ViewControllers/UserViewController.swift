@@ -174,8 +174,6 @@ extension UserViewController {
             FacebookManager.logout()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.skipLogin(false)
-            self.dismiss(animated: true, completion: { () -> Void in
-            })
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in

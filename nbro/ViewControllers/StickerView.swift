@@ -10,7 +10,7 @@ import Foundation
 import SVGKit
 
 class StickerView: UIView {
-    let imageView: UIView
+    let imageView: SVGKFastImageView
     let sticker: StickerModel
     fileprivate let boundingRect: CGRect
     fileprivate var rotated: CGFloat = 0
@@ -18,7 +18,7 @@ class StickerView: UIView {
     
     init(sticker: StickerModel, boundTo: CGRect) {
         self.sticker = sticker
-        imageView = SVGKFastImageView(svgkImage: sticker.image)
+        imageView = SVGKFastImageView(svgkImage: sticker.sticker.currentSVG)
         boundingRect = boundTo
         
         super.init(frame: .zero)
@@ -88,5 +88,10 @@ extension StickerView {
         
         sticker.rotation = Float(rotated)
         sticker.transform = view.transform
+    }
+    
+    dynamic func doubleTap(gesture: UITapGestureRecognizer) {
+        sticker.sticker.invert()
+        imageView.image = sticker.sticker.currentSVG
     }
 }

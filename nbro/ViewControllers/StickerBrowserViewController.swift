@@ -83,7 +83,7 @@ fileprivate class ViewModel {
 }
 
 class StickerBrowserViewController: UIViewController {
-    var actionHandler: ((SVGKImage) -> ())?
+    var actionHandler: ((Sticker) -> ())?
     var contentView = StickerBrowserView()
     var colorButton: UIBarButtonItem?
     var cancelButton: UIBarButtonItem?
@@ -151,9 +151,11 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
         let sticker = viewModel.stickers[indexPath.row]
         switch viewModel.state {
         case .white:
-            actionHandler?(sticker.blackSVG)
+            sticker.selectedColor = .black
+            actionHandler?(sticker)
         case .black:
-            actionHandler?(sticker.whiteSVG)
+            sticker.selectedColor = .white
+            actionHandler?(sticker)
         }
     }
 }

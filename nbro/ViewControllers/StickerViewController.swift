@@ -28,9 +28,14 @@ class StickerViewController: UIViewController {
         return player
     }()
     
+    let shareBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "share_navbar"), style: .plain, target: nil, action: nil)
+    let loadingBarButtonItem: UIBarButtonItem
+    
     init(image: UIImage) {
         stickerView = StickerContainerView(image: image)
-        
+        let loadingIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        loadingIndicatorView.startAnimating()
+        loadingBarButtonItem = UIBarButtonItem(customView: loadingIndicatorView)
         super.init(nibName: nil, bundle: nil)
         
         self.hidesBottomBarWhenPushed = true
@@ -64,8 +69,8 @@ class StickerViewController: UIViewController {
         stickerView.toolsView.button.addTarget(self, action: #selector(didCancelStickerButton), for: .touchCancel)
         stickerView.toolsView.button.addTarget(self, action: #selector(didCancelStickerButton), for: .touchDragExit)
         
-        
-        let shareBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "share_navbar"), style: .plain, target: self, action: #selector(sharePressed))
+        shareBarButtonItem.action = #selector(sharePressed)
+        shareBarButtonItem.target = self
         shareBarButtonItem.tintColor = .white
         navigationItem.rightBarButtonItem = shareBarButtonItem        
     }
@@ -78,9 +83,9 @@ class StickerViewController: UIViewController {
         animateResetTransform(view: stickerView.toolsView)
         
         let stickerBrowserViewController = StickerBrowserViewController()
-        stickerBrowserViewController.actionHandler = { [weak self] image in
+        stickerBrowserViewController.actionHandler = { [weak self] sticker in
             stickerBrowserViewController.dismiss(animated: true, completion: nil)
-            self?.stickerView.add(image: image)
+            self?.stickerView.add(sticker: sticker)
         }
         present(UINavigationController(rootViewController: stickerBrowserViewController), animated: true, completion: nil)
     }
@@ -91,6 +96,7 @@ class StickerViewController: UIViewController {
     
     dynamic private func sharePressed() {
         let screenBounds = UIScreen.main.bounds
+        navigationItem.rightBarButtonItem = loadingBarButtonItem
         let imageGenerator = ImageGenerator(image: stickerView.image, stickers: stickerView.stickers, scale: stickerView.scale)
         imageGenerator.generate { (image) in
             guard let image = image else { return }
@@ -105,7 +111,9 @@ class StickerViewController: UIViewController {
             }
 
             let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-            self.present(activityViewController, animated: true, completion: nil)
+            self.present(activityViewController, animated: true) {
+                self.navigationItem.rightBarButtonItem = self.shareBarButtonItem
+            }
         }
     }
 }

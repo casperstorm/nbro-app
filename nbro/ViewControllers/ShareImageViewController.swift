@@ -10,17 +10,18 @@ import Foundation
 import SVGKit
 
 class StickerModel {
-    let image: SVGKImage
+    let sticker: Sticker
     var rotation: Float = 0
     var position: CGPoint = .zero
     var scale: Float = 1
     var transform: CGAffineTransform = .identity
     
-    init(image: SVGKImage) {
-        self.image = image
+    init(sticker: Sticker) {
+        self.sticker = sticker
     }
     
     func size() -> CGSize {
+        let image = sticker.currentSVG
         let aspectRatio = image.hasSize() ? image.size.width / image.size.height : 1
         let maximum: CGFloat = 500
         let width = aspectRatio >= 1 ? maximum : maximum * aspectRatio
