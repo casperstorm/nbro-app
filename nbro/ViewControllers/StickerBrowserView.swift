@@ -21,6 +21,13 @@ class StickerBrowserView: UIView {
         return collectionView
     }()
     
+    let loadingView: UIActivityIndicatorView = {
+        let loadingView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        loadingView.hidesWhenStopped = true
+        
+        return loadingView
+    }()
+    
     init() {
         super.init(frame: CGRect.zero)
         setupSubviews()
@@ -33,13 +40,17 @@ class StickerBrowserView: UIView {
     
     fileprivate func setupSubviews() {
         backgroundColor = .white
-        let subviews = [collectionView]
+        let subviews = [collectionView, loadingView]
         subviews.forEach { addSubview($0) }
     }
     
     fileprivate func defineLayout() {
         collectionView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        
+        loadingView.snp.makeConstraints { (make) in
+            make.center.equalTo(loadingView.superview!)
         }
     }
 }

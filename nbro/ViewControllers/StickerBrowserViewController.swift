@@ -16,77 +16,87 @@ fileprivate class ViewModel {
         case black
     }
     
-    let stickers: [Sticker]
+    var stickers: [Sticker]?
     var state: ColorState
     
     init() {
         state = .white
-        stickers = [
-            Sticker(blackSVG: SVGKImage(named: "sticker_nbro_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_nbro_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_nbro_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_nbro_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_nbro_alt_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_nbro_alt_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_nbro_alt_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_nbro_alt_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_run-repeat_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_run-repeat_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_run-repeat_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_run-repeat_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_runner_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_runner_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_runner_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_runner_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_mermaid_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_mermaid_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_mermaid_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_mermaid_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_intowild_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_intowild_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_intowild_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_intowild_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_midweek_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_midweek_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_midweek_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_midweek_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_bunny_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_bunny_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_bunny_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_bunny_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_midweek-text_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_midweek-text_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_midweek-text_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_midweek-text_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_bloody-monday_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_bloody-monday_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_bloody-monday_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_bloody-monday_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_deadpoets_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_deadpoets_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_deadpoets_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_deadpoets_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_fridaylove_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_fridaylove_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_fridaylove_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_fridaylove_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_lacysunday_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_lacysunday_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_lacysunday_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_lacysunday_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_aftereight_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_aftereight_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_aftereight_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_aftereight_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_foamfinger_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_foamfinger_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_foamfinger_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_foamfinger_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_confetti_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_confetti_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_confetti_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_confetti_white")),
-        ]
+    }
+    
+    func loadStickers(completion: @escaping ((Void) -> Void)) {
+        DispatchQueue(label: "Load stickers").async {
+            let stickers = [
+                Sticker(blackSVG: SVGKImage(named: "sticker_nbro_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_nbro_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_nbro_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_nbro_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_nbro_alt_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_nbro_alt_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_nbro_alt_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_nbro_alt_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_run-repeat_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_run-repeat_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_run-repeat_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_run-repeat_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_runner_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_runner_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_runner_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_runner_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_mermaid_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_mermaid_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_mermaid_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_mermaid_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_intowild_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_intowild_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_intowild_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_intowild_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_midweek_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_midweek_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_midweek_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_midweek_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_bunny_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_bunny_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_bunny_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_bunny_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_midweek-text_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_midweek-text_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_midweek-text_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_midweek-text_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_bloody-monday_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_bloody-monday_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_bloody-monday_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_bloody-monday_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_deadpoets_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_deadpoets_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_deadpoets_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_deadpoets_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_fridaylove_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_fridaylove_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_fridaylove_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_fridaylove_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_lacysunday_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_lacysunday_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_lacysunday_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_lacysunday_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_aftereight_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_aftereight_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_aftereight_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_aftereight_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_foamfinger_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_foamfinger_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_foamfinger_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_foamfinger_white")),
+                Sticker(blackSVG: SVGKImage(named: "sticker_confetti_black.svg")!,
+                        whiteSVG: SVGKImage(named: "sticker_confetti_white.svg")!,
+                        blackPNG: #imageLiteral(resourceName: "sticker_confetti_black"),
+                        whitePNG: #imageLiteral(resourceName: "sticker_confetti_white")),
+            ]
+            
+            DispatchQueue.main.async {
+                self.stickers = stickers
+                completion()
+            }
+        }
     }
 }
 
@@ -105,6 +115,12 @@ class StickerBrowserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        
+        contentView.loadingView.startAnimating()
+        viewModel.loadStickers { [weak self] in
+            self?.contentView.loadingView.stopAnimating()
+            self?.contentView.collectionView.reloadData()
+        }
     }
 }
 
@@ -130,12 +146,12 @@ extension StickerBrowserViewController {
 
 extension StickerBrowserViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.stickers.count
+        return viewModel.stickers?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let sticker = viewModel.stickers?[indexPath.row] else { fatalError() }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sticker-cell", for: indexPath) as! StickerBrowserCell
-        let sticker = viewModel.stickers[indexPath.row]
         switch viewModel.state {
         case .white:
             cell.imageView.image = sticker.blackPNG
@@ -156,7 +172,7 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sticker = viewModel.stickers[indexPath.row]
+        guard let sticker = viewModel.stickers?[indexPath.row] else { return }
         switch viewModel.state {
         case .white:
             sticker.selectedColor = .black

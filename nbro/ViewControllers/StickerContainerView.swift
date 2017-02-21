@@ -81,6 +81,7 @@ class StickerContainerView: UIView {
         addGestureRecognizer(rotation)
         
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(gesture:)))
+        doubleTap.delegate = self
         doubleTap.numberOfTapsRequired = 2
         addGestureRecognizer(doubleTap)
     }
@@ -93,6 +94,10 @@ extension StickerContainerView: UIGestureRecognizerDelegate {
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return self.stickerView(for: gestureRecognizer) != nil
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return self.sticker(at: touch.location(in: self)) != nil
     }
 }
 
@@ -162,16 +167,19 @@ fileprivate extension StickerContainerView {
             return selectedSticker
         }
         let location = gesture.location(in: self)
-        
-        let sticker = stickerViews.filter { $0.frame.contains(location) }
-            .sorted { $0.0.sticker.scale > $0.1.sticker.scale }
-            .first
+        let sticker = self.sticker(at: location)
         
         if gesture.state != .recognized {
             selectedSticker = sticker
         }
         
         return sticker
+    }
+    
+    fileprivate func sticker(at location: CGPoint) -> StickerView? {
+        return stickerViews.filter { $0.frame.contains(location) }
+            .sorted { $0.0.sticker.scale > $0.1.sticker.scale }
+            .first
     }
 }
 
