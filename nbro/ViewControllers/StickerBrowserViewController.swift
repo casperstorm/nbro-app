@@ -82,10 +82,6 @@ fileprivate class ViewModel {
                     whiteSVG: SVGKImage(named: "sticker_foamfinger_white.svg")!,
                     blackPNG: #imageLiteral(resourceName: "sticker_foamfinger_black"),
                     whitePNG: #imageLiteral(resourceName: "sticker_foamfinger_white")),
-            Sticker(blackSVG: SVGKImage(named: "sticker_confetti_black.svg")!,
-                    whiteSVG: SVGKImage(named: "sticker_confetti_white.svg")!,
-                    blackPNG: #imageLiteral(resourceName: "sticker_confetti_black"),
-                    whitePNG: #imageLiteral(resourceName: "sticker_confetti_white")),
         ]
     }
 }
