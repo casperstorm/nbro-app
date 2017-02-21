@@ -79,6 +79,10 @@ class LoginViewController: UIViewController {
     
     func skipLoginButtonPressed() {
         TrackingManager.trackEvent(.skippedLogin)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.skipLogin(true)
+        
         self.dismiss(animated: true, completion: nil)
     }
 }
