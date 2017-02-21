@@ -33,12 +33,41 @@ xcode-select --install
 ```
 fastlane ios bump
 ```
-Increment build number
-### ios ipa
+BUMP VERSION
+
+ - ensure git status is clean
+
+ - increment build number
+
+ - commit changes
+
+ 
+### ios beta
 ```
-fastlane ios ipa
+fastlane ios beta
 ```
-Build .ipa file
+Submit a new Beta Build to Apple TestFlight
+
+ - build
+
+ - deliver to itc testflight
+
+ 
+### ios release
+```
+fastlane ios release
+```
+Deploy a new version to the App Store
+
+ - todo
+
+ - todo
+
+ - todo
+
+ - todo
+
+ 
 
 ----
 
