@@ -113,7 +113,7 @@ extension AppDelegate {
         let skip: Bool = UserDefaults.standard.bool(forKey: "nbro_skip_login_key")
         let auth: Bool = FacebookManager.authenticated()
         
-        return skip ? !skip : !auth        
+        return skip ? !skip : !auth
     }
 }
 

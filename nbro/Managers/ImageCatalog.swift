@@ -29,7 +29,6 @@ class ImageCatalog {
     
     func randomImageFromCatalog() -> UIImage {
         return backgroundImageArray.shuffle.chooseOne
-
     }
     
     func randomImageFromCatalogAndAvoidImage(_ avoid: UIImage) -> UIImage {

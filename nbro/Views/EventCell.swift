@@ -107,7 +107,8 @@ class TextView: UITextView, NSLayoutManagerDelegate {
 
     override func draw(_ rect: CGRect) {
         var rects = [CGRect]()
-        let color = UIColor(hex: 0x76edff, alpha:  0.55) //0x76edff / 0xffdd00
+//        let color = UIColor(hex: 0x76edff, alpha:  0.55) //0x76edff / 0xffdd00
+        let color = UIColor(hex: 0xE0E100, alpha: 0.55)
         
         self.layoutManager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, self.text.lengthOfBytes(using: String.Encoding.utf8))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
             if rects.count < 2 { // Only support 2 lines
