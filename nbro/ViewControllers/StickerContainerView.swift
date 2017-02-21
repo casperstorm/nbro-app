@@ -59,6 +59,13 @@ class StickerContainerView: UIView {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let imageFrame = self.imageFrame()
+        self.scale = Float(self.image.size.height / imageFrame.height)
+    }
+    
     private func setupGestures() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(gesture:)))
         pan.delegate = self
@@ -99,7 +106,10 @@ fileprivate extension StickerContainerView {
     
         
         if gesture.state == .changed {
-            stickerView.alpha = contains ? 0.5 : 1
+            UIView.animate(withDuration: 0.25, animations: { 
+                stickerView.alpha = contains ? 0.5 : 1
+            })
+            
             if(contains) {
                 toolsView.changeState(.delete)
             } else {
@@ -111,7 +121,10 @@ fileprivate extension StickerContainerView {
                 self.stickerViews.removeObject(stickerView)
             }
             
-            stickerView.alpha = 1
+            UIView.animate(withDuration: 0.25, animations: {
+                stickerView.alpha = 1
+            })
+            
             selectedSticker = nil
             toolsView.changeState(.sticker)
         }
@@ -156,18 +169,17 @@ fileprivate extension StickerContainerView {
 extension StickerContainerView {
     
     func add(image: SVGKImage) {
-        let sticker = StickerModel(image: image)
         let imageFrame = self.imageFrame()
+        let sticker = StickerModel(image: image)
         let stickerView = StickerView(sticker: sticker, boundTo: imageFrame)
         addSubview(stickerView)
         let size = sticker.size()
         stickerView.frame.size = size
         let position = CGPoint(x: imageFrame.width / 2 + imageFrame.minX, y: imageFrame.height / 2 + imageFrame.minY)
         stickerView.center = position
-        sticker.position = CGPoint(x: position.x, y: imageFrame.height / 2)
+        sticker.position = CGPoint(x: imageFrame.width / 2, y: imageFrame.height / 2)
         
         self.stickerViews.append(stickerView)
-        self.scale = Float(self.image.size.width / imageFrame.width)
     }
 
 }

@@ -43,6 +43,16 @@ class ImagePickerViewController: UIViewController {
         checkStatus()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let count = viewModel.assets?.count {
+            let lastItem = count - 1
+            let lastIndexPath = IndexPath(item: lastItem, section: 0)
+            contentView.collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: false)
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let aspectRatio: CGFloat = 1
@@ -98,7 +108,9 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImagePickerCollectionViewCell
         
-        let size = contentView.layout.itemSize
+        let scale = UIScreen.main.scale
+        let itemSize = contentView.layout.itemSize
+        let size = CGSize(width: itemSize.width * scale, height: itemSize.height * scale)
         viewModel.requestImage(for: indexPath, size: size) { image in
             cell.imageView.image = image
         }

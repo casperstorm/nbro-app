@@ -14,10 +14,12 @@ extension ImagePickerView {
         var assets: PHFetchResult<PHAsset>?
         private var requests: [IndexPath: PHImageRequestID] = [:]
         func requestImage(for indexPath: IndexPath, size: CGSize, completion: @escaping ((UIImage?) -> Void)) {
-            guard let asset = assets?[indexPath.item] else {
+            guard let assets = self.assets else {
                 completion(nil)
                 return
             }
+            let index = indexPath.item
+            let asset = assets[index]
             
             let imageManager = PHImageManager.default()
             
