@@ -10,9 +10,10 @@ import Foundation
 import UIKit
 import Photos
 
-class ImagePickerViewController: UIViewController {
+class ImagePickerViewController: UIViewController, UITabBarControllerDelegate {
     var contentView = ImagePickerView()
     let viewModel = ImagePickerView.ViewModel()
+    var initial: Bool = true
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
@@ -41,16 +42,21 @@ class ImagePickerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkStatus()
+        self.tabBarController?.delegate = self
+        
+        if initial {
+            contentView.collectionView.isHidden = true
+            initial = false
+            DispatchQueue.main.async {
+                self.scrollToBottom(animated: false)
+                self.contentView.collectionView.isHidden = false
+            }
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if let count = viewModel.assets?.count {
-            let lastItem = count - 1
-            let lastIndexPath = IndexPath(item: lastItem, section: 0)
-            contentView.collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: false)
-        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.delegate = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,6 +72,20 @@ class ImagePickerViewController: UIViewController {
         contentView.layout.minimumInteritemSpacing = itemSpace
         contentView.layout.minimumLineSpacing = itemSpace
         contentView.collectionView.contentInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController.childViewControllers.first == self {
+            scrollToBottom(animated: true)
+        }
+    }
+    
+    func scrollToBottom(animated: Bool) {
+        if let count = viewModel.assets?.count {
+            let lastItem = count - 1
+            let lastIndexPath = IndexPath(item: lastItem, section: 0)
+            contentView.collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: animated)
+        }
     }
 }
 
