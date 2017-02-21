@@ -97,7 +97,7 @@ extension StickerContainerView: UIGestureRecognizerDelegate {
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return self.sticker(at: touch.location(in: self)) != nil
+        return !toolsView.frame.contains(touch.location(in: self)) || sticker(at: touch.location(in: self)) != nil
     }
 }
 
