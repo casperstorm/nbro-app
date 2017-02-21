@@ -173,7 +173,6 @@ fileprivate extension StickerContainerView {
         
         return sticker
     }
-
 }
 
 fileprivate extension StickerContainerView {
