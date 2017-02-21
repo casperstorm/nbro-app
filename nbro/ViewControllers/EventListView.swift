@@ -126,10 +126,9 @@ class EventListView: UIView, CAAnimationDelegate {
             }
         }
     }
-    
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        let didFinishAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
+        let didFinishAnimating = backgroundImageView.layer.animationKeys()?.contains("animateContents") ?? false
         if(!didFinishAnimating) {
             backgroundImageView.layer.removeAnimation(forKey: "animateContents")
         }
