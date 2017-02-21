@@ -1,62 +1,77 @@
-fastlane_version "1.51.0"
+fastlane_version "1.110.0"
+
 default_platform :ios
 
-
 platform :ios do
-
-  ############################## PRE ##############################
-
   before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    # carthage
   end
 
-  ######################### PRIVATE LANES #########################
-
-  private_lane :build do |options|
-    gym(
-      scheme: "nbro",
-      clean: true,
-      include_bitcode: false,
-      workspace: "nbro.xcworkspace",
-      output_directory: "../",
-      output_name: "nbro.ipa",
-      xcargs: "ARCHIVE=YES" # Used to tell the Fabric run script to upload dSYM file
-    )
-  end
+  ## PRIVATE LANES ##
 
   private_lane :commit do |options|
     build = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]
     commit_version_bump(
-      message: "Build #{build}"
+      message: "Build #{build}",
+      xcodeproj: "nbro.xcodeproj"
     )
   end
 
-  ######################### PUBLIC LANES ##########################
+  ## PUBLIC LANES ##
 
-  desc "Increment build number"
+  desc "BUMP VERSION"
+  desc " - ensure git status is clean"
+  desc " - increment build number"
+  desc " - commit changes"
+  desc " "
   lane :bump do
     ensure_git_status_clean
     increment_build_number
     commit
+   end
+   
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc " - build"
+  desc " - deliver to itc testflight"
+  desc " "
+  lane :beta do
+    # match(type: "appstore") # more information: https://codesigning.guide
+    gym # Build your app - more options available
+    pilot
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
   end
 
-  desc "Build .ipa file"
-  lane :ipa do
-    ensure_git_status_clean
-    cocoapods
-    increment_build_number
-    build
-    # pilot(
-    #   ipa: "../nbro.ipa",
-    #   skip_submission: true,
-    # )
-    commit
+  desc "Deploy a new version to the App Store"
+  desc " - todo"
+  desc " - todo"
+  desc " - todo"
+  desc " - todo"
+  desc " "
+  lane :release do
+    # match(type: "appstore")
+    # snapshot
+    gym # Build your app - more options available
+    deliver(force: true)
+    # frameit
   end
 
-  ############################# POST ##############################
+  # You can define as many lanes as you want
 
   after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
   end
 
   error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
   end
 end
