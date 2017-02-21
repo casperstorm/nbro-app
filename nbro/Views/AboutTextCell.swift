@@ -10,12 +10,28 @@ import Foundation
 import UIKit
 
 class AboutTextCell: UITableViewCell {
-    let bodyLabel = UILabel.bodyLabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.titleBoldFontOfSize(18)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let contentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(hex: 0x959595)
+        label.textAlignment = .justified
+        label.font = UIFont.defaultLightFontOfSize(15)
+        label.numberOfLines = 0
+        return label
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clear
+        backgroundColor = .black
         selectionStyle = .none;
         
         setupSubviews()
@@ -27,27 +43,19 @@ class AboutTextCell: UITableViewCell {
     }
     
     fileprivate func setupSubviews() {
-        contentView.addSubview(bodyLabel)
-        
+        contentView.addSubview(contentLabel)
+        contentView.addSubview(titleLabel)
     }
     
     fileprivate func defineLayouts() {
-        bodyLabel.snp.makeConstraints { (make) in
-            make.width.equalTo(bodyLabel.superview!).inset(40)
-            make.centerX.equalTo(bodyLabel.superview!)
-            make.top.equalTo(bodyLabel.superview!).offset(16)
-            make.bottom.equalTo(bodyLabel.superview!).inset(25)
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview().inset(60)
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
         }
-    }
-}
-
-private extension UILabel {
-    static func bodyLabel() -> UILabel {
-        let label = UILabel()
-        label.textColor = UIColor(hex: 0x959595)
-        label.textAlignment = .center
-        label.font = UIFont.defaultLightFontOfSize(15)
-        label.numberOfLines = 0
-        return label
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview().inset(60)
+            make.top.equalToSuperview().offset(15)
+        }
     }
 }

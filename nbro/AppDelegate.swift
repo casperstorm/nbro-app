@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         
-        if (!FacebookManager.authenticated()) {
+        if (showLoginViewController()) {
             LaunchImageView.show()
             self.window?.rootViewController?.present(loginViewController, animated: false) {
                 LaunchImageView.hide()
@@ -74,9 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginViewController = LoginViewController()
         self.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
     }
-    
-    // MARK: Styling
-    
+}
+
+extension AppDelegate {
     func setupAdditionalStyling() {
         UIApplication.shared.statusBarStyle = .default
         
@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITabBar.appearance().tintColor = .black
         UITabBar.appearance().barTintColor = .black
-
+        
         let backButtonImage = #imageLiteral(resourceName: "back_button")
         
         navigationBarAppearace.backIndicatorImage = backButtonImage
@@ -100,6 +100,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSForegroundColorAttributeName: UIColor(hex: 0x000000),
             NSKernAttributeName: 1.0
             ], for: .normal)
+    }
+}
+
+extension AppDelegate {
+    func skipLogin(_ skip: Bool) {
+        UserDefaults.standard.set(skip, forKey: "nbro_skip_login_key")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func showLoginViewController() -> Bool {
+        let skip: Bool = UserDefaults.standard.bool(forKey: "nbro_skip_login_key")
+        let auth: Bool = FacebookManager.authenticated()
+        
+        return skip ? !skip : !auth
     }
 }
 

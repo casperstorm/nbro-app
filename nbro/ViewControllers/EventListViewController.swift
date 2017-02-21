@@ -94,6 +94,10 @@ extension EventListViewController {
 
 extension EventListViewController {
     func loadData() {
+        if(viewModel.events.count > 0) {
+            contentView.animateBackgroundImageCrossfadeChange()
+        }
+        
         viewModel.loadData({ events in
             let animate = self.viewModel.events.count == 0
             self.contentView.refreshControl.endRefreshing()

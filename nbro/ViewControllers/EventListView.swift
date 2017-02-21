@@ -148,7 +148,6 @@ private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
         tableView.register(EventCell.self, forCellReuseIdentifier: "event")
-        tableView.register(LogoCell.self, forCellReuseIdentifier: "logo")
         tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension

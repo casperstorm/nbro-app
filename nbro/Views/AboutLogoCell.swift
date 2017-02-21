@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 class AboutLogoCell: UITableViewCell {
-    let runnerLogoView = UIImageView.runnerImageView()
+    let logoImageView: UIImageView = {
+       return UIImageView()
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -26,21 +29,15 @@ class AboutLogoCell: UITableViewCell {
     }
     
     fileprivate func setupSubviews() {
-        contentView.addSubview(runnerLogoView)
+        contentView.addSubview(logoImageView)
     }
     
     fileprivate func defineLayouts() {
-        runnerLogoView.snp.makeConstraints { (make) in
-            make.top.equalTo(runnerLogoView.superview!).inset(30)
-            make.bottom.equalTo(runnerLogoView.superview!).inset(10)
-            make.centerX.equalTo(runnerLogoView.superview!)
+        logoImageView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().inset(30)
+            make.bottom.equalToSuperview().inset(10)
+            make.centerX.equalToSuperview()
         }
     }
 
-}
-
-private extension UIImageView {
-    static func runnerImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo"))
-    }
 }

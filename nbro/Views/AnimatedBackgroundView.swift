@@ -18,14 +18,6 @@ class AnimatedBackgroundView: UIView {
         backgroundColor = .gray
         setupSubviews()
         defineLayout()
-
-        //TODO: needed?
-        setNeedsLayout()
-        layoutIfNeeded()
-        setNeedsUpdateConstraints()
-        updateConstraintsIfNeeded()
-        setNeedsLayout()
-        layoutIfNeeded()
     }
     
     required init?(coder aDecoder: NSCoder) {

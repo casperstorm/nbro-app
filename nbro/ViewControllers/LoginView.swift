@@ -53,7 +53,7 @@ class LoginView: UIView {
         
         imageContainerView.snp.makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(imageContainerView.superview!)
-            make.bottom.equalTo(buttonContainerView.snp.top).priorityLow()
+            make.bottom.equalTo(buttonContainerView.snp.top).priority(10)
         }
 
         vignetteImageView.snp.updateConstraints { (make) -> Void in
@@ -67,7 +67,7 @@ class LoginView: UIView {
         
         buttonContainerView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(buttonContainerView.superview!)
-            make.height.equalTo(75).priorityRequired()
+            make.height.equalTo(75).priority(1000)
         }
         
         facebookButton.snp.makeConstraints { (make) -> Void in

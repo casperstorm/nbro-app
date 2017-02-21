@@ -172,7 +172,8 @@ extension UserViewController {
         alertController.addAction(UIAlertAction(title: "Log out", style: .default, handler: { (_) -> Void in
             TrackingManager.trackEvent(.logout)
             FacebookManager.logout()
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.skipLogin(false)
             self.dismiss(animated: true, completion: { () -> Void in
             })
         }))

@@ -11,7 +11,27 @@ import UIKit
 import SnapKit
 
 class AboutView: UIView {
-    let tableView = UITableView.tableView()
+    
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
+        return tableView
+    }()
+
+    let gradient: UIImageView = {
+        return UIImageView(image: #imageLiteral(resourceName: "about_gradient_shadow"))
+    }()
+    
+    let versionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.font = UIFont.defaultLightFontOfSize(12)
+        return label
+    }()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -25,42 +45,23 @@ class AboutView: UIView {
     }
     
     fileprivate func setupSubviews() {
-        let subviews = [tableView]
+        let subviews = [tableView, gradient, versionLabel]
         subviews.forEach { addSubview($0) }
     }
     
     fileprivate func defineLayout() {        
         tableView.snp.makeConstraints { (make) in
-            make.edges.equalTo(tableView.superview!)
+            make.edges.equalToSuperview()
+        }
+        
+        gradient.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+        }
+        
+        versionLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 
-}
-
-private extension UITableView {
-    static func tableView() -> UITableView {
-        let tableView = UITableView()
-        tableView.register(AboutLogoCell.self, forCellReuseIdentifier: "logo-cell")
-        tableView.register(AboutTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
-        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
-        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
-        tableView.register(AboutActionCell.self, forCellReuseIdentifier: "instagram-action-cell")
-        tableView.register(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
-        tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = UIColor.clear
-        tableView.alwaysBounceVertical = false
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 50
-        return tableView
-    }
-}
-
-private extension UIButton {
-    static func cancelButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), for: UIControlState())
-        
-        return button
-    }
 }
