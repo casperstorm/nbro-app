@@ -25,7 +25,7 @@ class UserView: UIView {
             }
         }
     }
-    let notAuthenticatedView = NotAuthenticatedView()
+    let notAuthenticatedView = InformationView()
     let tableView = UITableView.tableView()
     let loadingView = UserLoadingView()
     init() {
@@ -53,8 +53,7 @@ class UserView: UIView {
             make.edges.equalTo(tableView.superview!)
         }
         notAuthenticatedView.snp.makeConstraints { (make) -> Void in
-            make.centerY.equalTo(notAuthenticatedView.superview!)
-            make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
+            make.center.equalToSuperview()
         }
     }
 }

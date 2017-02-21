@@ -32,7 +32,7 @@ class EventListView: UIView, CAAnimationDelegate {
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
     let refreshControl = UIRefreshControl.refreshControl()
-    let notAuthenticatedView = NotAuthenticatedView()
+    let notAuthenticatedView = InformationView()
     var didPresentUserButtons = Bool()
 
     init() {
@@ -86,8 +86,7 @@ class EventListView: UIView, CAAnimationDelegate {
         }
 
         notAuthenticatedView.snp.makeConstraints { (make) -> Void in
-            make.centerY.equalTo(notAuthenticatedView.superview!)
-            make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
+            make.center.equalToSuperview()
         }
     }
     

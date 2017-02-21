@@ -74,7 +74,10 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
-        contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
+        
+        contentView.notAuthenticatedView.titleLabel.text = "go to login".uppercased()
+        contentView.notAuthenticatedView.descriptionLabel.text = "In order to see your upcoming events, you need to login."
+        contentView.notAuthenticatedView.button.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
