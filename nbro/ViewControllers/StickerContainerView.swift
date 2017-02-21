@@ -79,6 +79,10 @@ class StickerContainerView: UIView {
         let rotation = UIRotationGestureRecognizer(target: self, action: #selector(rotate(gesture:)))
         rotation.delegate = self
         addGestureRecognizer(rotation)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(gesture:)))
+        doubleTap.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTap)
     }
 }
 
@@ -140,6 +144,11 @@ fileprivate extension StickerContainerView {
         stickerView.rotate(gesture: gesture)
     }
     
+    dynamic func doubleTap(gesture: UITapGestureRecognizer) {
+        guard let stickerView = self.stickerView(for: gesture) else { return }
+        stickerView.doubleTap(gesture: gesture)
+    }
+    
     fileprivate func stickerView(for gesture: UIGestureRecognizer) -> StickerView? {
         if let selectedSticker = self.selectedSticker {
             return selectedSticker
@@ -168,9 +177,9 @@ fileprivate extension StickerContainerView {
 
 extension StickerContainerView {
     
-    func add(image: SVGKImage) {
+    func add(sticker: Sticker) {
         let imageFrame = self.imageFrame()
-        let sticker = StickerModel(image: image)
+        let sticker = StickerModel(sticker: sticker)
         let stickerView = StickerView(sticker: sticker, boundTo: imageFrame)
         addSubview(stickerView)
         let size = sticker.size()

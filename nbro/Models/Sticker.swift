@@ -9,7 +9,18 @@
 import Foundation
 import SVGKit
 
-struct Sticker {
+class Sticker {
+    enum Color {
+        case black
+        case white
+    }
+    var selectedColor = Color.white
+    var currentSVG: SVGKImage {
+        switch selectedColor {
+        case .white: return whiteSVG
+        case .black: return blackSVG
+        }
+    }
     let blackSVG: SVGKImage
     let whiteSVG: SVGKImage
     let blackPNG: UIImage
@@ -20,5 +31,12 @@ struct Sticker {
         self.blackSVG = blackSVG
         self.whitePNG = whitePNG
         self.whiteSVG = whiteSVG
+    }
+    
+    func invert() {
+        switch selectedColor {
+        case .black: self.selectedColor = .white
+        case .white: self.selectedColor = .black
+        }
     }
 }

@@ -54,7 +54,7 @@ class ImageGenerator {
     }
     
     private func image(for sticker: StickerModel, scale: Float) -> UIImage? {
-        let stickerImage = sticker.image
+        let stickerImage = sticker.sticker.currentSVG
         let stickerSize = CGSize(width: sticker.size().width * CGFloat(sticker.scale * scale), height: sticker.size().height * CGFloat(sticker.scale * scale))
         
         let screenScale = 1 / UIScreen.main.scale
