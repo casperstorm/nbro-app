@@ -227,7 +227,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     //MARK: L360ConfettiAreaDelegate
     
-    private func colors(for confettiArea: L360ConfettiArea!) -> [AnyObject]! {
+    func colors(for confettiArea: L360ConfettiArea!) -> [Any]! {
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
     
