@@ -43,6 +43,16 @@ class ImagePickerViewController: UIViewController {
         checkStatus()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let count = viewModel.assets?.count {
+            let lastItem = count - 1
+            let lastIndexPath = IndexPath(item: lastItem, section: 0)
+            contentView.collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: false)
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let aspectRatio: CGFloat = 1
