@@ -13,7 +13,7 @@ extension ImagePickerView {
     class ViewModel {
         var assets: PHFetchResult<PHAsset>?
         private var requests: [IndexPath: PHImageRequestID] = [:]
-        func requestImage(for indexPath: IndexPath, size: CGSize, completion: @escaping ((UIImage?) -> Void)) {
+        func requestImage(for indexPath: IndexPath, size: CGSize, deliveryMode: PHImageRequestOptionsDeliveryMode = .opportunistic, completion: @escaping ((UIImage?) -> Void)) {
             guard let assets = self.assets else {
                 completion(nil)
                 return
@@ -27,7 +27,9 @@ extension ImagePickerView {
                 imageManager.cancelImageRequest(request)
             }
             
-            let imageRequest = imageManager.requestImage(for: asset, targetSize: size, contentMode: .aspectFit, options: nil) { (image, _) in
+            let options = PHImageRequestOptions()
+            options.deliveryMode = deliveryMode
+            let imageRequest = imageManager.requestImage(for: asset, targetSize: size, contentMode: .aspectFit, options: options) { (image, _) in
                 completion(image)
             }
             requests[indexPath] = imageRequest
