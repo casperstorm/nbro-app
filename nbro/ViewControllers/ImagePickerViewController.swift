@@ -139,7 +139,7 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.requestImage(for: indexPath, size: PHImageManagerMaximumSize) { (image) in
+        viewModel.requestImage(for: indexPath, size: PHImageManagerMaximumSize, deliveryMode: .highQualityFormat) { (image) in
             guard let image = image else { return }
             
             let stickerViewController = StickerViewController(image: image)
