@@ -99,18 +99,21 @@ extension StickerContainerView: UIGestureRecognizerDelegate {
 fileprivate extension StickerContainerView {
     dynamic func pan(gesture: UIPanGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
-        
-        selectedSticker = stickerView
         stickerView.pan(gesture: gesture)
-    
+        
+        let sticker = stickerView.sticker
+        let stickerSize = CGSize(width: sticker.size().width * CGFloat(sticker.scale), height: sticker.size().height * CGFloat(sticker.scale))
+        let boundingRect = CGRect(x: 0 , y: 0, width: stickerSize.width, height: stickerSize.height)
+            .applying(CGAffineTransform(rotationAngle: CGFloat(-sticker.rotation)))
+        let stickerHeight = boundingRect.height
+        
         let imageFrame = self.imageFrame()
-        let converted = CGPoint(x: stickerView.sticker.position.x + imageFrame.minX, y: stickerView.sticker.position.y + imageFrame.minY)
+        let converted = CGPoint(x: stickerView.sticker.position.x + imageFrame.minX, y: stickerView.sticker.position.y + imageFrame.minY + (stickerHeight / 4))
         let point = convert(converted, to: toolsView)
         let contains = point.y >= frame.maxY - toolsView.frame.maxY
-    
         
         if gesture.state == .changed {
-            UIView.animate(withDuration: 0.25, animations: { 
+            UIView.animate(withDuration: 0.25, animations: {
                 stickerView.alpha = contains ? 0.5 : 1
             })
             
@@ -129,36 +132,48 @@ fileprivate extension StickerContainerView {
                 stickerView.alpha = 1
             })
             
-            selectedSticker = nil
             toolsView.changeState(.sticker)
         }
     }
     
     dynamic func pinch(gesture: UIPinchGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
+        
         stickerView.pinch(gesture: gesture)
     }
     
     dynamic func rotate(gesture: UIRotationGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
+        
         stickerView.rotate(gesture: gesture)
     }
     
     dynamic func doubleTap(gesture: UITapGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
+        
         stickerView.doubleTap(gesture: gesture)
     }
     
     fileprivate func stickerView(for gesture: UIGestureRecognizer) -> StickerView? {
         if let selectedSticker = self.selectedSticker {
+            if gesture.state == .cancelled || gesture.state == .ended || gesture.state == .failed {
+                self.selectedSticker = nil
+            }
             return selectedSticker
         }
         let location = gesture.location(in: self)
         
-        return stickerViews.filter { $0.frame.contains(location) }
+        let sticker = stickerViews.filter { $0.frame.contains(location) }
             .sorted { $0.0.sticker.scale > $0.1.sticker.scale }
             .first
+        
+        if gesture.state != .recognized {
+            selectedSticker = sticker
+        }
+        
+        return sticker
     }
+
 }
 
 fileprivate extension StickerContainerView {

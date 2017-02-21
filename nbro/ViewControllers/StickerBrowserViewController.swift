@@ -148,7 +148,7 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var sticker = viewModel.stickers[indexPath.row]
+        let sticker = viewModel.stickers[indexPath.row]
         switch viewModel.state {
         case .white:
             sticker.selectedColor = .black
