@@ -76,6 +76,8 @@
 		6CB6CC7F1CA1472600B9CD9E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6CC7E1CA1472600B9CD9E /* UserView.swift */; };
 		6CB7E56E1D6454E4009B9D66 /* AttendeesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB7E56D1D6454E4009B9D66 /* AttendeesViewController.swift */; };
 		6CB7E5711D645501009B9D66 /* AttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB7E5701D645501009B9D66 /* AttendeesView.swift */; };
+		6CBE06061E5CF604006851AB /* sticker_btg_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6CBE06041E5CF604006851AB /* sticker_btg_black.svg */; };
+		6CBE06071E5CF604006851AB /* sticker_btg_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6CBE06051E5CF604006851AB /* sticker_btg_white.svg */; };
 		6CCBC1E01E53845B00B0D1C7 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCBC1DF1E53845B00B0D1C7 /* ToolsView.swift */; };
 		6CD06B491C804E0700351A20 /* DissmissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B481C804E0700351A20 /* DissmissAnimator.swift */; };
 		6CD06B4B1C80501A00351A20 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD06B4A1C80501A00351A20 /* Interactor.swift */; };
@@ -178,6 +180,8 @@
 		6CB6CC7E1CA1472600B9CD9E /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		6CB7E56D1D6454E4009B9D66 /* AttendeesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendeesViewController.swift; sourceTree = "<group>"; };
 		6CB7E5701D645501009B9D66 /* AttendeesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AttendeesView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		6CBE06041E5CF604006851AB /* sticker_btg_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_btg_black.svg; path = SVG/sticker_btg_black.svg; sourceTree = "<group>"; };
+		6CBE06051E5CF604006851AB /* sticker_btg_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_btg_white.svg; path = SVG/sticker_btg_white.svg; sourceTree = "<group>"; };
 		6CCBC1DF1E53845B00B0D1C7 /* ToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolsView.swift; path = nbro/Views/ToolsView.swift; sourceTree = SOURCE_ROOT; };
 		6CD06B481C804E0700351A20 /* DissmissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DissmissAnimator.swift; path = Managers/DissmissAnimator.swift; sourceTree = "<group>"; };
 		6CD06B4A1C80501A00351A20 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interactor.swift; path = Managers/Interactor.swift; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 		6C6D1EE21E4A4165001CD064 /* stickers-svg */ = {
 			isa = PBXGroup;
 			children = (
+				6CBE06041E5CF604006851AB /* sticker_btg_black.svg */,
+				6CBE06051E5CF604006851AB /* sticker_btg_white.svg */,
 				6C80F8A51E5CD9C700CF0700 /* sticker_foamfinger_black.svg */,
 				6C80F8A61E5CD9C700CF0700 /* sticker_foamfinger_white.svg */,
 				6C80F89D1E5CB0AC00CF0700 /* sticker_lacysunday_black.svg */,
@@ -612,6 +618,7 @@
 				6C80F8A31E5CB31700CF0700 /* sticker_aftereight_black.svg in Resources */,
 				6C80F8A71E5CD9C700CF0700 /* sticker_foamfinger_black.svg in Resources */,
 				6C6D1F051E4A5D2E001CD064 /* sticker_midweek-text_black.svg in Resources */,
+				6CBE06061E5CF604006851AB /* sticker_btg_black.svg in Resources */,
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
 				6C6D1F101E4A5E8E001CD064 /* sticker_bloody-monday_black.svg in Resources */,
 				6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */,
@@ -621,6 +628,7 @@
 				6C5BADAD1C87171D00A0ECD0 /* pop.aiff in Resources */,
 				6C6D1F111E4A5E8E001CD064 /* sticker_bunny_black.svg in Resources */,
 				D02E190B1C6FA6D500D4C3D5 /* Exo2-SemiBold.ttf in Resources */,
+				6CBE06071E5CF604006851AB /* sticker_btg_white.svg in Resources */,
 				D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */,
 				6C6D1EF61E4A5987001CD064 /* sticker_runner_white.svg in Resources */,
 				6C6D1EE91E4A4343001CD064 /* sticker_nbro_black.svg in Resources */,
