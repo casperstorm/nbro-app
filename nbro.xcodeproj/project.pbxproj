@@ -64,6 +64,10 @@
 		6C80F8A01E5CB0AC00CF0700 /* sticker_lacysunday_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F89E1E5CB0AC00CF0700 /* sticker_lacysunday_white.svg */; };
 		6C80F8A31E5CB31700CF0700 /* sticker_aftereight_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8A11E5CB31700CF0700 /* sticker_aftereight_black.svg */; };
 		6C80F8A41E5CB31700CF0700 /* sticker_aftereight_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8A21E5CB31700CF0700 /* sticker_aftereight_white.svg */; };
+		6C80F8A71E5CD9C700CF0700 /* sticker_foamfinger_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8A51E5CD9C700CF0700 /* sticker_foamfinger_black.svg */; };
+		6C80F8A81E5CD9C700CF0700 /* sticker_foamfinger_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8A61E5CD9C700CF0700 /* sticker_foamfinger_white.svg */; };
+		6C80F8AB1E5CDB8400CF0700 /* sticker_confetti_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8A91E5CDB8400CF0700 /* sticker_confetti_black.svg */; };
+		6C80F8AC1E5CDB8400CF0700 /* sticker_confetti_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C80F8AA1E5CDB8400CF0700 /* sticker_confetti_white.svg */; };
 		6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */; };
 		6C8AF9D81C6E7FFB004D4789 /* MyriadPro-BoldCond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */; };
 		6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AF9DC1C6E83E3004D4789 /* Exo2-Bold.ttf */; };
@@ -162,6 +166,10 @@
 		6C80F89E1E5CB0AC00CF0700 /* sticker_lacysunday_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_lacysunday_white.svg; path = SVG/sticker_lacysunday_white.svg; sourceTree = "<group>"; };
 		6C80F8A11E5CB31700CF0700 /* sticker_aftereight_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_aftereight_black.svg; path = SVG/sticker_aftereight_black.svg; sourceTree = "<group>"; };
 		6C80F8A21E5CB31700CF0700 /* sticker_aftereight_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_aftereight_white.svg; path = SVG/sticker_aftereight_white.svg; sourceTree = "<group>"; };
+		6C80F8A51E5CD9C700CF0700 /* sticker_foamfinger_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_foamfinger_black.svg; path = SVG/sticker_foamfinger_black.svg; sourceTree = "<group>"; };
+		6C80F8A61E5CD9C700CF0700 /* sticker_foamfinger_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_foamfinger_white.svg; path = SVG/sticker_foamfinger_white.svg; sourceTree = "<group>"; };
+		6C80F8A91E5CDB8400CF0700 /* sticker_confetti_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_confetti_black.svg; path = SVG/sticker_confetti_black.svg; sourceTree = "<group>"; };
+		6C80F8AA1E5CDB8400CF0700 /* sticker_confetti_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_confetti_white.svg; path = SVG/sticker_confetti_white.svg; sourceTree = "<group>"; };
 		6C8AF9D51C6E7FF4004D4789 /* Exo2-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Light.ttf"; path = "Fonts/Exo2-Light.ttf"; sourceTree = "<group>"; };
 		6C8AF9D61C6E7FF4004D4789 /* MyriadPro-BoldCond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MyriadPro-BoldCond.otf"; path = "Fonts/MyriadPro-BoldCond.otf"; sourceTree = "<group>"; };
 		6C8AF9DC1C6E83E3004D4789 /* Exo2-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Bold.ttf"; path = "Fonts/Exo2-Bold.ttf"; sourceTree = "<group>"; };
@@ -337,6 +345,10 @@
 		6C6D1EE21E4A4165001CD064 /* stickers-svg */ = {
 			isa = PBXGroup;
 			children = (
+				6C80F8A91E5CDB8400CF0700 /* sticker_confetti_black.svg */,
+				6C80F8AA1E5CDB8400CF0700 /* sticker_confetti_white.svg */,
+				6C80F8A51E5CD9C700CF0700 /* sticker_foamfinger_black.svg */,
+				6C80F8A61E5CD9C700CF0700 /* sticker_foamfinger_white.svg */,
 				6C80F89D1E5CB0AC00CF0700 /* sticker_lacysunday_black.svg */,
 				6C80F89E1E5CB0AC00CF0700 /* sticker_lacysunday_white.svg */,
 				6C80F89B1E5CAFE000CF0700 /* sticker_deadpoets_white.svg */,
@@ -604,12 +616,14 @@
 				6C6D1EF51E4A5987001CD064 /* sticker_runner_black.svg in Resources */,
 				6C2A39631E5CAB69000D7B33 /* sticker_deadpoets_black.svg in Resources */,
 				6C80F8A31E5CB31700CF0700 /* sticker_aftereight_black.svg in Resources */,
+				6C80F8A71E5CD9C700CF0700 /* sticker_foamfinger_black.svg in Resources */,
 				6C6D1F051E4A5D2E001CD064 /* sticker_midweek-text_black.svg in Resources */,
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
 				6C6D1F101E4A5E8E001CD064 /* sticker_bloody-monday_black.svg in Resources */,
 				6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */,
 				6C8AF9DD1C6E843D004D4789 /* Exo2-Bold.ttf in Resources */,
 				6C6D1EFA1E4A5B04001CD064 /* sticker_intowild_white.svg in Resources */,
+				6C80F8AC1E5CDB8400CF0700 /* sticker_confetti_white.svg in Resources */,
 				6C6D1EEA1E4A4343001CD064 /* sticker_nbro_white.svg in Resources */,
 				6C5BADAD1C87171D00A0ECD0 /* pop.aiff in Resources */,
 				6C6D1F111E4A5E8E001CD064 /* sticker_bunny_black.svg in Resources */,
@@ -625,7 +639,9 @@
 				6C80F89F1E5CB0AC00CF0700 /* sticker_lacysunday_black.svg in Resources */,
 				6C6D1EED1E4A441C001CD064 /* sticker_nbro_alt_black.svg in Resources */,
 				6C6D1F071E4A5D2E001CD064 /* sticker_run-repeat_black.svg in Resources */,
+				6C80F8AB1E5CDB8400CF0700 /* sticker_confetti_black.svg in Resources */,
 				6C4427E81C88A2A80037D609 /* Settings.bundle in Resources */,
+				6C80F8A81E5CD9C700CF0700 /* sticker_foamfinger_white.svg in Resources */,
 				6C6D1EEE1E4A441C001CD064 /* sticker_nbro_alt_white.svg in Resources */,
 				6C2A39651E5CAC10000D7B33 /* sticker_fridaylove_black.svg in Resources */,
 				6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */,
