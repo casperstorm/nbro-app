@@ -172,7 +172,7 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        return CGSize(width: screenWidth / 5, height: screenWidth / 5)
+        return CGSize(width: screenWidth / 4, height: screenWidth / 4)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
