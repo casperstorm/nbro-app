@@ -34,6 +34,8 @@
 		6C65A1F41C6F8A05009015D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F31C6F8A05009015D1 /* EventListView.swift */; };
 		6C65A1F91C6F99B0009015D1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65A1F81C6F99B0009015D1 /* LoginView.swift */; };
 		6C6D1EE11E4A3F9E001CD064 /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6D1EE01E4A3F9E001CD064 /* Sticker.swift */; };
+		6C72D07C1E5EE4D500B28056 /* sticker_wakeup_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C72D07A1E5EE4D500B28056 /* sticker_wakeup_black.svg */; };
+		6C72D07D1E5EE4D500B28056 /* sticker_wakeup_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C72D07B1E5EE4D500B28056 /* sticker_wakeup_white.svg */; };
 		6C7337081C73224300744511 /* ImageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7337071C73224300744511 /* ImageCatalog.swift */; };
 		6C7CB0B11E5DB4AC004CFDB3 /* sticker_aftereight_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C7CB0871E5DB4AC004CFDB3 /* sticker_aftereight_black.svg */; };
 		6C7CB0B21E5DB4AC004CFDB3 /* sticker_aftereight_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C7CB0881E5DB4AC004CFDB3 /* sticker_aftereight_white.svg */; };
@@ -138,6 +140,8 @@
 		6C65A1F31C6F8A05009015D1 /* EventListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		6C65A1F81C6F99B0009015D1 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6C6D1EE01E4A3F9E001CD064 /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sticker.swift; sourceTree = "<group>"; };
+		6C72D07A1E5EE4D500B28056 /* sticker_wakeup_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_wakeup_black.svg; path = SVG/sticker_wakeup_black.svg; sourceTree = "<group>"; };
+		6C72D07B1E5EE4D500B28056 /* sticker_wakeup_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_wakeup_white.svg; path = SVG/sticker_wakeup_white.svg; sourceTree = "<group>"; };
 		6C7337071C73224300744511 /* ImageCatalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCatalog.swift; path = Managers/ImageCatalog.swift; sourceTree = "<group>"; };
 		6C7CB0871E5DB4AC004CFDB3 /* sticker_aftereight_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_aftereight_black.svg; path = SVG/sticker_aftereight_black.svg; sourceTree = "<group>"; };
 		6C7CB0881E5DB4AC004CFDB3 /* sticker_aftereight_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_aftereight_white.svg; path = SVG/sticker_aftereight_white.svg; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 		6C6D1EE21E4A4165001CD064 /* stickers-svg */ = {
 			isa = PBXGroup;
 			children = (
+				6C72D07A1E5EE4D500B28056 /* sticker_wakeup_black.svg */,
+				6C72D07B1E5EE4D500B28056 /* sticker_wakeup_white.svg */,
 				6C7CB0871E5DB4AC004CFDB3 /* sticker_aftereight_black.svg */,
 				6C7CB0881E5DB4AC004CFDB3 /* sticker_aftereight_white.svg */,
 				6C7CB08B1E5DB4AC004CFDB3 /* sticker_bloodymonday_black.svg */,
@@ -621,6 +627,7 @@
 				6C7CB0B71E5DB4AC004CFDB3 /* sticker_btg_black.svg in Resources */,
 				6C7CB0C41E5DB4AC004CFDB3 /* sticker_knockoff_white.svg in Resources */,
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
+				6C72D07D1E5EE4D500B28056 /* sticker_wakeup_white.svg in Resources */,
 				6C7CB0BD1E5DB4AC004CFDB3 /* sticker_foamfinger_black.svg in Resources */,
 				6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */,
 				6C7CB0CC1E5DB4AC004CFDB3 /* sticker_midweek_white.svg in Resources */,
@@ -639,6 +646,7 @@
 				6C7CB0CF1E5DB4AC004CFDB3 /* sticker_nbro_alt_black.svg in Resources */,
 				6C7CB0D01E5DB4AC004CFDB3 /* sticker_nbro_alt_white.svg in Resources */,
 				D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */,
+				6C72D07C1E5EE4D500B28056 /* sticker_wakeup_black.svg in Resources */,
 				6C7CB0B61E5DB4AC004CFDB3 /* sticker_bloodymonday_white.svg in Resources */,
 				6C7CB0B21E5DB4AC004CFDB3 /* sticker_aftereight_white.svg in Resources */,
 				6C7CB0B51E5DB4AC004CFDB3 /* sticker_bloodymonday_black.svg in Resources */,
