@@ -92,6 +92,8 @@
 		6CDA768A1E46A36900A170F5 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA76891E46A36900A170F5 /* ImagePickerViewController.swift */; };
 		6CDA768C1E46A37B00A170F5 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */; };
 		6CDDFAF91C6FC988002F9687 /* AnimatedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */; };
+		6CF5E8541E6044C2007EE361 /* sticker_pacer_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6CF5E8521E6044C2007EE361 /* sticker_pacer_black.svg */; };
+		6CF5E8551E6044C2007EE361 /* sticker_pacer_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6CF5E8531E6044C2007EE361 /* sticker_pacer_white.svg */; };
 		7C3FAC2CB4E2E18C784AF006 /* Pods_nbro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28A4103618D22CDAFD83965B /* Pods_nbro.framework */; };
 		D00F9F6B1E454C15003667B4 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F9F6A1E454C15003667B4 /* RootViewController.swift */; };
 		D014CF8F1E4A37F40013AD5F /* ShareImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014CF8E1E4A37F40013AD5F /* ShareImageViewController.swift */; };
@@ -200,6 +202,8 @@
 		6CDA76891E46A36900A170F5 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
 		6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		6CDDFAF81C6FC988002F9687 /* AnimatedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AnimatedBackgroundView.swift; path = Views/AnimatedBackgroundView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		6CF5E8521E6044C2007EE361 /* sticker_pacer_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_pacer_black.svg; path = SVG/sticker_pacer_black.svg; sourceTree = "<group>"; };
+		6CF5E8531E6044C2007EE361 /* sticker_pacer_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_pacer_white.svg; path = SVG/sticker_pacer_white.svg; sourceTree = "<group>"; };
 		8E9C014E4848CAD8A82E5466 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nbro.release.xcconfig"; path = "Pods/Target Support Files/Pods-nbro/Pods-nbro.release.xcconfig"; sourceTree = "<group>"; };
 		D00F9F6A1E454C15003667B4 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +357,8 @@
 		6C6D1EE21E4A4165001CD064 /* stickers-svg */ = {
 			isa = PBXGroup;
 			children = (
+				6CF5E8521E6044C2007EE361 /* sticker_pacer_black.svg */,
+				6CF5E8531E6044C2007EE361 /* sticker_pacer_white.svg */,
 				6C72D07A1E5EE4D500B28056 /* sticker_wakeup_black.svg */,
 				6C72D07B1E5EE4D500B28056 /* sticker_wakeup_white.svg */,
 				6C7CB0871E5DB4AC004CFDB3 /* sticker_aftereight_black.svg */,
@@ -626,6 +632,7 @@
 				6C7CB0D51E5DB4AC004CFDB3 /* sticker_run-repeat_black.svg in Resources */,
 				6C7CB0B71E5DB4AC004CFDB3 /* sticker_btg_black.svg in Resources */,
 				6C7CB0C41E5DB4AC004CFDB3 /* sticker_knockoff_white.svg in Resources */,
+				6CF5E8551E6044C2007EE361 /* sticker_pacer_white.svg in Resources */,
 				6C8AF9D71C6E7FFB004D4789 /* Exo2-Light.ttf in Resources */,
 				6C72D07D1E5EE4D500B28056 /* sticker_wakeup_white.svg in Resources */,
 				6C7CB0BD1E5DB4AC004CFDB3 /* sticker_foamfinger_black.svg in Resources */,
@@ -662,6 +669,7 @@
 				6C4427E81C88A2A80037D609 /* Settings.bundle in Resources */,
 				6C2D28F71C60C496003E5C74 /* Assets.xcassets in Resources */,
 				6C7CB0C31E5DB4AC004CFDB3 /* sticker_knockoff_black.svg in Resources */,
+				6CF5E8541E6044C2007EE361 /* sticker_pacer_black.svg in Resources */,
 				6C7CB0D21E5DB4AC004CFDB3 /* sticker_nbro_white.svg in Resources */,
 				6C7CB0C81E5DB4AC004CFDB3 /* sticker_longsaturday_white.svg in Resources */,
 				6C7CB0CB1E5DB4AC004CFDB3 /* sticker_midweek_black.svg in Resources */,
