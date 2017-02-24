@@ -157,6 +157,7 @@ extension ImagePickerViewController {
             PHPhotoLibrary.requestAuthorization({ _ in
                 DispatchQueue.main.async {
                     self.checkStatus()
+                    self.scrollToBottom(animated: false)
                 }
             })
         }
