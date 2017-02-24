@@ -24,6 +24,7 @@ class AboutTextCell: UITableViewCell {
         label.textColor = UIColor(hex: 0x959595)
         label.textAlignment = .justified
         label.font = UIFont.defaultLightFontOfSize(15)
+        label.lineBreakMode = .byCharWrapping
         label.numberOfLines = 0
         return label
     }()
