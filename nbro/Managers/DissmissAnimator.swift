@@ -15,33 +15,32 @@ class DismissAnimator : NSObject {
 }
 
 extension DismissAnimator : UIViewControllerAnimatedTransitioning {
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard
-            let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
-            let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey),
-            let containerView = transitionContext.containerView()
+            let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+            let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
             else {
                 return
         }
-        
+        let containerView = transitionContext.containerView
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
-        let screenBounds = UIScreen.mainScreen().bounds
+        let screenBounds = UIScreen.main.bounds
         let bottomLeftCorner = CGPoint(x: 0, y: screenBounds.height)
         let finalFrame = CGRect(origin: bottomLeftCorner, size: screenBounds.size)
-        toVC.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        toVC.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
 
         
-        UIView.animateWithDuration(
-            transitionDuration(transitionContext), delay: 0.0, options: transitionContext.isInteractive() ? .CurveLinear : .CurveEaseInOut, animations: {
+        UIView.animate(
+            withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: transitionContext.isInteractive ? .curveLinear : UIViewAnimationOptions(), animations: {
             fromVC.view.frame = finalFrame
-            toVC.view.transform = CGAffineTransformIdentity;
+            toVC.view.transform = CGAffineTransform.identity;
             
             }, completion: { _ in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
         )
     }

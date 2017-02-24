@@ -11,16 +11,16 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 
 class FacebookManager {
-    class func logInWithReadPermissions(completion: (success: Bool, error: NSError?) -> Void) {
+    class func logInWithReadPermissions(_ completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         let loginManager = FBSDKLoginManager()
-        loginManager.logInWithReadPermissions(["public_profile", "user_events"], fromViewController: nil, handler: {
-            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+        loginManager.logIn(withReadPermissions: ["public_profile", "user_events"], from: nil, handler: {
+            (result: FBSDKLoginManagerLoginResult?, error: Error?) -> Void in
             if result?.token != nil {
-                completion(success: true, error: nil)
+                completion(true, nil)
             } else if error != nil {
-                completion(success: false, error: error)
+                completion(false, error)
             } else {
-                completion(success: false, error: nil)
+                completion(false, nil)
             }
         })
     }
@@ -30,114 +30,114 @@ class FacebookManager {
     }
     
     class func authenticated() -> Bool {
-        return FBSDKAccessToken.currentAccessToken() != nil
+        return FBSDKAccessToken.current() != nil
     }
     
-    class func detailedEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+    class func detailedEvent(_ event: Event, completion: @escaping (_ result: NSDictionary) -> Void) {
         let params = ["fields": "attending_count, interested_count"]
         let graphPath = event.id
         let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
-        graphRequest.startWithCompletionHandler({
+        graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in
             guard let resultDict = result as? NSDictionary else {
                 return
             }
-            completion(result: resultDict)
+            completion(resultDict)
         })
     }
     
-    class func attendeesForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+    class func attendeesForEvent(_ event: Event, completion: @escaping (_ result: NSDictionary) -> Void) {
         profilesForEvent(event, params: ["fields": "attending.limit(999){name,picture.width(400)}"], completion: completion)
     }
     
-    class func interestedForEvent(event: Event, completion: (result: NSDictionary) -> Void) {
+    class func interestedForEvent(_ event: Event, completion: @escaping (_ result: NSDictionary) -> Void) {
         profilesForEvent(event, params: ["fields": "maybe.limit(999){name,picture.width(400)}"], completion: completion)
     }
     
-    private class func profilesForEvent(event: Event, params: [String:String], completion: (result: NSDictionary) -> Void) {
+    fileprivate class func profilesForEvent(_ event: Event, params: [String:String], completion: @escaping (_ result: NSDictionary) -> Void) {
         let graphPath = event.id
         let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
-        graphRequest.startWithCompletionHandler({
+        graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in
             guard let resultDict = result as? NSDictionary else {
                 return
             }
-            completion(result: resultDict)
+            completion(resultDict)
         })
     }
     
-    class func NBROEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
+    class func NBROEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
 
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
-        graphRequest.startWithCompletionHandler({
+        graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in
             if error != nil {
                 failure()
-            } else if let r = result {
+            } else if let r = result as? NSDictionary {
                 guard let data = r["data"] as? Array<NSDictionary> else {
-                    completion(events: [])
+                    completion([])
                     return
                 }
                 var events = data.map { (dict: NSDictionary) -> Event? in
                     return Event(dictionary: dict)
                     }.flatMap { $0 }
-                events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
-                completion(events: events)
+                events.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+                completion(events)
             }
         })
     }
     
-    class func userEvents(completion: (events: [Event]) -> Void,  failure: (Void -> Void)) {
+    class func userEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(100)"])
-        graphRequest.startWithCompletionHandler({
+        graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in
             if error != nil {
                 failure()
             } else if let r = result as? NSDictionary {
                 guard let e = r["events"] as? NSDictionary, let data = e["data"] as? Array<NSDictionary> else {
-                    completion(events: [])
+                    completion([])
                     return
                 }
                 var events = data.map { (dict: NSDictionary) -> Event? in
                     return Event(dictionary: dict)
                     }.flatMap { $0 }
-                events.sortInPlace({ $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedAscending })
-                completion(events: events)
+                events.sort(by: { $0.startDate.compare($1.startDate as Date) == ComparisonResult.orderedAscending })
+                completion(events)
             }
         })
     }
     
-    class func user(completion: (user: FacebookProfile) -> Void) {
+    class func user(_ completion: @escaping (_ user: FacebookProfile?) -> Void) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(600)"])
-        graphRequest.startWithCompletionHandler({
-            (connection, result, error) -> Void in
-            guard let dict = result as? NSDictionary, user = FacebookProfile(dictionary: dict) else {
-                return
+        graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+            if let dict = result as? NSDictionary, let user = FacebookProfile(dictionary: dict) {
+                completion(user)
+            } else {
+                completion(nil)
             }
-            completion(user: user)
         })
     }
     
-    class func requestPermission(permissions: Array<String>, completion:(success: Bool, error: NSError?) -> Void) {
+    class func requestPermission(_ permissions: Array<String>, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         let loginManager = FBSDKLoginManager()
-        loginManager.logInWithPublishPermissions(permissions, fromViewController: nil, handler: {
-            (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> Void in
+        loginManager.logIn(withPublishPermissions: permissions, from: nil, handler: {
+            (result: FBSDKLoginManagerLoginResult?, error: Error?) -> Void in
             
             if result?.token != nil {
-                completion(success: true, error: nil)
+                completion(true, nil)
             } else if error != nil {
-                completion(success: false, error: error)
+                completion(false, error)
             } else {
-                completion(success: false, error: nil)
+                completion(false, nil)
             }
         })
     }
     
-    private class func userHasPermission(permission: String) -> Bool {
-        let permissions = FBSDKAccessToken.currentAccessToken().permissions
-        return permissions.contains(permission)
+    fileprivate class func userHasPermission(_ permission: String) -> Bool {
+        let permissions = FBSDKAccessToken.current().permissions
+        return permissions!.contains(permission)
     }
     
     class func userHasRSVPEventPermission() -> Bool {
@@ -145,7 +145,7 @@ class FacebookManager {
         return FacebookManager.userHasPermission(rsvp)
     }
     
-    private class func handleEventRSVP(event: Event, path: String, completion:(success: Bool, error: NSError?) -> Void) {
+    fileprivate class func handleEventRSVP(_ event: Event, path: String, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         let rsvp = "rsvp_event"
         let hasPermissionAccess = userHasRSVPEventPermission()
         
@@ -154,29 +154,29 @@ class FacebookManager {
             // Request the permission, and call this function again.
             FacebookManager.requestPermission([rsvp], completion: { (success, error) in
                 if(!success || error != nil) {
-                    completion(success: false, error: error)
+                    completion(false, error)
                 } else {
                     FacebookManager.attentEvent(event, completion: completion)
                 }
             })
         } else {
             // Permission was found in local stored token.
-            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""], HTTPMethod: "POST")
-            graphRequest.startWithCompletionHandler({
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""], httpMethod: "POST")
+            graphRequest.start(completionHandler: {
                 (connection, result, error) -> Void in
                 
                 // If error exsist try to handle it.
                 if(error != nil) {
                     // Error codes are based on: https://developers.facebook.com/docs/graph-api/using-graph-api#errors
                     // Unpack the graph-error-code
-                    guard let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
+                    guard let error = error as? NSError, let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
                         return
                     }
                     
                     switch code {
                     case 102:
                         // Login status or access token has expired, been revoked, or is otherwise invalid
-                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
                         appDelegate.presentLoginViewController()
                         break
                     case 200...299:
@@ -189,68 +189,69 @@ class FacebookManager {
                         break
                     default:
                         // If we can't handle it, throw error.
-                        completion(success: false, error: error)
+                        completion(false, error as NSError?)
                         break
                     }
                 } else {
                     // If no error, try to unpack result and return success var
-                    guard let dict = result as? NSDictionary, success = dict["success"] as? Bool else {
-                        completion(success: false, error: error)
+                    guard let dict = result as? NSDictionary, let success = dict["success"] as? Bool else {
+                        completion(false, error as NSError?)
                         return
                     }
-                    completion(success: success, error: error)
+                    completion(success, error as NSError?)
                 }
             })
         }
     }
     
-    class func declineEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
+    class func declineEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void)  {
         let path = "/\(event.id)/declined"
         FacebookManager.handleEventRSVP(event, path: path, completion: completion)
 
     }
     
-    class func attentEvent(event: Event, completion:(success: Bool, error: NSError?) -> Void)  {
+    class func attentEvent(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void)  {
         let path = "/\(event.id)/attending"
         FacebookManager.handleEventRSVP(event, path: path, completion: completion)
     }
 
-    private class func recoverLostRSVPPermission(event: Event, completion:(success: Bool, error: NSError?) -> Void) {
+    fileprivate class func recoverLostRSVPPermission(_ event: Event, completion:@escaping (_ success: Bool, _ error: Error?) -> Void) {
         FacebookManager.requestPermission(["rsvp_event"], completion: { (success, error) in
             if(!success || error != nil) {
-                completion(success: false, error: error)
+                completion(false, error)
             } else {
                 FacebookManager.attentEvent(event, completion: completion)
             }
         })
     }
     
-    class func isAttendingEvent(event: Event, completion:(attending: Bool) -> Void) {
+    class func isAttendingEvent(_ event: Event, completion:@escaping (_ attending: Bool) -> Void) {
         FacebookManager.user { (user) in
+            guard let user = user else { return }
             let path = "/\(event.id)/attending/\(user.id)"
             let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: path, parameters: ["fields": ""])
-            graphRequest.startWithCompletionHandler({
+            graphRequest.start(completionHandler: {
                 (connection, result, error) -> Void in
-                guard let dict = result as? NSDictionary, data = dict["data"] as? NSArray else {
-                    completion(attending: false)
+                guard let dict = result as? NSDictionary, let data = dict["data"] as? NSArray else {
+                    completion(false)
                     return
                 }
                 
-                completion(attending: data.count > 0)
+                completion(data.count > 0)
             })
         }
     }
  
     // MARK: Helpers
     
-    private class func currentDateString(format: String) -> String {
-        let date = NSDate()
-        let dateFormatter = NSDateFormatter()
+    fileprivate class func currentDateString(_ format: String) -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
-    private class func eventGraphPath() -> String {
+    fileprivate class func eventGraphPath() -> String {
         let dateString = currentDateString("yyyy-MM-dd")
         let nbroGroupId = "108900355842020"
         let limit = "999"

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ImageCatalog {
-    private var backgroundImageArray: [UIImage] {
+    fileprivate var backgroundImageArray: [UIImage] {
         get {
             return [
                 UIImage(named: "background_image_1")!,
@@ -29,10 +29,9 @@ class ImageCatalog {
     
     func randomImageFromCatalog() -> UIImage {
         return backgroundImageArray.shuffle.chooseOne
-
     }
     
-    func randomImageFromCatalogAndAvoidImage(avoid: UIImage) -> UIImage {
+    func randomImageFromCatalogAndAvoidImage(_ avoid: UIImage) -> UIImage {
         var array = backgroundImageArray
         array.removeObjectsInArray([avoid])
         return array.shuffle.chooseOne

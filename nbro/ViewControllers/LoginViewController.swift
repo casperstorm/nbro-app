@@ -31,29 +31,29 @@ class LoginViewController: UIViewController {
         contentView.stopBackgroundAnimation()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        TrackingManager.trackEvent(.ViewLogin)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        TrackingManager.trackEvent(.viewLogin)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         contentView.animateBackgroundImage()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     func setupSubviews() {
-        contentView.facebookButton.addTarget(self, action: #selector(facebookLoginButtonPressed), forControlEvents: .TouchUpInside)
-        contentView.skipButton.addTarget(self, action: #selector(skipLoginButtonPressed), forControlEvents: .TouchUpInside)
+        contentView.facebookButton.addTarget(self, action: #selector(facebookLoginButtonPressed), for: .touchUpInside)
+        contentView.skipButton.addTarget(self, action: #selector(skipLoginButtonPressed), for: .touchUpInside)
     }
   
     override func viewDidLayoutSubviews() {
@@ -62,23 +62,27 @@ class LoginViewController: UIViewController {
     
     func facebookLoginButtonPressed() {
         contentView.activityIndicatorView.startAnimating()
-        contentView.facebookButton.hidden = true
+        contentView.facebookButton.isHidden = true
         FacebookManager.logInWithReadPermissions { (success, error) in
             self.contentView.activityIndicatorView.stopAnimating()
-            self.contentView.facebookButton.hidden = false
+            self.contentView.facebookButton.isHidden = false
             if(success) {
                 TrackingManager.trackUser()
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             } else if (error != nil) {
-                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "Error 😞", message: "🐂💩", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
     func skipLoginButtonPressed() {
-        TrackingManager.trackEvent(.SkippedLogin)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        TrackingManager.trackEvent(.skippedLogin)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.skipLogin(true)
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -10,13 +10,30 @@ import Foundation
 import UIKit
 
 class AboutTextCell: UITableViewCell {
-    let bodyLabel = UILabel.bodyLabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.titleBoldFontOfSize(18)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let contentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(hex: 0x959595)
+        label.textAlignment = .justified
+        label.font = UIFont.defaultLightFontOfSize(15)
+        label.lineBreakMode = .byCharWrapping
+        label.numberOfLines = 0
+        return label
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clearColor()
-        selectionStyle = .None;
+        backgroundColor = .black
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
@@ -26,28 +43,20 @@ class AboutTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
-        contentView.addSubview(bodyLabel)
-        
+    fileprivate func setupSubviews() {
+        contentView.addSubview(contentLabel)
+        contentView.addSubview(titleLabel)
     }
     
-    private func defineLayouts() {
-        bodyLabel.snp_makeConstraints { (make) in
-            make.width.equalTo(bodyLabel.superview!).inset(40)
-            make.centerX.equalTo(bodyLabel.superview!)
-            make.top.equalTo(bodyLabel.superview!).offset(16)
-            make.bottom.equalTo(bodyLabel.superview!).inset(25)
+    fileprivate func defineLayouts() {
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview().inset(60)
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
         }
-    }
-}
-
-private extension UILabel {
-    static func bodyLabel() -> UILabel {
-        let label = UILabel()
-        label.textColor = UIColor(hex: 0x959595)
-        label.textAlignment = .Center
-        label.font = UIFont.defaultLightFontOfSize(15)
-        label.numberOfLines = 0
-        return label
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview().inset(60)
+            make.top.equalToSuperview().offset(15)
+        }
     }
 }

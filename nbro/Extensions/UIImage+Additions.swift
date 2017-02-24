@@ -9,28 +9,28 @@
 import Foundation
 
 public extension UIImage {
-    convenience init(color: UIColor, size: CGSize = CGSizeMake(1, 1)) {
-        let rect = CGRectMake(0, 0, size.width, size.height)
+    convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         color.setFill()
         UIRectFill(rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.init(CGImage: image.CGImage!)
+        self.init(cgImage: (image?.cgImage!)!)
     }
     
     func convertToGrayScale() -> UIImage {
-        let imageRect:CGRect = CGRectMake(0, 0, size.width, size.height)
+        let imageRect:CGRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         let colorSpace = CGColorSpaceCreateDeviceGray()
         let width = size.width
         let height = size.height
         
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
-        let context = CGBitmapContextCreate(nil, Int(width), Int(height), 8, 0, colorSpace, bitmapInfo.rawValue)
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+        let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
         
-        CGContextDrawImage(context, imageRect, CGImage)
-        let imageRef = CGBitmapContextCreateImage(context)
-        let newImage = UIImage(CGImage: imageRef!)
+        context?.draw(cgImage!, in: imageRect)
+        let imageRef = context?.makeImage()
+        let newImage = UIImage(cgImage: imageRef!)
         
         return newImage
     }

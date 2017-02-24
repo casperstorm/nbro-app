@@ -11,13 +11,26 @@ import UIKit
 import SnapKit
 
 class UserView: UIView {
-    let cancelButton = UIButton.cancelButton()
-    let logoutButton = UIButton.logoutButton()
+    var showNotAuthenticatedView = false {
+        didSet {
+            notAuthenticatedView.isHidden = !showNotAuthenticatedView
+            tableView.isHidden = showNotAuthenticatedView
+            
+            if showNotAuthenticatedView && !oldValue {
+                notAuthenticatedView.alpha = 0.0
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    self.notAuthenticatedView.alpha = 1.0
+                })
+                
+            }
+        }
+    }
+    let notAuthenticatedView = InformationView()
     let tableView = UITableView.tableView()
     let loadingView = UserLoadingView()
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()        
     }
@@ -26,59 +39,33 @@ class UserView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
-        let subviews = [loadingView, tableView, cancelButton, logoutButton]
+    fileprivate func setupSubviews() {
+        let subviews = [loadingView, tableView, notAuthenticatedView]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
-        cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
-            make.width.height.equalTo(40)
-        }
-        
-        logoutButton.snp_makeConstraints { (make) -> Void in
-            make.top.trailing.equalTo(logoutButton.superview!).inset(EdgeInsetsMake(20, left: 0, bottom: 0, right: 15))
-            make.height.equalTo(40)
-        }
-        
-        loadingView.snp_makeConstraints { (make) in
+    fileprivate func defineLayout() {
+        loadingView.snp.makeConstraints { (make) in
             make.edges.equalTo(loadingView.superview!)
         }
         
-        tableView.snp_makeConstraints { (make) in
+        tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView.superview!)
         }
-    }
-}
-
-private extension UIButton {
-    static func cancelButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
-        
-        return button
-    }
-    static func logoutButton() -> UIButton {
-        let button = UIButton()
-        let title = "Log out"
-        let attrString = NSMutableAttributedString(string: title)
-        attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
-        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: 0xf60085), range: NSMakeRange(0, title.characters.count))
-        button.setAttributedTitle(attrString, forState: .Normal)
-        button.titleLabel?.font = UIFont.defaultSemiBoldFontOfSize(14)
-        return button
+        notAuthenticatedView.snp.makeConstraints { (make) -> Void in
+            make.center.equalToSuperview()
+        }
     }
 }
 
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
-        tableView.registerClass(UserTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.registerClass(UserEventCell.self, forCellReuseIdentifier: "event-cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
+        tableView.register(UserTextCell.self, forCellReuseIdentifier: "text-cell")
+        tableView.register(UserEventCell.self, forCellReuseIdentifier: "event-cell")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.alwaysBounceVertical = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50

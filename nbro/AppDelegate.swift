@@ -18,32 +18,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        FBSDKLoginManager.renewSystemCredentials {
-            (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
-        }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tokenDidChange), name: FBSDKAccessTokenDidChangeNotification, object: nil)
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKLoginManager.renewSystemCredentials { _, _ in }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(tokenDidChange), name: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil)
         
         setupAdditionalStyling()
 
-        let eventListViewController = EventListViewController()
-        let loginViewController = LoginViewController()
-        let navigationController = UINavigationController(rootViewController: eventListViewController)
-        navigationController.view.backgroundColor = .clearColor()
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let loginViewController = LoginViewController()        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = RootViewController()
         self.window?.backgroundColor = UIColor(hex: 0x222222)
         
         Fabric.with([Crashlytics.self])
         
-        if (!FacebookManager.authenticated()) {
+        if (showLoginViewController()) {
             LaunchImageView.show()
-            self.window?.rootViewController?.presentViewController(loginViewController, animated: false) {
+            self.window?.rootViewController?.present(loginViewController, animated: false) {
                 LaunchImageView.hide()
             }
         } else {
@@ -53,23 +48,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(application: UIApplication,
-        openURL url: NSURL,
+    func application(_ application: UIApplication,
+        open url: URL,
         sourceApplication: String?,
-        annotation: AnyObject) -> Bool {
+        annotation: Any) -> Bool {
             return FBSDKApplicationDelegate.sharedInstance().application(
                 application,
-                openURL: url,
+                open: url,
                 sourceApplication: sourceApplication,
                 annotation: annotation)
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
     }
     
     func tokenDidChange() {
-        let accessToken = FBSDKAccessToken.currentAccessToken()
+        let accessToken = FBSDKAccessToken.current()
         if accessToken == nil {
             presentLoginViewController()
         }
@@ -77,24 +72,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func presentLoginViewController() {
         let loginViewController = LoginViewController()
-        self.window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+        self.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
     }
-    
-    // MARK: Styling
-    
+}
+
+extension AppDelegate {
     func setupAdditionalStyling() {
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.shared.statusBarStyle = .default
         
         let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.tintColor = UIColor(hex: 0xffffff)
-        navigationBarAppearace.barTintColor = UIColor(hex: 0x000000)
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+        navigationBarAppearace.tintColor = .white
+        navigationBarAppearace.barTintColor = .black
+        navigationBarAppearace.isTranslucent = false
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(19)]
         
-        let backButtonImage = UIImage(named: "back_button")
+        UITabBar.appearance().tintColor = .black
+        UITabBar.appearance().barTintColor = .black
+        
+        let backButtonImage = #imageLiteral(resourceName: "back_button")
+        
         navigationBarAppearace.backIndicatorImage = backButtonImage
         navigationBarAppearace.backIndicatorTransitionMaskImage = backButtonImage
         
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.max), forBarMetrics: .Default)
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSFontAttributeName: UIFont.defaultSemiBoldFontOfSize(14),
+            NSForegroundColorAttributeName: UIColor(hex: 0x000000),
+            NSKernAttributeName: 1.0
+            ], for: .normal)
+    }
+}
+
+extension AppDelegate {
+    func skipLogin(_ skip: Bool) {
+        UserDefaults.standard.set(skip, forKey: "nbro_skip_login_key")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func showLoginViewController() -> Bool {
+        let skip: Bool = UserDefaults.standard.bool(forKey: "nbro_skip_login_key")
+        let auth: Bool = FacebookManager.authenticated()
+        
+        return skip ? !skip : !auth
     }
 }
 

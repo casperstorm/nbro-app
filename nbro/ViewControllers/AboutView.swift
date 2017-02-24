@@ -11,12 +11,31 @@ import UIKit
 import SnapKit
 
 class AboutView: UIView {
-    let cancelButton = UIButton.cancelButton()
-    let tableView = UITableView.tableView()
+    
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
+        return tableView
+    }()
+
+    let gradient: UIImageView = {
+        return UIImageView(image: #imageLiteral(resourceName: "about_gradient_shadow"))
+    }()
+    
+    let versionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.font = UIFont.defaultLightFontOfSize(12)
+        return label
+    }()
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
     }
@@ -25,48 +44,24 @@ class AboutView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
-        let subviews = [tableView, cancelButton]
+    fileprivate func setupSubviews() {
+        let subviews = [tableView, gradient, versionLabel]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
-        cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
-            make.width.height.equalTo(40)
+    fileprivate func defineLayout() {        
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
         
-        tableView.snp_makeConstraints { (make) in
-            make.edges.equalTo(tableView.superview!)
+        gradient.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+        }
+        
+        versionLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 
-}
-
-private extension UITableView {
-    static func tableView() -> UITableView {
-        let tableView = UITableView()
-        tableView.registerClass(AboutLogoCell.self, forCellReuseIdentifier: "logo-cell")
-        tableView.registerClass(AboutTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "appstore-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "credits-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "facebook-action-cell")
-        tableView.registerClass(AboutActionCell.self, forCellReuseIdentifier: "instagram-action-cell")
-        tableView.registerClass(AboutVersionCell.self, forCellReuseIdentifier: "version-cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
-        tableView.alwaysBounceVertical = false
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 50
-        return tableView
-    }
-}
-
-private extension UIButton {
-    static func cancelButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
-        
-        return button
-    }
 }

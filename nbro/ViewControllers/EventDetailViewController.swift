@@ -33,14 +33,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         setupActions()
         setupSubviews()
@@ -48,14 +48,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         evaluateAttendButton()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupMapView()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewEventDetail)
+        TrackingManager.trackEvent(.viewEventDetail)
         setupMapView()
     }
     
@@ -63,24 +63,24 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         setupMapView()
     }
     
-    private func setupMapView() {
-        if let longitude = event.longitude, latitude = event.latitude {
+    fileprivate func setupMapView() {
+        if let longitude = event.longitude, let latitude = event.latitude {
             let coordinate = CLLocationCoordinate2D(latitude: latitude,
                 longitude: longitude)
             self.contentView.addAnnotationAtCoordinate(coordinate)
             
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.01 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.contentView.mapView.setCenterCoordinate(coordinate,
+            let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.contentView.mapView.setCenter(coordinate,
                     zoomLevel: 14, animated: false)
-                self.contentView.mapView.contentInset = UIEdgeInsets(top: -UIScreen.mainScreen().bounds.height/2 - 100, left: 0, bottom: 0, right: 0)
+                self.contentView.mapView.contentInset = UIEdgeInsets(top: -UIScreen.main.bounds.height/2 - 100, left: 0, bottom: 0, right: 0)
             }
         }
     }
     
-    private func setupActions() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
-        contentView.facebookButton.addTarget(self, action: #selector(facebookPressed), forControlEvents: .TouchUpInside)
+    fileprivate func setupActions() {
+        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
+        contentView.facebookButton.addTarget(self, action: #selector(facebookPressed), for: .touchUpInside)
         contentView.panGestureRecognizer.addTarget(self, action: #selector(handleDismissGesture(_:)))
         contentView.eventView.attentButtonView.switchView.didSwipe = { [weak self] (isLeft: Bool) in
             if !isLeft {
@@ -91,54 +91,54 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         }
     }
     
-    private func setupSubviews() {
-        contentView.eventView.titleLabel.text = event.name.uppercaseString
-        contentView.eventView.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time)) – \(event.locationName)".uppercaseString
+    fileprivate func setupSubviews() {
+        contentView.eventView.titleLabel.text = event.name.uppercased()
+        contentView.eventView.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time)) – \(event.locationName)".uppercased()
         contentView.eventView.descriptionTextWithAjustedLineHeight(event.description)
 
         refreshRunnersCount()
         contentView.eventView.confettiView.delegate = self
-        contentView.eventView.attendeesButton.addTarget(self, action: #selector(attendeesButtonPressed), forControlEvents: .TouchUpInside)
-        contentView.eventView.interestedButton.addTarget(self, action: #selector(interestedButtonPressed), forControlEvents: .TouchUpInside)
+        contentView.eventView.attendeesButton.addTarget(self, action: #selector(attendeesButtonPressed), for: .touchUpInside)
+        contentView.eventView.interestedButton.addTarget(self, action: #selector(interestedButtonPressed), for: .touchUpInside)
     }
     
     // MARK: Actions
     
     func attendeesButtonPressed() {
-        let attendeesViewController = AttendeesViewController(event: event, state: .Attendees)
-        UIView.animateWithDuration(0.25, animations: {
-            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        let attendeesViewController = AttendeesViewController(event: event, state: .attendees)
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
         })
         
         attendeesViewController.transitioningDelegate = self
-        self.presentViewController(attendeesViewController, animated: true, completion: {
-            self.view.transform = CGAffineTransformIdentity;
+        self.present(attendeesViewController, animated: true, completion: {
+            self.view.transform = CGAffineTransform.identity;
         })
     }
     
     func interestedButtonPressed() {
-        let attendeesViewController = AttendeesViewController(event: event, state: .Interested)
-        UIView.animateWithDuration(0.25, animations: {
-            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        let attendeesViewController = AttendeesViewController(event: event, state: .interested)
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
         })
         
         attendeesViewController.transitioningDelegate = self
-        self.presentViewController(attendeesViewController, animated: true, completion: {
-            self.view.transform = CGAffineTransformIdentity;
+        self.present(attendeesViewController, animated: true, completion: {
+            self.view.transform = CGAffineTransform.identity;
         })
     }
     
     func cancelPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func facebookPressed() {
-        TrackingManager.trackEvent(.VisitEventInFacebook)
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/events/\(event.id)/")!)
+        TrackingManager.trackEvent(.visitEventInFacebook)
+        UIApplication.shared.openURL(URL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
     
     func attentEvent() {
-        TrackingManager.trackEvent(.AttendEvent)
+        TrackingManager.trackEvent(.attendEvent)
         if FacebookManager.userHasRSVPEventPermission() {
             // blast confetti:
             contentView.eventView.fireConfetti()
@@ -172,35 +172,35 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         }
     }
     
-    func handleDismissGesture(sender: UIPanGestureRecognizer) {
+    func handleDismissGesture(_ sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
         let velocityThreshold:CGFloat = 1000
         
         // convert y-position to downward pull progress (percentage)
-        let translation = sender.translationInView(view)
+        let translation = sender.translation(in: view)
         let verticalMovement = translation.y / view.bounds.height
         let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
         let downwardMovementPercent = fminf(downwardMovement, 1.0)
         let progress = CGFloat(downwardMovementPercent)
         
-        let velocity = sender.velocityInView(contentView)
+        let velocity = sender.velocity(in: contentView)
         guard let interactor = interactor else { return }
         
         switch sender.state {
-        case .Began:
+        case .began:
             interactor.hasStarted = true
-            dismissViewControllerAnimated(true, completion: nil)
-        case .Changed:
+            dismiss(animated: true, completion: nil)
+        case .changed:
             interactor.shouldFinish = progress > percentThreshold || velocity.y > velocityThreshold
-            interactor.updateInteractiveTransition(progress)
-        case .Cancelled:
+            interactor.update(progress)
+        case .cancelled:
             interactor.hasStarted = false
-            interactor.cancelInteractiveTransition()
-        case .Ended:
+            interactor.cancel()
+        case .ended:
             interactor.hasStarted = false
             interactor.shouldFinish
-                ? interactor.finishInteractiveTransition()
-                : interactor.cancelInteractiveTransition()
+                ? interactor.finish()
+                : interactor.cancel()
         default:
             break
         }
@@ -209,8 +209,8 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     //MARK: Helpers
     
     func refreshRunnersCount() {
-        self.contentView.eventView.attendingDetailView.titleLabel.text = "Attending".uppercaseString
-        self.contentView.eventView.interestedDetailView.titleLabel.text = "Interested".uppercaseString
+        self.contentView.eventView.attendingDetailView.titleLabel.text = "Attending".uppercased()
+        self.contentView.eventView.interestedDetailView.titleLabel.text = "Interested".uppercased()
         
         FacebookManager.detailedEvent(event) { (result) in
             guard   let attending = result["attending_count"] as? Int,
@@ -220,14 +220,14 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         }
     }
     
-    func setRunnersCount(attending: Int, interested: Int) {
-        self.contentView.eventView.attendingDetailView.detailLabel.text = "\(attending)".uppercaseString
-        self.contentView.eventView.interestedDetailView.detailLabel.text = "\(interested)".uppercaseString
+    func setRunnersCount(_ attending: Int, interested: Int) {
+        self.contentView.eventView.attendingDetailView.detailLabel.text = "\(attending)".uppercased()
+        self.contentView.eventView.interestedDetailView.detailLabel.text = "\(interested)".uppercased()
     }
     
     //MARK: L360ConfettiAreaDelegate
     
-    func colorsForConfettiArea(confettiArea: L360ConfettiArea!) -> [AnyObject]! {
+    func colors(for confettiArea: L360ConfettiArea!) -> [Any]! {
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
     
@@ -241,11 +241,11 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
 }
 
 extension EventDetailViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DismissAnimator()
     }
     
-    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor!.hasStarted ? interactor : nil
     }
 }

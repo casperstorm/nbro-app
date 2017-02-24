@@ -10,12 +10,15 @@ import Foundation
 import UIKit
 
 class AboutLogoCell: UITableViewCell {
-    let runnerLogoView = UIImageView.runnerImageView()
+    let logoImageView: UIImageView = {
+       return UIImageView()
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .blackColor()
-        selectionStyle = .None;
+        backgroundColor = .black
+        selectionStyle = .none;
         
         setupSubviews()
         defineLayouts()
@@ -25,22 +28,16 @@ class AboutLogoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
-        contentView.addSubview(runnerLogoView)
+    fileprivate func setupSubviews() {
+        contentView.addSubview(logoImageView)
     }
     
-    private func defineLayouts() {
-        runnerLogoView.snp_makeConstraints { (make) in
-            make.top.equalTo(runnerLogoView.superview!).inset(30)
-            make.bottom.equalTo(runnerLogoView.superview!).inset(10)
-            make.centerX.equalTo(runnerLogoView.superview!)
+    fileprivate func defineLayouts() {
+        logoImageView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().inset(30)
+            make.bottom.equalToSuperview().inset(10)
+            make.centerX.equalToSuperview()
         }
     }
 
-}
-
-private extension UIImageView {
-    static func runnerImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo"))
-    }
 }

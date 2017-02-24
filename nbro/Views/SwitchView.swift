@@ -13,12 +13,12 @@ import SnapKit
 import Shimmer
 
 class SwitchView: UIView, UIGestureRecognizerDelegate {
-    private let backgroundImageView = UIImageView(image: UIImage(named: "slider_bg")!.resizableImageWithCapInsets(UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30)))
-    private let knobImageView = UIImageView(image: UIImage(named: "slider_man"))
-    private let knobContainerView = KnobContainerView()
-    private let panGestureRecognizer = UIPanGestureRecognizer()
-    private var knobOffset: CGFloat = 0
-    private let shimmeringView = FBShimmeringView()
+    fileprivate let backgroundImageView = UIImageView(image: UIImage(named: "slider_bg")!.resizableImage(withCapInsets: UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30)))
+    fileprivate let knobImageView = UIImageView(image: UIImage(named: "slider_man"))
+    fileprivate let knobContainerView = KnobContainerView()
+    fileprivate let panGestureRecognizer = UIPanGestureRecognizer()
+    fileprivate var knobOffset: CGFloat = 0
+    fileprivate let shimmeringView = FBShimmeringView()
     var isLeft = true {
         didSet {
             knobOffset = self.isLeft ? knobInset : bounds.width - knobInset - (bounds.height - 2 * knobInset)
@@ -26,7 +26,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
             setupText()
         }
     }
-    private let containerView = UIView()
+    fileprivate let containerView = UIView()
     let titleLabel = UILabel.titleLabel()
     
     var knobInset: CGFloat = 0
@@ -41,7 +41,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    var didSwipe: (Bool -> Void)?
+    var didSwipe: ((Bool) -> Void)?
     
     init() {
         super.init(frame: CGRect.zero)
@@ -58,7 +58,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         
         shimmeringView.shimmeringHighlightLength = 0.5
         shimmeringView.shimmeringSpeed = 150
-        shimmeringView.shimmering = true
+        shimmeringView.isShimmering = true
         
         containerView.clipsToBounds = true
         setupText()
@@ -68,23 +68,23 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupText() {
+    fileprivate func setupText() {
         titleLabel.alpha = 0.0
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .Center
+        paragraphStyle.alignment = .center
         
         if self.isLeft {
             let text = NSMutableAttributedString(string: "SLIDE TO ATTEND RUN")
             text.addAttributes([
                 NSParagraphStyleAttributeName: paragraphStyle,
                 NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.blackColor()
+                NSForegroundColorAttributeName: UIColor.black
                 ], range: NSMakeRange(0, 8))
             text.addAttributes([
                 NSParagraphStyleAttributeName: paragraphStyle,
                 NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.blackColor()
+                NSForegroundColorAttributeName: UIColor.black
                 ], range: NSMakeRange(8, 11))
             self.titleLabel.attributedText = text
         } else {
@@ -92,12 +92,12 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
             text.addAttributes([
                 NSParagraphStyleAttributeName: paragraphStyle,
                 NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.blackColor()
+                NSForegroundColorAttributeName: UIColor.black
                 ], range: NSMakeRange(0, 3))
             text.addAttributes([
                 NSParagraphStyleAttributeName: paragraphStyle,
                 NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.blackColor()
+                NSForegroundColorAttributeName: UIColor.black
                 ], range: NSMakeRange(3, 15))
             self.titleLabel.attributedText = text
             
@@ -106,12 +106,12 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         setNeedsUpdateConstraints()
         updateConstraintsIfNeeded()
         
-        UIView.animateWithDuration(0.3) { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.titleLabel.alpha = 1.0
-        }
+        }) 
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         shimmeringView.contentView = titleLabel
         containerView.addSubview(shimmeringView)
         let subviews = [backgroundImageView, containerView, knobContainerView]
@@ -120,50 +120,50 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         knobContainerView.addSubview(knobImageView)
     }
     
-    private func defineLayout() {
-        backgroundImageView.snp_makeConstraints { (make) in
+    fileprivate func defineLayout() {
+        backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalTo(self).inset(1)
         }
         
-        shimmeringView.snp_makeConstraints { (make) -> Void in
+        shimmeringView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.bottom.equalTo(titleLabel.superview!)
             make.centerX.equalTo(self)
         }
         
-        knobImageView.snp_updateConstraints { (make) in
+        knobImageView.snp.updateConstraints { (make) in
             make.center.equalTo(knobImageView.superview!)
         }
     }
     
     override func updateConstraints() {
-        containerView.snp_updateConstraints { (make) -> Void in
+        containerView.snp.updateConstraints { (make) -> Void in
             make.top.bottom.equalTo(containerView.superview!)
             make.right.equalTo(containerView.superview!).offset(isLeft ? 0 : -(self.frame.width - knobOffset - (knobImageView.frame.width / 2.0)) )
             make.left.equalTo(containerView.superview!).offset(isLeft ? knobOffset + knobImageView.frame.width / 2.0 : 0)
         }
         
-        knobContainerView.snp_updateConstraints { (make) in
+        knobContainerView.snp.updateConstraints { (make) in
             make.top.bottom.equalTo(knobContainerView.superview!)
             make.left.equalTo(knobContainerView.superview!).offset(knobOffset)
-            make.width.equalTo(knobContainerView.snp_height)
+            make.width.equalTo(knobContainerView.snp.height)
             
         }
         
         super.updateConstraints()
     }
     
-    dynamic private func viewDidPan(panGestureRecognizer: UIPanGestureRecognizer) {
-        var translation = panGestureRecognizer.translationInView(panGestureRecognizer.view?.superview!)
+    dynamic fileprivate func viewDidPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        var translation = panGestureRecognizer.translation(in: panGestureRecognizer.view?.superview!)
         
-        if panGestureRecognizer.state == .Began {
-            let point = panGestureRecognizer.locationInView(self)
+        if panGestureRecognizer.state == .began {
+            let point = panGestureRecognizer.location(in: self)
             translation.x += (point.x - knobContainerView.frame.width)
         }
-        panGestureRecognizer.locationInView(self)
+        panGestureRecognizer.location(in: self)
         
         let offset = knobOffset + translation.x
         let offsetMin = max(offset, knobInset)
@@ -173,10 +173,10 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         setNeedsUpdateConstraints()
         updateConstraintsIfNeeded()
         
-        panGestureRecognizer.setTranslation(CGPoint.zero, inView: panGestureRecognizer.view?.superview!)
+        panGestureRecognizer.setTranslation(CGPoint.zero, in: panGestureRecognizer.view?.superview!)
         
         
-        if panGestureRecognizer.state == .Ended {
+        if panGestureRecognizer.state == .ended {
             if isLeft {
                 if knobOffset == bounds.width - knobInset - (bounds.height - 2 * knobInset) {
                     isLeft = false
@@ -185,7 +185,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
                     knobOffset = knobInset
                     setNeedsUpdateConstraints()
                     setNeedsLayout()
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
                         self.layoutIfNeeded()
                     })
                 }
@@ -197,7 +197,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
                     knobOffset = bounds.width - knobInset - (bounds.height - 2 * knobInset)
                     setNeedsUpdateConstraints()
                     setNeedsLayout()
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
                         self.layoutIfNeeded()
                     })
                 }
@@ -205,18 +205,18 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        return knobContainerView.pointInside(point, withEvent: event) ? knobContainerView : nil
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return knobContainerView.point(inside: point, with: event) ? knobContainerView : nil
     }
 }
 
 private class KnobContainerView: UIView {
     
-    private override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    fileprivate override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let center = self.center
         let distance = abs(hypotf(Float(center.x - point.x), Float(center.y - point.y)))
         return distance < Float(60)

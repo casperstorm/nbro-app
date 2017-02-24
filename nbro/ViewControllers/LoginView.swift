@@ -22,7 +22,7 @@ class LoginView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
         
@@ -38,7 +38,7 @@ class LoginView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
@@ -49,36 +49,36 @@ class LoginView: UIView {
         buttonContainerView.addSubview(activityIndicatorView)
     }
     
-    private func defineLayout() {
+    fileprivate func defineLayout() {
         
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(imageContainerView.superview!)
-            make.bottom.equalTo(buttonContainerView.snp_top).priorityLow()
+            make.bottom.equalTo(buttonContainerView.snp.top).priority(10)
         }
 
-        vignetteImageView.snp_updateConstraints { (make) -> Void in
+        vignetteImageView.snp.updateConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
         }
         
-        logoImageView.snp_makeConstraints { (make) in
+        logoImageView.snp.makeConstraints { (make) in
             make.centerX.equalTo(logoImageView.superview!)
-            make.top.equalTo(logoImageView.superview!.snp_centerY).multipliedBy(0.24)
+            make.top.equalTo(logoImageView.superview!.snp.centerY).multipliedBy(0.24)
         }
         
-        buttonContainerView.snp_makeConstraints { (make) in
+        buttonContainerView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(buttonContainerView.superview!)
-            make.height.equalTo(75).priorityRequired()
+            make.height.equalTo(75).priority(1000)
         }
         
-        facebookButton.snp_makeConstraints { (make) -> Void in
+        facebookButton.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(facebookButton.superview!)
         }
         
-        activityIndicatorView.snp_makeConstraints { (make) in
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.center.equalTo(activityIndicatorView.superview!)
         }
         
-        skipButton.snp_makeConstraints { (make) in
+        skipButton.snp.makeConstraints { (make) in
             make.top.equalTo(skipButton.superview!).inset(26)
             make.right.equalTo(skipButton.superview!).inset(15)
         }
@@ -87,7 +87,7 @@ class LoginView: UIView {
     
     override func updateConstraints() {
         
-        self.backgroundImageView.snp_updateConstraints { (make) -> Void in
+        self.backgroundImageView.snp.updateConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             
@@ -104,17 +104,17 @@ class LoginView: UIView {
     
     func stopBackgroundAnimation() {
         self.backgroundImageView.layer.removeAllAnimations()
-        self.backgroundImageView.transform = CGAffineTransformIdentity
+        self.backgroundImageView.transform = CGAffineTransform.identity
     }
     
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         
-        UIView.animateWithDuration(90.0, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
-            self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
+        UIView.animate(withDuration: 90.0, delay: 0, options: [.autoreverse, .repeat, .curveLinear], animations: { () -> Void in
+            self.backgroundImageView.transform = CGAffineTransform(translationX: -offset, y: 0)
             
             }) { (finished) -> Void in
-                self.backgroundImageView.transform = CGAffineTransformIdentity
+                self.backgroundImageView.transform = CGAffineTransform.identity
         }
     }
 }
@@ -129,15 +129,15 @@ private extension UIButton {
         let fbRange = NSRange(location: auth.characters.count, length: fb.characters.count)
         let fbFont = UIFont.defaultBoldFontOfSize(15)
         let authFont = UIFont.defaultLightFontOfSize(15)
-        let attrString = NSMutableAttributedString(string: combinedString.uppercaseString)
+        let attrString = NSMutableAttributedString(string: combinedString.uppercased())
         attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
         attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)
         attrString.addAttribute(NSKernAttributeName, value: 1.1, range: fbRange)
         attrString.addAttribute(NSKernAttributeName, value: 1.1, range: authRange)
         
-        facebookButton.setAttributedTitle(attrString, forState: .Normal)
-        facebookButton.backgroundColor = UIColor.whiteColor()
-        facebookButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        facebookButton.setAttributedTitle(attrString, for: UIControlState())
+        facebookButton.backgroundColor = UIColor.white
+        facebookButton.setTitleColor(UIColor.black, for: UIControlState())
         facebookButton.translatesAutoresizingMaskIntoConstraints = false
         return facebookButton
     }
@@ -146,8 +146,8 @@ private extension UIButton {
         let title = "SKIP"
         let attrString = NSMutableAttributedString(string: title)
         attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
-        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, title.characters.count))
-        button.setAttributedTitle(attrString, forState: .Normal)
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSMakeRange(0, title.characters.count))
+        button.setAttributedTitle(attrString, for: UIControlState())
         button.titleLabel?.font = UIFont.defaultMediumFontOfSize(15)
         return button
     }
@@ -162,7 +162,7 @@ private extension UIImageView {
         return UIImageView(image: UIImage(named: "background_vignette"))
     }
     static func logoImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo"))
+        return UIImageView(image: UIImage(named: "nbro_logo_big"))
     }
     
 }
@@ -170,7 +170,7 @@ private extension UIImageView {
 private extension UIView {
     static func buttonContainerView() -> UIView {
         let buttonContainerView = UIView()
-        buttonContainerView.backgroundColor = UIColor.whiteColor()
+        buttonContainerView.backgroundColor = UIColor.white
         return buttonContainerView
     }
 }
@@ -179,7 +179,7 @@ private extension UIActivityIndicatorView {
     static func activityIndicatorView() -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.color = UIColor.blackColor()
+        activityIndicatorView.color = UIColor.black
         return activityIndicatorView
     }
 }

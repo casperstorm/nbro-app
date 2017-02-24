@@ -16,7 +16,7 @@ class DetailLabelView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
         setupSubviews()
         defineLayout()
     }
@@ -25,22 +25,22 @@ class DetailLabelView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func defineLayout() {
-        containerView.snp_makeConstraints { (make) -> Void in
+    fileprivate func defineLayout() {
+        containerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(containerView.superview!)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(titleLabel.superview!)
         }
         
-        detailLabel.snp_makeConstraints { (make) -> Void in
+        detailLabel.snp.makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(detailLabel.superview!)
-            make.top.equalTo(titleLabel.snp_bottom).offset(6)
+            make.top.equalTo(titleLabel.snp.bottom).offset(6)
         }
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(detailLabel)
@@ -52,14 +52,14 @@ private extension UILabel {
         let label = UILabel()
         label.font = UIFont.defaultSemiBoldFontOfSize(14)
         label.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         return label
     }
     static func detailLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.titleBoldFontOfSize(38)
-        label.textColor = .blackColor()
-        label.textAlignment = .Center
+        label.textColor = .black
+        label.textAlignment = .center
         return label
     }
 }

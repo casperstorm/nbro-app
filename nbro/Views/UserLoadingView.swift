@@ -15,11 +15,9 @@ class UserLoadingView: UIView {
     let statusLabel = UILabel.statusLabel()
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
         setupSubviews()
-        defineLayout()
-        
-        activityIndicatorView.startAnimating()
+        defineLayout()        
         statusLabel.alpha = 0.0
         statusLabel.text = "Something went 🐴💩"
     }
@@ -28,17 +26,17 @@ class UserLoadingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [activityIndicatorView, statusLabel]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
-        activityIndicatorView.snp_makeConstraints { (make) in
+    fileprivate func defineLayout() {
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.edges.equalTo(activityIndicatorView.superview!)
         }
         
-        statusLabel.snp_makeConstraints { (make) in
+        statusLabel.snp.makeConstraints { (make) in
             make.edges.equalTo(activityIndicatorView.superview!)
         }
     }
@@ -46,9 +44,9 @@ class UserLoadingView: UIView {
 
 private extension UIActivityIndicatorView {
     static func activityIndicatorView() -> UIActivityIndicatorView {
-        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.color = UIColor.whiteColor()
+        activityIndicatorView.color = UIColor.white
         return activityIndicatorView
     }
 }
@@ -56,8 +54,8 @@ private extension UIActivityIndicatorView {
 private extension UILabel {
     static func statusLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Center
+        label.textColor = .white
+        label.textAlignment = .center
         label.font = UIFont.defaultRegularFontOfSize(13)
         return label
     }

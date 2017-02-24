@@ -5,54 +5,39 @@
 
 import UIKit
 import Nuke
-
-class EventListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
+fileprivate class ViewModel {
+    var events: [Event] = []
     
-    enum EventListType {
-        case LogoCell
-        case EventCell
+    fileprivate func loadData(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
+        FacebookManager.NBROEvents(completion, failure: failure)
     }
-    
+
+}
+
+class EventListViewController: UIViewController {
     var contentView = EventListView()
+    fileprivate let viewModel = ViewModel()
+    
     override func loadView() {
         super.loadView()
         view = contentView
         view.clipsToBounds = true
     }
-    var events: [Event] = []
     let interactor = Interactor()
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         
-        if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
-            registerForPreviewingWithDelegate(self, sourceView: view)
-        }
-        
-        self.prepareBottomButtonsForAnimation()
-    }
-    
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let point = contentView.tableView.convertPoint(location, fromView: contentView)
-        guard let indexPath = contentView.tableView.indexPathForRowAtPoint(point) else { return nil }
-        let cellType = cellTypeForIndexPath(indexPath)
-        if cellType == .EventCell {
-            let event = self.eventForIndexPath(indexPath)
-            let eventDetailViewController = EventDetailViewController(event: event)
-            eventDetailViewController.transitioningDelegate = self
-            eventDetailViewController.interactor = self.interactor
-            
-            return eventDetailViewController
-        } else {
-            return nil
+        if traitCollection.forceTouchCapability == UIForceTouchCapability.available {
+            registerForPreviewing(with: self, sourceView: view)
         }
     }
-    
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-        self.presentViewController(viewControllerToCommit, animated: true, completion: nil)
-    }
-    
+
     func applicationWillEnterForeground() {
         self.contentView.animateBackgroundImage()
     }
@@ -61,285 +46,145 @@ class EventListViewController: UIViewController, UITableViewDelegate, UITableVie
         contentView.stopBackgroundAnimation()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewEventList)
+        TrackingManager.trackEvent(.viewEventList)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
 
         contentView.animateBackgroundImage()
         loadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
-        self.contentView.userButtonView.hidden = !FacebookManager.authenticated()
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
 
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        contentView.refreshControl.addTarget(self, action: #selector(shouldRefreshData), forControlEvents: .ValueChanged)
-        contentView.notAuthenticatedView.loginButton.addTarget(self, action: #selector(loginPressed), forControlEvents: .TouchUpInside)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didPressUserButton), forControlEvents: .TouchDown)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didPressReleaseUserButton), forControlEvents: .TouchUpInside)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), forControlEvents: .TouchCancel)
-        contentView.userButtonView.button.addTarget(self, action: #selector(didCancelUserButton), forControlEvents: .TouchDragExit)
+        contentView.refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         
-        contentView.aboutButton.addTarget(self, action: #selector(didPressAboutButton), forControlEvents: .TouchDown)
-        contentView.aboutButton.addTarget(self, action: #selector(didPressReleaseAboutButton), forControlEvents: .TouchUpInside)
-        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), forControlEvents: .TouchDragExit)
-        contentView.aboutButton.addTarget(self, action: #selector(didCancelAboutButton), forControlEvents: .TouchCancel)
+        contentView.notAuthenticatedView.titleLabel.text = "go to login".uppercased()
+        contentView.notAuthenticatedView.descriptionLabel.text = "In order to see your upcoming events, you need to login."
+        contentView.notAuthenticatedView.button.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
     }
-    
-    // MARK: Actions
-    
-    dynamic private func didPressUserButton() {
-        animateScaleTransform(self.contentView.userButtonView, sx: 0.85, 0.85)
-    }
-    
-    dynamic private func didPressReleaseUserButton() {
-        animateResetTransform(self.contentView.userButtonView)
-        
-        let userViewController = UserViewController()
-        UIView.animateWithDuration(0.25, animations: {
-            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        })
-        
-        userViewController.transitioningDelegate = self
-        self.presentViewController(userViewController, animated: true, completion: {
-            self.view.transform = CGAffineTransformIdentity;
-        })
-    }
-    
-    dynamic private func didCancelUserButton() {
-        animateResetTransform(self.contentView.userButtonView)
-    }
-    
-    dynamic private func didPressAboutButton() {
-        animateScaleTransform(self.contentView.aboutButton, sx: 0.85, 0.85)
+}
 
-    }
-    
-    dynamic private func didPressReleaseAboutButton() {
-        animateResetTransform(self.contentView.aboutButton)
-        
-        let aboutViewController = AboutViewController()
-        let navigationController = UINavigationController(rootViewController: aboutViewController)
-        UIView.animateWithDuration(0.25, animations: {
-            self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        })
-
-        navigationController.transitioningDelegate = self
-        aboutViewController.interactor = self.interactor
-        self.presentViewController(navigationController, animated: true, completion: {
-            self.view.transform = CGAffineTransformIdentity;
-        })
-    }
-    
-    dynamic private func didCancelAboutButton() {
-        animateResetTransform(self.contentView.aboutButton)
-    }
-    
-    dynamic private func loginPressed() {
+extension EventListViewController {
+    dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
-        presentViewController(loginViewController, animated: true) { () -> Void in
+        present(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
             self.contentView.didPresentUserButtons = false
-            self.prepareBottomButtonsForAnimation()
-            self.events = []
+            self.viewModel.events = []
             self.contentView.tableView.reloadData()
         }
     }
-    
-    func shouldRefreshData() {
-        loadData()
-    }
-    
-    // MARK: Data
-    
-    private func loadData() {
-        FacebookManager.NBROEvents({ (events) -> Void in
-            let animate = self.events.count == 0
+}
+
+extension EventListViewController {
+    func loadData() {
+        if(viewModel.events.count > 0) {
+            contentView.animateBackgroundImageCrossfadeChange()
+        }
+        
+        viewModel.loadData({ events in
+            let animate = self.viewModel.events.count == 0
             self.contentView.refreshControl.endRefreshing()
 
-            self.events = events
+            self.viewModel.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-            
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.animateBottomButtons()
-            }
-            }, failure: {
-                if (self.isViewLoaded() && self.view.window != nil){
-                    self.animateBottomButtons()
-                }
-        })
-        
-        FacebookManager.user { (user) in
-            let request = ImageRequest(URLRequest: NSURLRequest(URL: user.imageURL))
-            Nuke.taskWith(request) { response in
-                switch response {
-                case let .Success(image, _):
-                    self.contentView.userButtonView.imageView.image = image.convertToGrayScale()
-                case .Failure(_): break
-                }
-                }.resume()
-        }
+        }) { }
     }
-    
-    // MARK: UITableView
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellType = cellTypeForIndexPath(indexPath)
-        
-        switch cellType {
-        case .LogoCell:
-            return configureLogoCell(indexPath)
-        case .EventCell:
-            return configureEventCell(indexPath)
-        }
-    }
-    
-    private func animateCellsEntrance(animate: Bool) {
+}
+
+extension EventListViewController {
+    fileprivate func animateCellsEntrance(_ animate: Bool) {
         if(animate) {
             let visibleCells = contentView.tableView.visibleCells
             for index in 0 ..< visibleCells.count {
                 let delay = (Double(index) * 0.04) + 0.3
                 let cell = visibleCells[index]
-                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.size.width - 120.0, 0)
+                cell.transform = CGAffineTransform(translationX: UIScreen.main.bounds.size.width - 120.0, y: 0)
                 cell.alpha = 0
-                UIView.animateWithDuration(0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
-                    cell.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: 0.9, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                    cell.transform = CGAffineTransform.identity
                     cell.alpha = 1.0
-                    }, completion: nil)
+                }, completion: nil)
             }
         }
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // iOS still contains weird bug where presenting something from didSelectRow can take a while
-        let cellType = cellTypeForIndexPath(indexPath)
-        if(cellType == .EventCell) {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                UIView.animateWithDuration(0.25, animations: {
-                    self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-                })
-                
-                let event = self.eventForIndexPath(indexPath)
-                let eventDetailViewController = EventDetailViewController(event: event)
-                eventDetailViewController.transitioningDelegate = self
-                eventDetailViewController.interactor = self.interactor
-                self.presentViewController(eventDetailViewController, animated: true, completion: {
-                    self.view.transform = CGAffineTransformIdentity;
-                })
-            }
-        } else if(cellType == .LogoCell) {
-            contentView.animateBackgroundImageCrossfadeChange()
-        }
-    }
-    
-    // MARK : Cell Creation
-    
-    private func configureEventCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("event", forIndexPath: indexPath) as! EventCell
-        let event = eventForIndexPath(indexPath)
-        cell.nameLabelText(event.name.uppercaseString)
-        cell.dateLabel.text = "\(event.formattedStartDate(.Relative(fallback: .Date(includeYear: true)))) at \(event.formattedStartDate(.Time))".uppercaseString
+}
 
+extension EventListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.events.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath) as! EventCell
+        let event = viewModel.events[indexPath.row]
+        cell.nameLabelText(event.name.uppercased())
+        cell.dateLabel.text = "\(event.formattedStartDate(.relative(fallback: .date(includeYear: true)))) at \(event.formattedStartDate(.time))".uppercased()
+        
         return cell
     }
-    
-    private func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("logo", forIndexPath: indexPath) as! LogoCell
-        return cell
-    }
-    
-    // MARK : Helper
-    
-    private func cellTypeForIndexPath(indexPath: NSIndexPath) -> EventListType {
-        if(indexPath.row == 0) {
-            return EventListType.LogoCell
-        } else {
-            return EventListType.EventCell
-        }
-    }
-    
-    private func eventForIndexPath(indexPath: NSIndexPath) -> Event {
-        return events[indexPath.row - 1]
-    }
-    
-    private func animateBottomButtons() {
-        if(!self.contentView.didPresentUserButtons) {
-            UIView.animateWithDuration(0.9,
-                                       delay: 0.1,
-                                       usingSpringWithDamping: 0.5,
-                                       initialSpringVelocity: 0.7,
-                                       options: .CurveLinear,
-                                       animations: ({
-                                        self.contentView.aboutButton.transform = CGAffineTransformIdentity
-                                       }), completion: { (Bool) in
-                                        self.contentView.didPresentUserButtons = true
+}
+
+extension EventListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // iOS still contains weird bug where presenting something from didSelectRow can take a while
+        DispatchQueue.main.async { () -> Void in
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
             })
             
-            UIView.animateWithDuration(0.9,
-                                       delay: 0.0,
-                                       usingSpringWithDamping: 0.5,
-                                       initialSpringVelocity: 0.7,
-                                       options: .CurveLinear,
-                                       animations: ({
-                                        self.contentView.userButtonView.transform = CGAffineTransformIdentity
-                                       }), completion: { (Bool) in
-                                        self.contentView.didPresentUserButtons = true
+            let event = self.viewModel.events[indexPath.row]
+            let eventDetailViewController = EventDetailViewController(event: event)
+            eventDetailViewController.transitioningDelegate = self
+            eventDetailViewController.interactor = self.interactor
+            self.present(eventDetailViewController, animated: true, completion: {
+                self.view.transform = CGAffineTransform.identity;
             })
-        }
-    }
-    
-    private func prepareBottomButtonsForAnimation() {
-        if(!self.contentView.didPresentUserButtons) {
-            self.contentView.aboutButton.transform = CGAffineTransformTranslate(self.contentView.aboutButton.transform, 0, 100)
-            self.contentView.userButtonView.transform = CGAffineTransformTranslate(self.contentView.userButtonView.transform, 0, 100)
-        }
-    }
-    
-    private func animateScaleTransform(view: UIView, sx: CGFloat, _ sy: CGFloat) {
-        UIView.animateWithDuration(0.1) {
-            view.transform = CGAffineTransformScale(view.transform, sx, sy)
-        }
-    }
-    
-    private func animateResetTransform(view: UIView) {
-        UIView.animateWithDuration(0.1) {
-            view.transform = CGAffineTransformIdentity
         }
     }
 }
 
 extension EventListViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DismissAnimator()
     }
     
-    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor.hasStarted ? interactor : nil
+    }
+}
+
+extension EventListViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let point = contentView.tableView.convert(location, from: contentView)
+        guard let indexPath = contentView.tableView.indexPathForRow(at: point) else { return nil }
+        let event = viewModel.events[indexPath.row]
+        let eventDetailViewController = EventDetailViewController(event: event)
+        eventDetailViewController.transitioningDelegate = self
+        eventDetailViewController.interactor = self.interactor
+        
+        return eventDetailViewController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.present(viewControllerToCommit, animated: true, completion: nil)
     }
 }
 

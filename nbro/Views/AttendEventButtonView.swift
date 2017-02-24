@@ -16,7 +16,7 @@ class AttentEventButtonView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .whiteColor()
+        backgroundColor = .white
         setupSubviews()
         defineLayout()
     }
@@ -25,35 +25,35 @@ class AttentEventButtonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(switchView)
         addSubview(activityIndicatorView)
     }
     
-    private func defineLayout() {
-        switchView.snp_makeConstraints { (make) in
+    fileprivate func defineLayout() {
+        switchView.snp.makeConstraints { (make) in
             make.edges.equalTo(switchView.superview!)
             make.height.equalTo(44)
         }
         
-        activityIndicatorView.snp_makeConstraints { (make) in
+        activityIndicatorView.snp.makeConstraints { (make) in
             make.center.equalTo(activityIndicatorView.superview!)
         }
     }
     
     func startAnimating() {
         activityIndicatorView.startAnimating()
-        switchView.hidden = true
+        switchView.isHidden = true
     }
     
     func stopAnimating() {
         activityIndicatorView.stopAnimating()
-        switchView.hidden = false
+        switchView.isHidden = false
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        let convertedPoint = self.convertPoint(point, toView: switchView)
-        return switchView.hitTest(convertedPoint, withEvent: event)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let convertedPoint = self.convert(point, to: switchView)
+        return switchView.hitTest(convertedPoint, with: event)
     }
     
 }
@@ -63,9 +63,9 @@ private extension UIButton {
         let button = UIButton()
         let font = UIFont.defaultRegularFontOfSize(15)
         button.titleLabel?.font = font
-        button.backgroundColor = UIColor.grayColor()
-        button.setTitleColor(.whiteColor(), forState: .Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        button.backgroundColor = UIColor.gray
+        button.setTitleColor(.white, for: UIControlState())
+        button.setTitleColor(UIColor.black, for: UIControlState())
         return button
     }
 }
@@ -74,7 +74,7 @@ private extension UIActivityIndicatorView {
     static func activityIndicatorView() -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.color = UIColor.blackColor()
+        activityIndicatorView.color = UIColor.black
         return activityIndicatorView
     }
 }

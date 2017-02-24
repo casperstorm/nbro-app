@@ -15,40 +15,33 @@ class AnimatedBackgroundView: UIView {
     let imageContainerView = UIView()
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .grayColor()
+        backgroundColor = .gray
         setupSubviews()
         defineLayout()
-
-        setNeedsLayout()
-        layoutIfNeeded()
-        setNeedsUpdateConstraints()
-        updateConstraintsIfNeeded()
-        setNeedsLayout()
-        layoutIfNeeded()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
     }
     
-    private func defineLayout() {
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+    fileprivate func defineLayout() {
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(imageContainerView.superview!)
         }
         
-        vignetteImageView.snp_updateConstraints { (make) -> Void in
+        vignetteImageView.snp.updateConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!)
         }
     }
     
     override func updateConstraints() {
-        self.backgroundImageView.snp_updateConstraints { (make) -> Void in
+        self.backgroundImageView.snp.updateConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             

@@ -9,22 +9,12 @@
 import Foundation
 import UIKit
 
-class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    enum AboutCellType: Int {
-        case LogoCell = 0
-        case TextCell
-        case AppStoreActionCell
-        case InstagramActionCell
-        case FacebookActionCell
-        case CreditsActionCell
-        case VersionCell
-        
-        case Amount
+class AboutViewController: UIViewController {
+    enum TableData: Int {
+        case logo, text
     }
     
     var contentView = AboutView()
-    var interactor:Interactor?
 
     override func loadView() {
         super.loadView()
@@ -33,137 +23,63 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        TrackingManager.trackEvent(.ViewAbout)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .Black
-        self.navigationController?.navigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
-    private func setupSubviews() {
-        contentView.cancelButton.addTarget(self, action: #selector(cancelPressed), forControlEvents: .TouchUpInside)
-        contentView.tableView.delegate = self
-        contentView.tableView.dataSource = self
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
-    // MARK: Actions
-    
-    func cancelPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: UITableView
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AboutCellType.Amount.rawValue
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellType = AboutCellType(rawValue: indexPath.row)!
-        switch cellType {
-        case .LogoCell:
-            return configureLogoCell(indexPath)
-        case .TextCell:
-            return configureTextCell(indexPath)
-        case .AppStoreActionCell:
-            return configureAppStoreActionCell(indexPath)
-        case .InstagramActionCell:
-            return configureInstagramActionCell(indexPath)
-        case .FacebookActionCell:
-            return configureFacebookActionCell(indexPath)
-        case .CreditsActionCell:
-            return configureCreditsActionCell(indexPath)
-        case .VersionCell:
-            return configureVersionCell(indexPath)
-        default:
-            return UITableViewCell()
-        }
-    }
-
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cellType = AboutCellType(rawValue: indexPath.row)!
-        switch cellType {
-        case .AppStoreActionCell:
-            TrackingManager.trackEvent(.VisitAppStore)
-            UIApplication.sharedApplication().openURL(NSURL(string: "itms-apps://itunes.apple.com/app/id1084299725")!)
-        case .FacebookActionCell:
-            TrackingManager.trackEvent(.VisitFacebook)
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/groups/108900355842020/")!)
-        case .InstagramActionCell:
-            TrackingManager.trackEvent(.VisitInstagram)
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.instagram.com/nbrorunning/")!)
-        case .CreditsActionCell:
-            self.navigationController?.pushViewController(CreditViewController(), animated: true)
-        default: break
-
-        }
-    }
-    
-    // MARK : Cell Creation
-    
-    func configureLogoCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("logo-cell", forIndexPath: indexPath) as! AboutLogoCell
-        return cell
-    }
-    
-    func configureTextCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("text-cell", forIndexPath: indexPath) as! AboutTextCell
-        cell.bodyLabel.text = "NBRO is a club for passionate runners with a thing for sneakers and get-togethers. NBRO is without king, territory or rules. Everyone is welcome to join the 4+ weekly training sessions."
+        setupSubviews()
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationItem.title = "About".uppercased()
         
-        return cell
+        contentView.versionLabel.text = applicationVersionString()
     }
     
-    func configureAppStoreActionCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("appstore-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.setTitleText("Rate in App Store".uppercaseString)
-        cell.iconImageView.image = UIImage(named: "about_like_icon")
-        return cell
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        TrackingManager.trackEvent(.viewAbout)
     }
     
-    func configureFacebookActionCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("facebook-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.setTitleText("NBRO Facebook".uppercaseString)
-        cell.iconImageView.image = UIImage(named: "about_facebook_icon")
-        return cell
+    fileprivate func setupSubviews() {
+        contentView.tableView.dataSource = self
+        contentView.tableView.delegate = self
+        contentView.tableView.register(AboutLogoCell.self, forCellReuseIdentifier: "LogoCell")
+        contentView.tableView.register(AboutTextCell.self, forCellReuseIdentifier: "TextCell")
     }
     
-    func configureCreditsActionCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("credits-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.setTitleText("Credits".uppercaseString)
-        cell.iconImageView.image = UIImage(named: "about_credit_icon")
-        return cell
-    }
-    
-    func configureVersionCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("version-cell", forIndexPath: indexPath) as! AboutVersionCell
-        cell.nameLabel.text = "NBRO RUNNING APP"
-        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-        let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
-        cell.versionLabel.text = "v. " + version + " (" + build + ")"
-        return cell
-    }
-    
-    func configureInstagramActionCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = contentView.tableView.dequeueReusableCellWithIdentifier("instagram-action-cell", forIndexPath: indexPath) as! AboutActionCell
-        cell.setTitleText("NBRO Instagram".uppercaseString)
-        cell.iconImageView.image = UIImage(named: "about_instagram_icon")
-        return cell
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }
+
+extension AboutViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let data = TableData(rawValue: indexPath.row)
+        switch data! {
+        case .logo:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "LogoCell", for: indexPath) as! AboutLogoCell
+            cell.logoImageView.image = #imageLiteral(resourceName: "nbro_logo")
+            return cell
+        case .text:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath) as! AboutTextCell
+            cell.titleLabel.text = "WE ARE NBRO RUNNERS OF COPENHAGEN.\nWE RUN THIS CITY."
+            cell.contentLabel.text = "NBRO is a running community for passionate runners with a thing for sneakers and social get-togethers.\n\nNBRO is without king, territory or rules. Everyone is welcome to join the 6+ weekly training events starting from Søpavillionen at the Lakes in the heart of Copenhagen. Our training is fun and varied for runners of all levels and comprises of cross, core and interval training as well as distances a mile too long."
+            return cell
+        }
+    }
+}
+
+extension AboutViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+}
+
+extension AboutViewController {
+    func applicationVersionString() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
+        
+        return version + " (" + build + ")"
+    }
+}
+

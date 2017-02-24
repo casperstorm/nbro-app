@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 import SnapKit
 
-class EventListView: UIView {
+class EventListView: UIView, CAAnimationDelegate {
     
     var showNotAuthenticatedView = false {
         didSet {
-            notAuthenticatedView.hidden = !showNotAuthenticatedView
-            tableView.hidden = showNotAuthenticatedView
+            notAuthenticatedView.isHidden = !showNotAuthenticatedView
+            tableView.isHidden = showNotAuthenticatedView
             
             if showNotAuthenticatedView && !oldValue {
                 notAuthenticatedView.alpha = 0.0
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.notAuthenticatedView.alpha = 1.0
                 })
 
@@ -31,16 +31,14 @@ class EventListView: UIView {
     let backgroundImageView = UIImageView.backgroundImageView()
     let vignetteImageView = UIImageView.vignetteImageView()
     let imageContainerView = UIView()
-    let aboutButton = UIButton.aboutButton()
-    let userButtonView = CircularUserButtonView()
     let refreshControl = UIRefreshControl.refreshControl()
-    let notAuthenticatedView = NotAuthenticatedView()
+    let notAuthenticatedView = InformationView()
     var didPresentUserButtons = Bool()
 
     init() {
         super.init(frame: CGRect.zero)
-        notAuthenticatedView.hidden = true
-        backgroundColor = .clearColor()
+        notAuthenticatedView.isHidden = true
+        backgroundColor = .clear
         setupSubviews()
         defineLayout()        
     }
@@ -49,88 +47,64 @@ class EventListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         tableView.addSubview(refreshControl)
         addSubview(imageContainerView)
         imageContainerView.addSubview(backgroundImageView)
         imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
-        addSubview(aboutButton)
         addSubview(notAuthenticatedView)
-        addSubview(userButtonView)
 
         if refreshControl.subviews.count > 0 {
             refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
         }
     }
     
-    private func defineLayout() {
-        imageContainerView.snp_makeConstraints { (make) -> Void in
+    fileprivate func defineLayout() {
+        imageContainerView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(imageContainerView.superview!)
         }
         
-        vignetteImageView.snp_makeConstraints { (make) -> Void in
+        vignetteImageView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(vignetteImageView.superview!).inset(-1)
         }
         
-        tableView.snp_makeConstraints { (make) -> Void in
+        tableView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(tableView.superview!)
         }
         
-        backgroundImageView.snp_makeConstraints { (make) -> Void in
+        backgroundImageView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(backgroundImageView.superview!)
             make.left.equalTo(backgroundImageView.superview!)
             
             let imageSize = backgroundImageView.image?.size ?? CGSize.zero
-            let factor = CGRectGetHeight(UIScreen.mainScreen().bounds) / imageSize.height
+            let factor = UIScreen.main.bounds.height / imageSize.height
             //todo maybe not use uiscreen? but problem is we dont have height at this point of superview.
             
             make.width.equalTo(imageSize.width * factor)
             make.height.equalTo(imageSize.height * factor)
         }
 
-        notAuthenticatedView.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(notAuthenticatedView.superview!)
-            make.leading.trailing.equalTo(notAuthenticatedView.superview!).inset(50)
+        notAuthenticatedView.snp.makeConstraints { (make) -> Void in
+            make.center.equalToSuperview()
         }
-        
-        userButtonView.snp_makeConstraints { (make) in
-            make.bottom.equalTo(userButtonView.superview!).inset(20)
-            make.right.equalTo(userButtonView.superview!).inset(20)
-            make.width.height.equalTo(60)
-        }
-    }
-    
-    override func updateConstraints() {
-        aboutButton.snp_remakeConstraints { (make) in
-            if(FacebookManager.authenticated()) {
-                make.centerY.equalTo(userButtonView).offset(4)
-                make.right.equalTo(userButtonView.snp_left).offset(-10)
-            } else {
-                make.right.bottom.equalTo(aboutButton.superview!).inset(20)
-            }
-            
-            make.width.height.equalTo(47)
-        }
-        
-        super.updateConstraints()
     }
     
     // MARK : Animation
     
     func stopBackgroundAnimation() {
         self.backgroundImageView.layer.removeAllAnimations()
-        self.backgroundImageView.transform = CGAffineTransformIdentity
+        self.backgroundImageView.transform = CGAffineTransform.identity
     }
     
     func animateBackgroundImage() {
         let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
         
-        UIView.animateWithDuration(90, delay: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: { () -> Void in
-            self.backgroundImageView.transform = CGAffineTransformMakeTranslation(-offset, 0)
+        UIView.animate(withDuration: 90, delay: 0, options: [.autoreverse, .repeat, .curveLinear], animations: { () -> Void in
+            self.backgroundImageView.transform = CGAffineTransform(translationX: -offset, y: 0)
             
         }) { (finished) -> Void in
-            self.backgroundImageView.transform = CGAffineTransformIdentity
+            self.backgroundImageView.transform = CGAffineTransform.identity
         }
     }
     
@@ -146,18 +120,17 @@ class EventListView: UIView {
                 crossfade.fromValue = fromImage
                 crossfade.toValue = toImage
                 crossfade.delegate = self
-                crossfade.removedOnCompletion = true
-                backgroundImageView.layer .addAnimation(crossfade, forKey: "animateContents")
+                crossfade.isRemovedOnCompletion = true
+                backgroundImageView.layer .add(crossfade, forKey: "animateContents")
                 backgroundImageView.image = toImage;
             }
         }
     }
-    
 
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        let didFinishAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        let didFinishAnimating = backgroundImageView.layer.animationKeys()?.contains("animateContents") ?? false
         if(!didFinishAnimating) {
-            backgroundImageView.layer.removeAnimationForKey("animateContents")
+            backgroundImageView.layer.removeAnimation(forKey: "animateContents")
         }
     }
 }
@@ -165,7 +138,7 @@ class EventListView: UIView {
 private extension UIRefreshControl {
     static func refreshControl() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .whiteColor()
+        refreshControl.tintColor = .white
         return refreshControl
     }
 }
@@ -173,12 +146,12 @@ private extension UIRefreshControl {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(EventCell.self, forCellReuseIdentifier: "event")
-        tableView.registerClass(LogoCell.self, forCellReuseIdentifier: "logo")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(EventCell.self, forCellReuseIdentifier: "event")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
+        tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         return tableView
     }
 }
@@ -197,7 +170,7 @@ private extension UIImageView {
 private extension UIButton {
     static func aboutButton() -> UIButton {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "about_button"), forState: .Normal)
+        button.setBackgroundImage(UIImage(named: "about_button"), for: UIControlState())
         return button
     }
 }

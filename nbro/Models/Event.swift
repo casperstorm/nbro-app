@@ -10,19 +10,19 @@ import AFDateHelper
 struct Event {
     
     enum DateFormat {
-        case Date(includeYear: Bool)
-        case Time
-        indirect case Relative(fallback: DateFormat)
+        case date(includeYear: Bool)
+        case time
+        indirect case relative(fallback: DateFormat)
         
-        private static var dateformatters = [String:NSDateFormatter]()
+        fileprivate static var dateformatters = [String:DateFormatter]()
         
-        func formattedStringFromDate(date: NSDate) -> String {
+        func formattedStringFromDate(_ date: Foundation.Date) -> String {
             switch self {
-            case Date(_):
+            case .date(_):
                 return dateString(date, dateFormat: self)
-            case Time:
+            case .time:
                 return dateString(date, dateFormat: self)
-            case Relative(let fallback):
+            case .relative(let fallback):
                 if(date.isTomorrow()) {
                     return "Tomorrow"
                 } else if(date.isToday()) {
@@ -33,28 +33,28 @@ struct Event {
             }
         }
         
-        private func dateString(date: NSDate, dateFormat: DateFormat) -> String {
+        fileprivate func dateString(_ date: Foundation.Date, dateFormat: DateFormat) -> String {
             let format = formatFromDateFormat(dateFormat)
             let dateFormatter = self.dateFormatter(format)
-            return dateFormatter.stringFromDate(date)
+            return dateFormatter.string(from: date)
         }
         
-        private func formatFromDateFormat(format: DateFormat) -> String {
+        fileprivate func formatFromDateFormat(_ format: DateFormat) -> String {
             switch format {
-            case Date(let includeYear):
+            case .date(let includeYear):
                 return "dd. MMM" + (includeYear ? " yyyy" : "")
-            case Time:
+            case .time:
                 return "HH:mm"
             default:
                 return ""
             }
         }
         
-        private func dateFormatter(format: String) -> NSDateFormatter {
+        fileprivate func dateFormatter(_ format: String) -> DateFormatter {
             if let dateFormatter = DateFormat.dateformatters[format] {
                 return dateFormatter
             } else {
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = format
                 DateFormat.dateformatters[format] = dateFormatter
                 return dateFormatter
@@ -64,14 +64,14 @@ struct Event {
     }
     
     enum RSVPStatus {
-        case Attending
-        case Unsure
-        case Unknown
+        case attending
+        case unsure
+        case unknown
     }
     
     let id: String
     let name: String
-    let startDate: NSDate
+    let startDate: Date
     let latitude: CLLocationDegrees?
     let longitude: CLLocationDegrees?
     let locationName: String
@@ -79,16 +79,17 @@ struct Event {
     let rsvp: RSVPStatus?
     
     init?(dictionary: NSDictionary) {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
         let startDateString = dictionary["start_time"] as? String ?? ""
         
         guard let name = dictionary["name"] as? String,
-            startDate = dateFormatter.dateFromString(startDateString),
-            latitude = dictionary["place"]?["location"]??["latitude"] as? CLLocationDegrees,
-            longitude = dictionary["place"]?["location"]??["longitude"] as? CLLocationDegrees,
-            description = dictionary["description"] as? String,
-            id = dictionary["id"] as? String else {
+            let startDate = dateFormatter.date(from: startDateString),
+            
+            let latitude = dictionary.value(forKeyPath: "place.location.latitude") as? CLLocationDegrees,
+            let longitude = dictionary.value(forKeyPath: "place.location.longitude") as? CLLocationDegrees,
+            let description = dictionary["description"] as? String,
+            let id = dictionary["id"] as? String else {
                 return nil
         }
         
@@ -97,23 +98,23 @@ struct Event {
         self.startDate = startDate
         self.latitude = latitude
         self.longitude = longitude
-        self.locationName = dictionary["place"]?["name"] as? String ?? "-"
+        self.locationName = dictionary.value(forKeyPath: "place.name") as? String ?? "-"
         self.description = description
         
         if let rsvp = dictionary["rsvp_status"] as? String {
             if(rsvp == "attending") {
-                self.rsvp = .Attending
+                self.rsvp = .attending
             } else if (rsvp == "unsure") {
-                self.rsvp = .Unsure
+                self.rsvp = .unsure
             } else {
-                self.rsvp = .Unknown
+                self.rsvp = .unknown
             }
         } else {
-            self.rsvp = .Unknown
+            self.rsvp = .unknown
         }
     }
     
-    func formattedStartDate(dateFormat: DateFormat) -> String {
+    func formattedStartDate(_ dateFormat: DateFormat) -> String {
         return dateFormat.formattedStringFromDate(self.startDate)
     }
 }

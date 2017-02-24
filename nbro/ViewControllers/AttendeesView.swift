@@ -31,7 +31,7 @@ class AttendeeCell: UITableViewCell {
         
         profileImageView.layer.cornerRadius = 22.5
         profileImageView.layer.masksToBounds = true
-        profileImageView.contentMode = .ScaleAspectFill
+        profileImageView.contentMode = .scaleAspectFill
         
         self.layer.masksToBounds = true
         self.contentView.layer.masksToBounds = true
@@ -44,35 +44,35 @@ class AttendeeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         contentView.addSubview(topSeparatorView)
         contentView.addSubview(bottomSeparatorView)
         contentView.addSubview(profileImageView)
         contentView.addSubview(titleLabel)
     }
     
-    private func defineLayouts() {
+    fileprivate func defineLayouts() {
         
-        topSeparatorView.snp_makeConstraints { (make) in
+        topSeparatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(topSeparatorView.superview!)
             make.top.equalTo(topSeparatorView.superview!)
             make.height.equalTo(0.5)
         }
         
-        bottomSeparatorView.snp_makeConstraints { (make) in
+        bottomSeparatorView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(bottomSeparatorView.superview!)
             make.height.equalTo(0.5)
         }
         
-        profileImageView.snp_makeConstraints { (make) in
+        profileImageView.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(profileImageView.superview!).inset(10)
             make.left.equalTo(22)
             make.width.equalTo(45)
             make.height.equalTo(45)
         }
         
-        titleLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(profileImageView.snp_right).offset(22)
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(profileImageView.snp.right).offset(22)
             make.centerY.equalTo(titleLabel.superview!)
             make.right.lessThanOrEqualTo(profileImageView.superview!).offset(-22)
         }
@@ -87,7 +87,7 @@ class AttendeesView: UIView, UIGestureRecognizerDelegate {
     
     init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = .blackColor()
+        backgroundColor = .black
         setupSubviews()
         defineLayout()
     }
@@ -96,27 +96,27 @@ class AttendeesView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         let subviews = [loadingView, tableView, cancelButton, titleLabel]
         subviews.forEach { addSubview($0) }
     }
     
-    private func defineLayout() {
-        cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(EdgeInsetsMake(20, left: 10, bottom: 0, right: 0))
+    fileprivate func defineLayout() {
+        cancelButton.snp.makeConstraints { (make) -> Void in
+            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
-        tableView.snp_makeConstraints { (make) in
+        tableView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(tableView.superview!)
-            make.top.equalTo(cancelButton.snp_bottom).offset(20)
+            make.top.equalTo(cancelButton.snp.bottom).offset(20)
         }
         
-        loadingView.snp_makeConstraints { (make) in
+        loadingView.snp.makeConstraints { (make) in
             make.edges.equalTo(loadingView.superview!)
         }
         
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(titleLabel.superview!)
             make.centerY.equalTo(self.cancelButton).offset(5)
         }
@@ -126,16 +126,16 @@ class AttendeesView: UIView, UIGestureRecognizerDelegate {
 private extension UILabel {
     static func profileNameLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Left
+        label.textColor = .white
+        label.textAlignment = .left
         label.font = UIFont.defaultMediumFontOfSize(16)
         return label
     }
     static func titleLabel() -> UILabel {
         let label = UILabel()
-        label.textColor = .whiteColor()
+        label.textColor = .white
         label.font = UIFont.titleBoldFontOfSize(30)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         return label
     }
 }
@@ -143,7 +143,7 @@ private extension UILabel {
 private extension UIButton {
     static func cancelButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "icon_cancel"), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel"), for: UIControlState())
         
         return button
     }
@@ -152,9 +152,9 @@ private extension UIButton {
 private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
-        tableView.registerClass(AttendeeCell.self, forCellReuseIdentifier: "attendee-cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.register(AttendeeCell.self, forCellReuseIdentifier: "attendee-cell")
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         tableView.alwaysBounceVertical = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
