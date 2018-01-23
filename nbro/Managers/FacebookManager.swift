@@ -66,7 +66,7 @@ class FacebookManager {
         })
     }
     
-    class func NBROEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
+    class func NBROEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping (() -> Void)) {
         let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
 
@@ -89,7 +89,7 @@ class FacebookManager {
         })
     }
     
-    class func userEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
+    class func userEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping (() -> Void)) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(100)"])
         graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in

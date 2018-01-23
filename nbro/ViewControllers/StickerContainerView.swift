@@ -102,7 +102,7 @@ extension StickerContainerView: UIGestureRecognizerDelegate {
 }
 
 fileprivate extension StickerContainerView {
-    dynamic func pan(gesture: UIPanGestureRecognizer) {
+    @objc dynamic func pan(gesture: UIPanGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
         stickerView.pan(gesture: gesture)
         
@@ -141,19 +141,19 @@ fileprivate extension StickerContainerView {
         }
     }
     
-    dynamic func pinch(gesture: UIPinchGestureRecognizer) {
+    @objc dynamic func pinch(gesture: UIPinchGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
         
         stickerView.pinch(gesture: gesture)
     }
     
-    dynamic func rotate(gesture: UIRotationGestureRecognizer) {
+    @objc dynamic func rotate(gesture: UIRotationGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
         
         stickerView.rotate(gesture: gesture)
     }
     
-    dynamic func doubleTap(gesture: UITapGestureRecognizer) {
+    @objc dynamic func doubleTap(gesture: UITapGestureRecognizer) {
         guard let stickerView = self.stickerView(for: gesture) else { return }
         
         stickerView.doubleTap(gesture: gesture)
@@ -178,7 +178,7 @@ fileprivate extension StickerContainerView {
     
     fileprivate func sticker(at location: CGPoint) -> StickerView? {
         return stickerViews.filter { $0.frame.contains(location) }
-            .sorted { $0.0.sticker.scale > $0.1.sticker.scale }
+            .sorted { $0.sticker.scale > $1.sticker.scale }
             .first
     }
 }

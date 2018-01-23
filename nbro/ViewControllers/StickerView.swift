@@ -46,7 +46,7 @@ class StickerView: UIView {
 }
 
 extension StickerView {
-    dynamic func pan(gesture: UIPanGestureRecognizer) {
+    @objc dynamic func pan(gesture: UIPanGestureRecognizer) {
         let view = self
         let translate = gesture.translation(in: self)
         
@@ -60,7 +60,7 @@ extension StickerView {
         }
     }
     
-    dynamic func pinch(gesture: UIPinchGestureRecognizer) {
+    @objc dynamic func pinch(gesture: UIPinchGestureRecognizer) {
         let view = self
         if gesture.state == .began {
             self.scale = gesture.scale
@@ -79,7 +79,7 @@ extension StickerView {
         }
     }
     
-    dynamic func rotate(gesture: UIRotationGestureRecognizer) {
+    @objc dynamic func rotate(gesture: UIRotationGestureRecognizer) {
         let view = self
         
         view.transform = view.transform.rotated(by: gesture.rotation)
@@ -90,7 +90,7 @@ extension StickerView {
         sticker.transform = view.transform
     }
     
-    dynamic func doubleTap(gesture: UITapGestureRecognizer) {
+    @objc dynamic func doubleTap(gesture: UITapGestureRecognizer) {
         sticker.sticker.invert()
         imageView.image = sticker.sticker.currentSVG
     }

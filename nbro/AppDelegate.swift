@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKAppEvents.activateApp()
     }
     
-    func tokenDidChange() {
+    @objc func tokenDidChange() {
         let accessToken = FBSDKAccessToken.current()
         if accessToken == nil {
             presentLoginViewController()
@@ -84,7 +84,7 @@ extension AppDelegate {
         navigationBarAppearace.tintColor = .white
         navigationBarAppearace.barTintColor = .black
         navigationBarAppearace.isTranslucent = false
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(19)]
+        navigationBarAppearace.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white, NSAttributedStringKey.font: UIFont.defaultBoldFontOfSize(19)]
         
         UITabBar.appearance().tintColor = .black
         UITabBar.appearance().barTintColor = .black
@@ -96,9 +96,9 @@ extension AppDelegate {
         
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
         UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSFontAttributeName: UIFont.defaultSemiBoldFontOfSize(14),
-            NSForegroundColorAttributeName: UIColor(hex: 0x000000),
-            NSKernAttributeName: 1.0
+            NSAttributedStringKey.font: UIFont.defaultSemiBoldFontOfSize(14),
+            NSAttributedStringKey.foregroundColor: UIColor(hex: 0x000000),
+            NSAttributedStringKey.kern: 1.0
             ], for: .normal)
     }
 }

@@ -161,13 +161,13 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 }
 
 extension UserViewController {
-    dynamic fileprivate func loginPressed() {
+    @objc dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
         }
     }
     
-    dynamic fileprivate func logoutPressed() {
+    @objc dynamic fileprivate func logoutPressed() {
         let alertController = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Log out", style: .default, handler: { (_) -> Void in
             TrackingManager.trackEvent(.logout)

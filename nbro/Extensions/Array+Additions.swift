@@ -27,7 +27,7 @@ extension Array {
         var elements = self
         for index in indices {
             let anotherIndex = Int(arc4random_uniform(UInt32(elements.count - index))) + index
-            anotherIndex != index ? swap(&elements[index], &elements[anotherIndex]) : ()
+            anotherIndex != index ? elements.swapAt(index, anotherIndex) : ()
         }
         return elements
     }

@@ -93,7 +93,7 @@ class CreditCell: UITableViewCell {
     
     func setTitleText(_ title: String) {
         let attrString = NSMutableAttributedString(string: title)
-        attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.characters.count))
         titleLabel.attributedText = attrString
     }
     

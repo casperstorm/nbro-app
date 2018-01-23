@@ -35,7 +35,7 @@ class ImagePickerViewController: UIViewController, UITabBarControllerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-    dynamic private func applicationDidBecomeActive() {
+    @objc dynamic private func applicationDidBecomeActive() {
         checkStatus()
     }
     
@@ -149,7 +149,7 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
 }
 
 extension ImagePickerViewController {
-    func buttonPressed() {
+    @objc func buttonPressed() {
         let status = PHPhotoLibrary.authorizationStatus()
         if status == .denied {
             UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)

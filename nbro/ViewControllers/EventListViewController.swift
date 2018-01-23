@@ -8,7 +8,7 @@ import Nuke
 fileprivate class ViewModel {
     var events: [Event] = []
     
-    fileprivate func loadData(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping ((Void) -> Void)) {
+    fileprivate func loadData(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping (() -> Void)) {
         FacebookManager.NBROEvents(completion, failure: failure)
     }
 
@@ -38,11 +38,11 @@ class EventListViewController: UIViewController {
         }
     }
 
-    func applicationWillEnterForeground() {
+    @objc func applicationWillEnterForeground() {
         self.contentView.animateBackgroundImage()
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground() {
         contentView.stopBackgroundAnimation()
     }
     
@@ -81,7 +81,7 @@ class EventListViewController: UIViewController {
 }
 
 extension EventListViewController {
-    dynamic fileprivate func loginPressed() {
+    @objc dynamic fileprivate func loginPressed() {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
@@ -93,7 +93,7 @@ extension EventListViewController {
 }
 
 extension EventListViewController {
-    func loadData() {
+    @objc func loadData() {
         if(viewModel.events.count > 0) {
             contentView.animateBackgroundImageCrossfadeChange()
         }

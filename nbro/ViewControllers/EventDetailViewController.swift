@@ -59,7 +59,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         setupMapView()
     }
     
-    func applicationWillEnterForeground() {
+    @objc func applicationWillEnterForeground() {
         setupMapView()
     }
     
@@ -104,7 +104,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     // MARK: Actions
     
-    func attendeesButtonPressed() {
+    @objc func attendeesButtonPressed() {
         let attendeesViewController = AttendeesViewController(event: event, state: .attendees)
         UIView.animate(withDuration: 0.25, animations: {
             self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
@@ -116,7 +116,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         })
     }
     
-    func interestedButtonPressed() {
+    @objc func interestedButtonPressed() {
         let attendeesViewController = AttendeesViewController(event: event, state: .interested)
         UIView.animate(withDuration: 0.25, animations: {
             self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9);
@@ -128,11 +128,11 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         })
     }
     
-    func cancelPressed() {
+    @objc func cancelPressed() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func facebookPressed() {
+    @objc func facebookPressed() {
         TrackingManager.trackEvent(.visitEventInFacebook)
         UIApplication.shared.openURL(URL(string: "https://www.facebook.com/events/\(event.id)/")!)
     }
@@ -172,7 +172,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         }
     }
     
-    func handleDismissGesture(_ sender: UIPanGestureRecognizer) {
+    @objc func handleDismissGesture(_ sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
         let velocityThreshold:CGFloat = 1000
         

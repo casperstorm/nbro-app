@@ -77,27 +77,27 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         if self.isLeft {
             let text = NSMutableAttributedString(string: "SLIDE TO ATTEND RUN")
             text.addAttributes([
-                NSParagraphStyleAttributeName: paragraphStyle,
-                NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.black
+                NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                NSAttributedStringKey.font: UIFont.defaultBoldFontOfSize(14),
+                NSAttributedStringKey.foregroundColor: UIColor.black
                 ], range: NSMakeRange(0, 8))
             text.addAttributes([
-                NSParagraphStyleAttributeName: paragraphStyle,
-                NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.black
+                NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                NSAttributedStringKey.font: UIFont.defaultRegularFontOfSize(14),
+                NSAttributedStringKey.foregroundColor: UIColor.black
                 ], range: NSMakeRange(8, 11))
             self.titleLabel.attributedText = text
         } else {
             let text = NSMutableAttributedString(string: "YAY! SEE YOU THERE.")
             text.addAttributes([
-                NSParagraphStyleAttributeName: paragraphStyle,
-                NSFontAttributeName: UIFont.defaultBoldFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.black
+                NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                NSAttributedStringKey.font: UIFont.defaultBoldFontOfSize(14),
+                NSAttributedStringKey.foregroundColor: UIColor.black
                 ], range: NSMakeRange(0, 3))
             text.addAttributes([
-                NSParagraphStyleAttributeName: paragraphStyle,
-                NSFontAttributeName: UIFont.defaultRegularFontOfSize(14),
-                NSForegroundColorAttributeName: UIColor.black
+                NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                NSAttributedStringKey.font: UIFont.defaultRegularFontOfSize(14),
+                NSAttributedStringKey.foregroundColor: UIColor.black
                 ], range: NSMakeRange(3, 15))
             self.titleLabel.attributedText = text
             
@@ -156,7 +156,7 @@ class SwitchView: UIView, UIGestureRecognizerDelegate {
         super.updateConstraints()
     }
     
-    dynamic fileprivate func viewDidPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+    @objc dynamic fileprivate func viewDidPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
         var translation = panGestureRecognizer.translation(in: panGestureRecognizer.view?.superview!)
         
         if panGestureRecognizer.state == .began {

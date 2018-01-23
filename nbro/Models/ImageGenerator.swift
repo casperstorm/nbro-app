@@ -63,7 +63,7 @@ class ImageGenerator {
         guard let uiimage = stickerImage.uiImage, let ciimage = CIImage(image: uiimage) else { return nil }
         
         let transform = CGAffineTransform(rotationAngle: CGFloat(-sticker.rotation))
-        let transformed = ciimage.applying(transform)
+        let transformed = ciimage.transformed(by: transform)
         let image = UIImage(ciImage: transformed)
         return image
     }

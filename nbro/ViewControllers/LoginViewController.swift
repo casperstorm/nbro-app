@@ -23,11 +23,11 @@ class LoginViewController: UIViewController {
         setupSubviews()
     }
     
-    func applicationWillEnterForeground() {
+    @objc func applicationWillEnterForeground() {
         contentView.animateBackgroundImage()
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground() {
         contentView.stopBackgroundAnimation()
     }
     
@@ -60,7 +60,7 @@ class LoginViewController: UIViewController {
         super.viewDidLayoutSubviews()
     }
     
-    func facebookLoginButtonPressed() {
+    @objc func facebookLoginButtonPressed() {
         contentView.activityIndicatorView.startAnimating()
         contentView.facebookButton.isHidden = true
         FacebookManager.logInWithReadPermissions { (success, error) in
@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func skipLoginButtonPressed() {
+    @objc func skipLoginButtonPressed() {
         TrackingManager.trackEvent(.skippedLogin)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

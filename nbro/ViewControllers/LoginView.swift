@@ -130,10 +130,10 @@ private extension UIButton {
         let fbFont = UIFont.defaultBoldFontOfSize(15)
         let authFont = UIFont.defaultLightFontOfSize(15)
         let attrString = NSMutableAttributedString(string: combinedString.uppercased())
-        attrString.addAttribute(NSFontAttributeName, value: authFont, range: authRange)
-        attrString.addAttribute(NSFontAttributeName, value: fbFont, range: fbRange)
-        attrString.addAttribute(NSKernAttributeName, value: 1.1, range: fbRange)
-        attrString.addAttribute(NSKernAttributeName, value: 1.1, range: authRange)
+        attrString.addAttribute(NSAttributedStringKey.font, value: authFont, range: authRange)
+        attrString.addAttribute(NSAttributedStringKey.font, value: fbFont, range: fbRange)
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.1, range: fbRange)
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.1, range: authRange)
         
         facebookButton.setAttributedTitle(attrString, for: UIControlState())
         facebookButton.backgroundColor = UIColor.white
@@ -145,8 +145,8 @@ private extension UIButton {
         let button = UIButton()
         let title = "SKIP"
         let attrString = NSMutableAttributedString(string: title)
-        attrString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, title.characters.count))
-        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSMakeRange(0, title.characters.count))
         button.setAttributedTitle(attrString, for: UIControlState())
         button.titleLabel?.font = UIFont.defaultMediumFontOfSize(15)
         return button

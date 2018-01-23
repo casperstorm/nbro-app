@@ -131,7 +131,7 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     
     //MARK: Actions
     
-    func cancelPressed() {
+    @objc func cancelPressed() {
         self.dismiss(animated: true, completion: nil)
     }
     

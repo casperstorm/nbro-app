@@ -23,7 +23,7 @@ fileprivate class ViewModel {
         state = .white
     }
     
-    func loadStickers(completion: @escaping ((Void) -> Void)) {
+    func loadStickers(completion: @escaping (() -> Void)) {
         DispatchQueue(label: "Load stickers").async {
             let stickers = [
                 Sticker(blackSVG: SVGKImage(named: "sticker_nbro_black.svg")!,
@@ -197,7 +197,7 @@ extension StickerBrowserViewController: UICollectionViewDelegate, UICollectionVi
 }
 
 extension StickerBrowserViewController {
-    func colorButtonTapped() {
+    @objc func colorButtonTapped() {
         switch viewModel.state {
         case .white:
             switchToState(state: .black)
@@ -206,7 +206,7 @@ extension StickerBrowserViewController {
         }
     }
     
-    func dismissTapped() {
+    @objc func dismissTapped() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -215,7 +215,7 @@ extension StickerBrowserViewController {
         case .black:
             navigationController?.navigationBar.barStyle = .black
             navigationController?.navigationBar.barTintColor = .black
-            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white, NSAttributedStringKey.font: UIFont.defaultBoldFontOfSize(18)]
             contentView.backgroundColor = .black
             colorButton?.tintColor = .white
             cancelButton?.tintColor = .white
@@ -224,7 +224,7 @@ extension StickerBrowserViewController {
         case .white:
             navigationController?.navigationBar.barStyle = .default
             navigationController?.navigationBar.barTintColor = .white
-            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black, NSFontAttributeName: UIFont.defaultBoldFontOfSize(18)]
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.black, NSAttributedStringKey.font: UIFont.defaultBoldFontOfSize(18)]
             contentView.backgroundColor = .white
             colorButton?.tintColor = .black
             cancelButton?.tintColor = .black

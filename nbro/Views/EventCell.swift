@@ -55,11 +55,11 @@ class EventCell: UITableViewCell {
         let attrString = NSMutableAttributedString(string: name)
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 0.7
-        attrString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSRange(location: 0, length:
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length:
                                                                                 name.characters.count))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont.titleBoldFontOfSize(42), range: NSRange(location: 0, length:
+        attrString.addAttribute(NSAttributedStringKey.font, value: UIFont.titleBoldFontOfSize(42), range: NSRange(location: 0, length:
                                                                                 name.characters.count))
-        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length:
+        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length:
             name.characters.count))
 
         nameTextView.attributedText = attrString

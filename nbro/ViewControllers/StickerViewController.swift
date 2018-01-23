@@ -75,11 +75,11 @@ class StickerViewController: UIViewController {
         navigationItem.rightBarButtonItem = shareBarButtonItem        
     }
 
-    dynamic private func didTouchDownStickerButton() {
+    @objc dynamic private func didTouchDownStickerButton() {
         animateScaleTransform(view: stickerView.toolsView, sx: 0.85, 0.85)
     }
     
-    dynamic private func didTouchUpInsideStickerButton() {
+    @objc dynamic private func didTouchUpInsideStickerButton() {
         animateResetTransform(view: stickerView.toolsView)
         
         let stickerBrowserViewController = StickerBrowserViewController()
@@ -90,11 +90,11 @@ class StickerViewController: UIViewController {
         present(UINavigationController(rootViewController: stickerBrowserViewController), animated: true, completion: nil)
     }
     
-    dynamic private func didCancelStickerButton() {
+    @objc dynamic private func didCancelStickerButton() {
         animateResetTransform(view: stickerView.toolsView)
     }
     
-    dynamic private func sharePressed() {
+    @objc dynamic private func sharePressed() {
         let screenBounds = UIScreen.main.bounds
         navigationItem.rightBarButtonItem = loadingBarButtonItem
         let imageGenerator = ImageGenerator(image: stickerView.image, stickers: stickerView.stickers, scale: stickerView.scale)
