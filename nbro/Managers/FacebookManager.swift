@@ -67,7 +67,7 @@ class FacebookManager {
     }
     
     class func NBROEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping (() -> Void)) {
-        let params = ["fields": "cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
+        let params = ["fields": "event_times, cover, name, description, place, start_time, end_time, type, updated_time, timezone, attending_count, maybe_count, noreply_count, interested_count"]
         let graphPath = eventGraphPath()
 
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: params)
@@ -80,10 +80,33 @@ class FacebookManager {
                     completion([])
                     return
                 }
-                var events = data.map { (dict: NSDictionary) -> Event? in
+                var unfiltred = data.map { (dict: NSDictionary) -> Event? in
                     return Event(dictionary: dict)
                     }.flatMap { $0 }
-                events.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+                let temp = unfiltred
+                for event in temp {
+                    if let times = event.eventTimes {
+                        unfiltred.removeObject(event)
+                        
+                        for dictionary in times {
+                            let e = Event(event, dictionary: dictionary)
+                            if let event = e {
+                                unfiltred.append(event)
+                            }
+                        }
+                    }
+                }
+                
+                let date = Date()
+                unfiltred.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+                let events = unfiltred.filter({ event -> Bool in
+                    if event.startDate < date {
+                        return false
+                    }
+                    
+                    return true
+                })
+                
                 completion(events)
             }
         })
@@ -169,7 +192,7 @@ class FacebookManager {
                 if(error != nil) {
                     // Error codes are based on: https://developers.facebook.com/docs/graph-api/using-graph-api#errors
                     // Unpack the graph-error-code
-                    guard let error = error as? NSError, let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
+                    guard let error = error as NSError?, let code = error.userInfo[FBSDKGraphRequestErrorGraphErrorCode] as? Int else {
                         return
                     }
                     
@@ -252,10 +275,9 @@ class FacebookManager {
     }
     
     fileprivate class func eventGraphPath() -> String {
-        let dateString = currentDateString("yyyy-MM-dd")
-        let nbroGroupId = "108900355842020"
-        let limit = "999"
-        let path = nbroGroupId + "/events" + "?since=" + dateString + "&limit=" + limit
+        let limit = "50"
+        let path = "108900355842020" + "/events" + "?limit=" + limit
+        print(path)
         return path
     }
 }

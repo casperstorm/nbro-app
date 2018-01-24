@@ -77,6 +77,28 @@ struct Event {
     let locationName: String
     let description: String
     let rsvp: RSVPStatus?
+    let eventTimes: Array<NSDictionary>?
+    
+    init?(_ event: Event, dictionary: NSDictionary) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+       let startDateString = dictionary["start_time"] as? String ?? ""
+        
+        guard let id = dictionary["id"] as? String,
+            let startDate = dateFormatter.date(from: startDateString) else {
+            return nil
+        }
+        
+        self.id = id
+        self.name = event.name
+        self.startDate = startDate
+        self.latitude = event.latitude
+        self.longitude = event.longitude
+        self.locationName = event.locationName
+        self.description = event.description
+        self.rsvp = event.rsvp
+        self.eventTimes = nil
+    }
     
     init?(dictionary: NSDictionary) {
         let dateFormatter = DateFormatter()
@@ -85,7 +107,7 @@ struct Event {
         
         guard let name = dictionary["name"] as? String,
             let startDate = dateFormatter.date(from: startDateString),
-            
+            let eventTimes = dictionary["event_times"] as? Array<NSDictionary>,
             let latitude = dictionary.value(forKeyPath: "place.location.latitude") as? CLLocationDegrees,
             let longitude = dictionary.value(forKeyPath: "place.location.longitude") as? CLLocationDegrees,
             let description = dictionary["description"] as? String,
@@ -100,6 +122,7 @@ struct Event {
         self.longitude = longitude
         self.locationName = dictionary.value(forKeyPath: "place.name") as? String ?? "-"
         self.description = description
+        self.eventTimes = eventTimes
         
         if let rsvp = dictionary["rsvp_status"] as? String {
             if(rsvp == "attending") {
