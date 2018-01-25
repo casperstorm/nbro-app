@@ -70,7 +70,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     func setupSubviews() {        
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
-        navigationItem.title = "Profile".uppercased()
         
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self

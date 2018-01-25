@@ -80,34 +80,8 @@ class FacebookManager {
                     completion([])
                     return
                 }
-                var unfiltred = data.map { (dict: NSDictionary) -> Event? in
-                    return Event(dictionary: dict)
-                    }.flatMap { $0 }
-                let temp = unfiltred
-                for event in temp {
-                    if let times = event.eventTimes {
-                        unfiltred.removeObject(event)
-                        
-                        for dictionary in times {
-                            let e = Event(event, dictionary: dictionary)
-                            if let event = e {
-                                unfiltred.append(event)
-                            }
-                        }
-                    }
-                }
-                
-                let date = Date()
-                unfiltred.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
-                let events = unfiltred.filter({ event -> Bool in
-                    if event.startDate < date {
-                        return false
-                    }
-                    
-                    return true
-                })
-                
-                completion(events)
+    
+                completion(parseEvents(data))
             }
         })
     }
@@ -123,11 +97,7 @@ class FacebookManager {
                     completion([])
                     return
                 }
-                var events = data.map { (dict: NSDictionary) -> Event? in
-                    return Event(dictionary: dict)
-                    }.flatMap { $0 }
-                events.sort(by: { $0.startDate.compare($1.startDate as Date) == ComparisonResult.orderedAscending })
-                completion(events)
+                completion(parseEvents(data))
             }
         })
     }
@@ -266,6 +236,42 @@ class FacebookManager {
     }
  
     // MARK: Helpers
+    
+    fileprivate class func parseEvents(_ data: Array<NSDictionary>) -> [Event] {
+        // Generate Events
+        var unfiltredEvents = data.map { (dict: NSDictionary) -> Event? in
+            return Event(dictionary: dict)
+            }.flatMap { $0 }
+        
+        // Since we are dealing with recurring events, we generate a new Event for each recurring we meet
+        let temp = unfiltredEvents
+        for event in temp {
+            if let times = event.eventTimes {
+                unfiltredEvents.removeObject(event)
+                
+                for dictionary in times {
+                    let e = Event(event, dictionary: dictionary)
+                    if let event = e {
+                        unfiltredEvents.append(event)
+                    }
+                }
+            }
+        }
+        
+        // Sort them
+        let date = Date()
+        unfiltredEvents.sort(by: { $0.startDate.compare($1.startDate) == ComparisonResult.orderedAscending })
+        let sortedEvents = unfiltredEvents.filter({ event -> Bool in
+            if event.startDate < date {
+                return false
+            }
+            
+            return true
+        })
+        
+        return sortedEvents
+    }
+
     
     fileprivate class func currentDateString(_ format: String) -> String {
         let date = Date()

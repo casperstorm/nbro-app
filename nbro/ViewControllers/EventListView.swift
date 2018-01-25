@@ -30,7 +30,8 @@ class EventListView: UIView, CAAnimationDelegate {
     let tableView = UITableView.tableView()
     let refreshControl = UIRefreshControl.refreshControl()
     let notAuthenticatedView = InformationView()
-    var didPresentUserButtons = Bool()
+    let loadingView = LoadingView()
+    
 
     init() {
         super.init(frame: CGRect.zero)
@@ -45,16 +46,21 @@ class EventListView: UIView, CAAnimationDelegate {
     }
     
     fileprivate func setupSubviews() {
+        let subviews = [loadingView, tableView, notAuthenticatedView]
+        subviews.forEach { addSubview($0) }
+        
         tableView.addSubview(refreshControl)
-        addSubview(tableView)
-        addSubview(notAuthenticatedView)
-
+        
         if refreshControl.subviews.count > 0 {
             refreshControl.subviews[0].frame = CGRect(x: 0, y: 30, width: 0, height: 0)
         }
     }
     
     fileprivate func defineLayout() {
+        loadingView.snp.makeConstraints { (make) in
+            make.edges.equalTo(loadingView.superview!)
+        }
+        
         tableView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(tableView.superview!)
         }

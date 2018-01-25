@@ -27,7 +27,7 @@ class UserView: UIView {
     }
     let notAuthenticatedView = InformationView()
     let tableView = UITableView.tableView()
-    let loadingView = UserLoadingView()
+    let loadingView = LoadingView()
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .black

@@ -45,15 +45,9 @@ class EventListViewController: UIViewController {
         loadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        self.contentView.setNeedsUpdateConstraints()
         self.contentView.showNotAuthenticatedView = !FacebookManager.authenticated()
     }
 
@@ -73,7 +67,6 @@ extension EventListViewController {
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true) { () -> Void in
             self.contentView.showNotAuthenticatedView = false
-            self.contentView.didPresentUserButtons = false
             self.viewModel.events = []
             self.contentView.tableView.reloadData()
         }
@@ -82,7 +75,16 @@ extension EventListViewController {
 
 extension EventListViewController {
     @objc func loadData() {
+        if (viewModel.events.count == 0) {
+            presentLoadingAnimation()
+        }
         viewModel.loadData({ events in
+            if (events.count > 0) {
+               self.hideLoadingAnimation()
+            } else {
+                self.presentErrorView()
+            }
+            
             let animate = self.viewModel.events.count == 0
             self.contentView.refreshControl.endRefreshing()
 
@@ -108,6 +110,29 @@ extension EventListViewController {
                 }, completion: nil)
             }
         }
+    }
+    
+    fileprivate func presentLoadingAnimation() {
+        contentView.loadingView.activityIndicatorView.startAnimating()
+    }
+    
+    fileprivate func hideLoadingAnimation() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.contentView.loadingView.activityIndicatorView.alpha = 0.0
+        }, completion: { (completed) in
+            self.contentView.loadingView.activityIndicatorView.stopAnimating()
+            self.contentView.loadingView.activityIndicatorView.alpha = 1.0
+        })
+    }
+    
+    fileprivate func presentErrorView() {
+        contentView.tableView.isHidden = true
+        hideLoadingAnimation()
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.contentView.loadingView.statusLabel.alpha = 1.0
+        }, completion: { (completed) in
+        })
     }
 }
 

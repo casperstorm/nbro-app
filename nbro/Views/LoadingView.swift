@@ -1,23 +1,24 @@
 //
-//  UserLoadingView.swift
+//  LoadingView.swift
 //  nbro
 //
-//  Created by Casper Storm Larsen on 25/03/16.
-//  Copyright © 2016 Bob. All rights reserved.
+//  Created by Casper Rogild Storm on 25/01/2018.
+//  Copyright © 2018 Bob. All rights reserved.
 //
+
 
 import Foundation
 import UIKit
 import SnapKit
 
-class UserLoadingView: UIView {
+class LoadingView: UIView {
     let activityIndicatorView = UIActivityIndicatorView.activityIndicatorView()
     let statusLabel = UILabel.statusLabel()
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .clear
         setupSubviews()
-        defineLayout()        
+        defineLayout()
         statusLabel.alpha = 0.0
         statusLabel.text = "Something went 🐴💩"
     }
@@ -60,3 +61,4 @@ private extension UILabel {
         return label
     }
 }
+

@@ -82,7 +82,7 @@ class AttendeeCell: UITableViewCell {
 class AttendeesView: UIView, UIGestureRecognizerDelegate {
     let cancelButton = UIButton.cancelButton()
     let tableView = UITableView.tableView()
-    let loadingView = UserLoadingView()
+    let loadingView = LoadingView()
     let titleLabel = UILabel.titleLabel()
     
     init() {
