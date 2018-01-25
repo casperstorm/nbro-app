@@ -37,23 +37,11 @@ class EventListViewController: UIViewController {
             registerForPreviewing(with: self, sourceView: view)
         }
     }
-
-    @objc func applicationWillEnterForeground() {
-        self.contentView.animateBackgroundImage()
-    }
-    
-    @objc func applicationDidEnterBackground() {
-        contentView.stopBackgroundAnimation()
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.viewEventList)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-
-        contentView.animateBackgroundImage()
         loadData()
     }
     
@@ -94,10 +82,6 @@ extension EventListViewController {
 
 extension EventListViewController {
     @objc func loadData() {
-        if(viewModel.events.count > 0) {
-            contentView.animateBackgroundImageCrossfadeChange()
-        }
-        
         viewModel.loadData({ events in
             let animate = self.viewModel.events.count == 0
             self.contentView.refreshControl.endRefreshing()

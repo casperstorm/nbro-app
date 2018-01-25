@@ -11,7 +11,9 @@ import UIKit
 
 class AboutLogoCell: UITableViewCell {
     let logoImageView: UIImageView = {
-       return UIImageView()
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+       return image
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -37,6 +39,7 @@ class AboutLogoCell: UITableViewCell {
             make.top.equalToSuperview().inset(30)
             make.bottom.equalToSuperview().inset(10)
             make.centerX.equalToSuperview()
+            make.width.equalTo(200)
         }
     }
 

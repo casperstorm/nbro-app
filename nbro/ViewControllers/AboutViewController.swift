@@ -26,7 +26,6 @@ class AboutViewController: UIViewController {
         setupSubviews()
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barStyle = .black
-        self.navigationItem.title = "About".uppercased()
         
         contentView.versionLabel.text = applicationVersionString()
     }
@@ -58,7 +57,7 @@ extension AboutViewController: UITableViewDataSource {
         switch data! {
         case .logo:
             let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "LogoCell", for: indexPath) as! AboutLogoCell
-            cell.logoImageView.image = #imageLiteral(resourceName: "nbro_logo")
+            cell.logoImageView.image = #imageLiteral(resourceName: "logo")
             return cell
         case .text:
             let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath) as! AboutTextCell

@@ -46,7 +46,7 @@ class EventCell: UITableViewCell {
         }
         
         dateLabel.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalTo(dateLabel.superview!).inset(UIEdgeInsets(top: 0, left: 35, bottom: 20, right: 22))
+            make.left.bottom.right.equalTo(dateLabel.superview!).inset(UIEdgeInsets(top: 0, left: 22, bottom: 20, right: 22))
             make.top.equalTo(nameTextView.snp.bottom).offset(-25)
         }
     }
@@ -107,8 +107,7 @@ class TextView: UITextView, NSLayoutManagerDelegate {
 
     override func draw(_ rect: CGRect) {
         var rects = [CGRect]()
-//        let color = UIColor(hex: 0x76edff, alpha:  0.55) //0x76edff / 0xffdd00
-        let color = UIColor(hex: 0xE0E100, alpha: 0.55)
+        let color = UIColor(hex: 0xFFFFFF, alpha: 0.30)
         
         self.layoutManager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, self.text.lengthOfBytes(using: String.Encoding.utf8))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
             if rects.count < 2 { // Only support 2 lines

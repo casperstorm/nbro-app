@@ -28,9 +28,6 @@ class EventListView: UIView, CAAnimationDelegate {
     }
     
     let tableView = UITableView.tableView()
-    let backgroundImageView = UIImageView.backgroundImageView()
-    let vignetteImageView = UIImageView.vignetteImageView()
-    let imageContainerView = UIView()
     let refreshControl = UIRefreshControl.refreshControl()
     let notAuthenticatedView = InformationView()
     var didPresentUserButtons = Bool()
@@ -38,7 +35,7 @@ class EventListView: UIView, CAAnimationDelegate {
     init() {
         super.init(frame: CGRect.zero)
         notAuthenticatedView.isHidden = true
-        backgroundColor = .clear
+        backgroundColor = .black
         setupSubviews()
         defineLayout()        
     }
@@ -49,9 +46,6 @@ class EventListView: UIView, CAAnimationDelegate {
     
     fileprivate func setupSubviews() {
         tableView.addSubview(refreshControl)
-        addSubview(imageContainerView)
-        imageContainerView.addSubview(backgroundImageView)
-        imageContainerView.addSubview(vignetteImageView)
         addSubview(tableView)
         addSubview(notAuthenticatedView)
 
@@ -61,76 +55,12 @@ class EventListView: UIView, CAAnimationDelegate {
     }
     
     fileprivate func defineLayout() {
-        imageContainerView.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(imageContainerView.superview!)
-        }
-        
-        vignetteImageView.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(vignetteImageView.superview!).inset(-1)
-        }
-        
         tableView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(tableView.superview!)
         }
         
-        backgroundImageView.snp.makeConstraints { (make) -> Void in
-            make.centerY.equalTo(backgroundImageView.superview!)
-            make.left.equalTo(backgroundImageView.superview!)
-            
-            let imageSize = backgroundImageView.image?.size ?? CGSize.zero
-            let factor = UIScreen.main.bounds.height / imageSize.height
-            //todo maybe not use uiscreen? but problem is we dont have height at this point of superview.
-            
-            make.width.equalTo(imageSize.width * factor)
-            make.height.equalTo(imageSize.height * factor)
-        }
-
         notAuthenticatedView.snp.makeConstraints { (make) -> Void in
             make.center.equalToSuperview()
-        }
-    }
-    
-    // MARK : Animation
-    
-    func stopBackgroundAnimation() {
-        self.backgroundImageView.layer.removeAllAnimations()
-        self.backgroundImageView.transform = CGAffineTransform.identity
-    }
-    
-    func animateBackgroundImage() {
-        let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
-        
-        UIView.animate(withDuration: 90, delay: 0, options: [.autoreverse, .repeat, .curveLinear], animations: { () -> Void in
-            self.backgroundImageView.transform = CGAffineTransform(translationX: -offset, y: 0)
-            
-        }) { (finished) -> Void in
-            self.backgroundImageView.transform = CGAffineTransform.identity
-        }
-    }
-    
-    func animateBackgroundImageCrossfadeChange() {
-        let isAnimating = backgroundImageView.layer.animationKeys()!.contains("animateContents")
-        if(!isAnimating) {
-            if let backgroundImage = backgroundImageView.image {
-                let fromImage = backgroundImage
-                let toImage = ImageCatalog().randomImageFromCatalogAndAvoidImage(fromImage)
-                
-                let crossfade = CABasicAnimation(keyPath: "contents")
-                crossfade.duration = 1.0
-                crossfade.fromValue = fromImage
-                crossfade.toValue = toImage
-                crossfade.delegate = self
-                crossfade.isRemovedOnCompletion = true
-                backgroundImageView.layer .add(crossfade, forKey: "animateContents")
-                backgroundImageView.image = toImage;
-            }
-        }
-    }
-
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        let didFinishAnimating = backgroundImageView.layer.animationKeys()?.contains("animateContents") ?? false
-        if(!didFinishAnimating) {
-            backgroundImageView.layer.removeAnimation(forKey: "animateContents")
         }
     }
 }
@@ -153,17 +83,6 @@ private extension UITableView {
         tableView.estimatedRowHeight = 50
         tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         return tableView
-    }
-}
-
-private extension UIImageView {
-    static func backgroundImageView() -> UIImageView {
-        let image = ImageCatalog().randomImageFromCatalog()
-        let backgroundImageView = UIImageView(image: image)
-        return backgroundImageView
-    }
-    static func vignetteImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "background_vignette"))
     }
 }
 
