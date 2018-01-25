@@ -89,8 +89,6 @@ struct Event {
             return nil
         }
         
-        print(dictionary)
-        
         self.id = id
         self.name = event.name
         self.startDate = startDate

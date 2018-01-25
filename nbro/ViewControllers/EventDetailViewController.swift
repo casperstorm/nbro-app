@@ -134,7 +134,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     @objc func facebookPressed() {
         TrackingManager.trackEvent(.visitEventInFacebook)
-        UIApplication.shared.openURL(URL(string: "https://www.facebook.com/events/\(event.id)/")!)
+        UIApplication.shared.open(URL(string: "https://www.facebook.com/events/\(event.id)/")!, options: [:], completionHandler: nil)
     }
     
     func attentEvent() {
@@ -142,9 +142,9 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
         if FacebookManager.userHasRSVPEventPermission() {
             // blast confetti:
             contentView.eventView.fireConfetti()
-            
+
             FacebookManager.attentEvent(event) { (success, error) in
-                if(success) {
+                if(error == nil) {
                     self.refreshRunnersCount()
                 } else {
                     self.contentView.eventView.attentButtonView.switchView.isLeft = true
@@ -152,7 +152,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
             }
         } else {
             FacebookManager.attentEvent(event) { (success, error) in
-                if(success) {
+                if(error == nil) {
                     self.contentView.eventView.fireConfetti()
                     self.refreshRunnersCount()
                 } else {
@@ -164,7 +164,7 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     func declinetEvent() {
         FacebookManager.declineEvent(event) { (success, error) -> Void in
-            if(success) {
+            if(error == nil) {
                 self.refreshRunnersCount()
             } else {
                 self.contentView.eventView.attentButtonView.switchView.isLeft = false

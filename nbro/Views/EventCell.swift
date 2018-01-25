@@ -56,11 +56,11 @@ class EventCell: UITableViewCell {
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 0.7
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length:
-                                                                                name.characters.count))
+                                                                                name.count))
         attrString.addAttribute(NSAttributedStringKey.font, value: UIFont.titleBoldFontOfSize(42), range: NSRange(location: 0, length:
-                                                                                name.characters.count))
-        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length:
-            name.characters.count))
+                                                                                name.count))
+        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length:
+            name.count))
 
         nameTextView.attributedText = attrString
         nameTextView.setNeedsDisplay()
@@ -107,7 +107,7 @@ class TextView: UITextView, NSLayoutManagerDelegate {
 
     override func draw(_ rect: CGRect) {
         var rects = [CGRect]()
-        let color = UIColor(hex: 0xFFFFFF, alpha: 0.30)
+        let color = UIColor(hex: 0xFFFFFF, alpha: 1.0)
         
         self.layoutManager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, self.text.lengthOfBytes(using: String.Encoding.utf8))) { (rect, usedRect, textContainer, glyphRange, stop) -> Void in
             if rects.count < 2 { // Only support 2 lines

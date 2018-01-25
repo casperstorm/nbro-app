@@ -86,22 +86,6 @@ class FacebookManager {
         })
     }
     
-    class func userEvents(_ completion: @escaping (_ events: [Event]) -> Void,  failure: @escaping (() -> Void)) {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "events.limit(100)"])
-        graphRequest.start(completionHandler: {
-            (connection, result, error) -> Void in
-            if error != nil {
-                failure()
-            } else if let r = result as? NSDictionary {
-                guard let e = r["events"] as? NSDictionary, let data = e["data"] as? Array<NSDictionary> else {
-                    completion([])
-                    return
-                }
-                completion(parseEvents(data))
-            }
-        })
-    }
-    
     class func user(_ completion: @escaping (_ user: FacebookProfile?) -> Void) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields" : "name, picture.width(600)"])
         graphRequest.start(completionHandler: { (connection, result, error) -> Void in
@@ -283,7 +267,6 @@ class FacebookManager {
     fileprivate class func eventGraphPath() -> String {
         let limit = "50"
         let path = "108900355842020" + "/events" + "?limit=" + limit
-        print(path)
         return path
     }
 }
