@@ -112,5 +112,56 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>ic_written</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon_alt_nbro</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>ic_skull</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon_alt_skull</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>ic_daf</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon_alt_daf</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>ic_runpartyrepeat</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon_alt_runpartyrepeat</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+		</dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon_default</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+	</dict>
 </dict>
 </plist>

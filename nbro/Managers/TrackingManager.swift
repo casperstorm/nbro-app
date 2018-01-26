@@ -24,6 +24,7 @@ class TrackingManager {
         case viewEventList
         case viewEventDetail
         case viewAbout
+        case viewAppIcons
         case viewUser
         case viewCredits
         case viewLogin
@@ -68,6 +69,8 @@ class TrackingManager {
             FBSDKAppEvents.logEvent("ViewUser")
         case .viewAttendees:
             FBSDKAppEvents.logEvent("ViewAttendees")
+        case .viewAppIcons:
+            FBSDKAppEvents.logEvent("viewAppIcons")
         }
         
     }

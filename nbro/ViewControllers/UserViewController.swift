@@ -96,7 +96,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         case .icon:
             let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "detail-cell", for: indexPath) as! DetailCell
             cell.titleLabel.text = "App Icon"
-            cell.detailLabel.text = "Alternates icons available"
+            cell.detailLabel.text = "Alternates icons"
             cell.iconImageView.image = #imageLiteral(resourceName: "alt-icon")
             cell.bottomSeparatorView.isHidden = true
             return cell
@@ -127,6 +127,10 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         case .about:
             DispatchQueue.main.async { () -> Void in
                 self.navigationController?.pushViewController(AboutViewController(), animated: true)
+            }
+        case .icon:
+            DispatchQueue.main.async { () -> Void in
+                self.navigationController?.pushViewController(AppIconListViewController(), animated: true)
             }
         default: break;
         }
