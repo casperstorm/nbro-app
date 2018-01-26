@@ -14,8 +14,6 @@ class LoginView: UIView {
     let imageContainerView = UIView()
     let facebookButton = UIButton.facebookButton()
     let skipButton = UIButton.skipButton()
-    let backgroundImageView = UIImageView.backgroundImageView()
-    let vignetteImageView = UIImageView.vignetteImageView()
     let logoImageView = UIImageView.logoImageView()
     let buttonContainerView = UIView.buttonContainerView()
     let activityIndicatorView = UIActivityIndicatorView.activityIndicatorView()
@@ -40,8 +38,6 @@ class LoginView: UIView {
     
     fileprivate func setupSubviews() {
         addSubview(imageContainerView)
-        imageContainerView.addSubview(backgroundImageView)
-        imageContainerView.addSubview(vignetteImageView)
         imageContainerView.addSubview(logoImageView)
         imageContainerView.addSubview(skipButton)
         addSubview(buttonContainerView)
@@ -55,14 +51,10 @@ class LoginView: UIView {
             make.left.right.top.equalTo(imageContainerView.superview!)
             make.bottom.equalTo(buttonContainerView.snp.top).priority(10)
         }
-
-        vignetteImageView.snp.updateConstraints { (make) -> Void in
-            make.edges.equalTo(vignetteImageView.superview!)
-        }
         
         logoImageView.snp.makeConstraints { (make) in
-            make.centerX.equalTo(logoImageView.superview!)
-            make.top.equalTo(logoImageView.superview!.snp.centerY).multipliedBy(0.24)
+            make.center.equalTo(logoImageView.superview!)
+            make.width.equalTo(logoImageView.superview!).multipliedBy(0.65)
         }
         
         buttonContainerView.snp.makeConstraints { (make) in
@@ -84,39 +76,6 @@ class LoginView: UIView {
         }
         
     }
-    
-    override func updateConstraints() {
-        
-        self.backgroundImageView.snp.updateConstraints { (make) -> Void in
-            make.centerY.equalTo(backgroundImageView.superview!)
-            make.left.equalTo(backgroundImageView.superview!)
-            
-            let imageSize = backgroundImageView.image?.size ?? CGSize.zero
-            let factor = backgroundImageView.superview!.frame.height / imageSize.height
-            
-            make.width.equalTo(imageSize.width * factor)
-            make.height.equalTo(imageSize.height * factor)
-        }
-        super.updateConstraints()
-    }
-    
-    // MARK : Animation
-    
-    func stopBackgroundAnimation() {
-        self.backgroundImageView.layer.removeAllAnimations()
-        self.backgroundImageView.transform = CGAffineTransform.identity
-    }
-    
-    func animateBackgroundImage() {
-        let offset = backgroundImageView.frame.width - backgroundImageView.superview!.frame.width
-        
-        UIView.animate(withDuration: 90.0, delay: 0, options: [.autoreverse, .repeat, .curveLinear], animations: { () -> Void in
-            self.backgroundImageView.transform = CGAffineTransform(translationX: -offset, y: 0)
-            
-            }) { (finished) -> Void in
-                self.backgroundImageView.transform = CGAffineTransform.identity
-        }
-    }
 }
 
 private extension UIButton {
@@ -125,8 +84,8 @@ private extension UIButton {
         let auth = "Authenticate with "
         let fb = "Facebook"
         let combinedString = auth + fb
-        let authRange = NSRange(location: 0, length: auth.characters.count)
-        let fbRange = NSRange(location: auth.characters.count, length: fb.characters.count)
+        let authRange = NSRange(location: 0, length: auth.count)
+        let fbRange = NSRange(location: auth.count, length: fb.count)
         let fbFont = UIFont.defaultBoldFontOfSize(15)
         let authFont = UIFont.defaultLightFontOfSize(15)
         let attrString = NSMutableAttributedString(string: combinedString.uppercased())
@@ -145,8 +104,8 @@ private extension UIButton {
         let button = UIButton()
         let title = "SKIP"
         let attrString = NSMutableAttributedString(string: title)
-        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.characters.count))
-        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.count))
+        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSMakeRange(0, title.count))
         button.setAttributedTitle(attrString, for: UIControlState())
         button.titleLabel?.font = UIFont.defaultMediumFontOfSize(15)
         return button
@@ -154,15 +113,10 @@ private extension UIButton {
 }
 
 private extension UIImageView {
-    static func backgroundImageView() -> UIImageView {
-        let backgroundImageView = UIImageView(image: UIImage(named: "background_image_2"))
-        return backgroundImageView
-    }
-    static func vignetteImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "background_vignette"))
-    }
     static func logoImageView() -> UIImageView {
-        return UIImageView(image: UIImage(named: "nbro_logo_big"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "logo"))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }
     
 }

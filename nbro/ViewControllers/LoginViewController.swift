@@ -23,30 +23,11 @@ class LoginViewController: UIViewController {
         setupSubviews()
     }
     
-    @objc func applicationWillEnterForeground() {
-        contentView.animateBackgroundImage()
-    }
-    
-    @objc func applicationDidEnterBackground() {
-        contentView.stopBackgroundAnimation()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         TrackingManager.trackEvent(.viewLogin)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        contentView.animateBackgroundImage()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-
-    }
-
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
     }
@@ -56,10 +37,6 @@ class LoginViewController: UIViewController {
         contentView.skipButton.addTarget(self, action: #selector(skipLoginButtonPressed), for: .touchUpInside)
     }
   
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
     @objc func facebookLoginButtonPressed() {
         contentView.activityIndicatorView.startAnimating()
         contentView.facebookButton.isHidden = true
