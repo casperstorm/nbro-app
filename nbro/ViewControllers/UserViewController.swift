@@ -8,6 +8,7 @@
 
 import Foundation
 import Nuke
+import SafariServices
 
 fileprivate class ViewModel {
     enum TableData: Int {
@@ -118,6 +119,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         contentView.tableView.deselectRow(at: indexPath, animated: true)
         let type = tableDataRow(indexPath)
         switch type {
+        case .garmin:
+            DispatchQueue.main.async { () -> Void in
+                let safariVC = SFSafariViewController(url: NSURL(string: "https://apps.garmin.com/da-DK/apps/4020dbed-9196-4b7b-94b1-7c3dc754696f")! as URL)
+                self.present(safariVC, animated: true, completion: nil)
+            }
         case .about:
             DispatchQueue.main.async { () -> Void in
                 self.navigationController?.pushViewController(AboutViewController(), animated: true)

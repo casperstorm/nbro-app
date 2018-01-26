@@ -11,6 +11,7 @@ import UIKit
 import CoreLocation
 import Mapbox
 import L360Confetti
+import SafariServices
 
 class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
@@ -134,7 +135,8 @@ class EventDetailViewController: UIViewController, L360ConfettiAreaDelegate {
     
     @objc func facebookPressed() {
         TrackingManager.trackEvent(.visitEventInFacebook)
-        UIApplication.shared.open(URL(string: "https://www.facebook.com/events/\(event.id)/")!, options: [:], completionHandler: nil)
+        let safariVC = SFSafariViewController(url: NSURL(string: "https://www.facebook.com/events/\(event.id)/")! as URL)
+        self.present(safariVC, animated: true, completion: nil)
     }
     
     func attentEvent() {

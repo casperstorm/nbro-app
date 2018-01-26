@@ -73,8 +73,6 @@ private extension UITableView {
     static func tableView() -> UITableView {
         let tableView = UITableView()
         tableView.register(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
-        tableView.register(UserTextCell.self, forCellReuseIdentifier: "text-cell")
-        tableView.register(UserEventCell.self, forCellReuseIdentifier: "event-cell")
         tableView.register(DetailCell.self, forCellReuseIdentifier: "detail-cell")
         tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor.clear

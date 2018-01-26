@@ -56,8 +56,6 @@
 		6C3144661C723A2900A138EF /* Exo2-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C3144651C72398D00A138EF /* Exo2-Medium.ttf */; };
 		6C402B241C7331BD00E57613 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C402B231C7331BD00E57613 /* Array+Additions.swift */; };
 		6C4134E41CA2AEBE00704797 /* UserProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4134E31CA2AEBE00704797 /* UserProfileCell.swift */; };
-		6C4134E71CA2C9D600704797 /* UserTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4134E61CA2C9D600704797 /* UserTextCell.swift */; };
-		6C4134E91CA2CD9400704797 /* UserEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4134E81CA2CD9400704797 /* UserEventCell.swift */; };
 		6C4427E81C88A2A80037D609 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6C4427E71C88A2A80037D609 /* Settings.bundle */; };
 		6C5BADA11C8716C300A0ECD0 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5BADA01C8716C300A0ECD0 /* CreditCell.swift */; };
 		6C5BADA31C8716D600A0ECD0 /* UIFont+NBRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5BADA21C8716D600A0ECD0 /* UIFont+NBRO.swift */; };
@@ -158,8 +156,6 @@
 		6C3144651C72398D00A138EF /* Exo2-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Medium.ttf"; path = "Fonts/Exo2-Medium.ttf"; sourceTree = "<group>"; };
 		6C402B231C7331BD00E57613 /* Array+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Additions.swift"; path = "Extensions/Array+Additions.swift"; sourceTree = "<group>"; };
 		6C4134E31CA2AEBE00704797 /* UserProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileCell.swift; path = Views/UserProfileCell.swift; sourceTree = "<group>"; };
-		6C4134E61CA2C9D600704797 /* UserTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserTextCell.swift; path = Views/UserTextCell.swift; sourceTree = "<group>"; };
-		6C4134E81CA2CD9400704797 /* UserEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventCell.swift; sourceTree = "<group>"; };
 		6C4390851C62537600E923D0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6C4427E71C88A2A80037D609 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		6C5BADA01C8716C300A0ECD0 /* CreditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CreditCell.swift; path = Views/CreditCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -292,8 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				6C4134E31CA2AEBE00704797 /* UserProfileCell.swift */,
-				6C4134E61CA2C9D600704797 /* UserTextCell.swift */,
-				6C4134E81CA2CD9400704797 /* UserEventCell.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -774,8 +768,6 @@
 				6C9A5C2A1C60BF72007459A8 /* AppDelegate.swift in Sources */,
 				D0AF55421E46B8C200789AA3 /* StickerViewController.swift in Sources */,
 				181FC20B9B42C364690B0448 /* EventListViewController.swift in Sources */,
-				6C4134E91CA2CD9400704797 /* UserEventCell.swift in Sources */,
-				6C4134E71CA2C9D600704797 /* UserTextCell.swift in Sources */,
 				6C3144571C71E23400A138EF /* UIImage+Additions.swift in Sources */,
 				6C4134E41CA2AEBE00704797 /* UserProfileCell.swift in Sources */,
 				6C5BADAB1C87171000A0ECD0 /* DetailLabelView.swift in Sources */,
