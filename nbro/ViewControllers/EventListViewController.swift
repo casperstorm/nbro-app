@@ -80,7 +80,8 @@ extension EventListViewController {
         }
         viewModel.loadData({ events in
             if (events.count > 0) {
-               self.hideLoadingAnimation()
+                self.hideLoadingAnimation()
+                self.hideErrorView()
             } else {
                 self.presentErrorView()
             }
@@ -125,6 +126,13 @@ extension EventListViewController {
         })
     }
     
+    fileprivate func hideErrorView() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.contentView.loadingView.statusLabel.alpha = 0.0
+        }, completion: { (completed) in
+        })
+    }
+ 
     fileprivate func presentErrorView() {
         contentView.tableView.isHidden = true
         hideLoadingAnimation()
