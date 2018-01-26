@@ -135,10 +135,10 @@ extension UserViewController {
 extension UserViewController {
     func prepareToLoadData() {
         let authenticated = FacebookManager.authenticated()
+        self.navigationController?.isNavigationBarHidden = !authenticated
+
         if (authenticated) {
-            
             contentView.notAuthenticatedView.isHidden = true
-            
             let logoutBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "logout"), style: .plain, target: self, action: #selector(logoutPressed))
             navigationItem.rightBarButtonItem = logoutBarButtonItem
             

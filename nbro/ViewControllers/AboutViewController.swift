@@ -35,6 +35,7 @@ class AboutViewController: UIViewController {
         TrackingManager.trackEvent(.viewAbout)
     }
     
+
     fileprivate func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self

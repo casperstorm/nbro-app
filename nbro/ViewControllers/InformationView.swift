@@ -12,7 +12,7 @@ import UIKit
 class InformationView: UIView {
     fileprivate let titleBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: 0xE0E100, alpha: 0.55)
+        view.backgroundColor = UIColor(hex: 0xFFFFFF, alpha: 1)
         return view
     }()
     
@@ -20,7 +20,7 @@ class InformationView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.titleBoldFontOfSize(44)
-        label.textColor = UIColor.white
+        label.textColor = UIColor.black
         label.textAlignment = .center
         return label
     }()

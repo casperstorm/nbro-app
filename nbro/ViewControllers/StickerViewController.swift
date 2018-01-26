@@ -106,8 +106,8 @@ class StickerViewController: UIViewController {
                 self.soundPlayer.currentTime = 0
                 self.soundPlayer.play()
                 
-                self.confettiView.blast(from: CGPoint(x: screenBounds.width/2, y: screenBounds.height - 420), towards: CGFloat(M_PI)/2, withForce: 400, confettiWidth: 8, numberOfConfetti: 35)
-                self.confettiView.blast(from: CGPoint(x: screenBounds.width/2, y: screenBounds.height - 420), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
+                self.confettiView.blast(from: CGPoint(x: screenBounds.width/2, y: screenBounds.height - 420), towards: CGFloat(Double.pi/2), withForce: 400, confettiWidth: 8, numberOfConfetti: 35)
+                self.confettiView.blast(from: CGPoint(x: screenBounds.width/2, y: screenBounds.height - 420), towards: CGFloat(Double.pi/2), withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
             }
 
             let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
@@ -134,7 +134,6 @@ extension StickerViewController {
 
 extension StickerViewController: L360ConfettiAreaDelegate {
     func colors(for confettiArea: L360ConfettiArea!) -> [Any]! {
-//        return [UIColor(hex: 0xFFD700), UIColor(hex: 0xD3D3D3)]
         return [UIColor(hex: 0xFF5E5E), UIColor(hex: 0xFFD75E), UIColor(hex: 0x33DB96), UIColor(hex: 0xA97DBB), UIColor(hex: 0xCFCFCF), UIColor(hex: 0x2A7ADC)]
     }
 }

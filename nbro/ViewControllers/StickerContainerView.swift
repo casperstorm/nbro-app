@@ -55,7 +55,7 @@ class StickerContainerView: UIView {
         
         toolsView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalToSuperview()
-            make.height.equalTo(80)
+            make.height.equalTo(100)
         }
     }
     
