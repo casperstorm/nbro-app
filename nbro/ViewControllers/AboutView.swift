@@ -24,15 +24,6 @@ class AboutView: UIView {
     let gradient: UIImageView = {
         return UIImageView(image: #imageLiteral(resourceName: "about_gradient_shadow"))
     }()
-    
-    let versionLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray
-        label.textAlignment = .center
-        label.font = UIFont.defaultLightFontOfSize(12)
-        return label
-    }()
-    
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .black
@@ -45,7 +36,7 @@ class AboutView: UIView {
     }
     
     fileprivate func setupSubviews() {
-        let subviews = [tableView, gradient, versionLabel]
+        let subviews = [tableView, gradient]
         subviews.forEach { addSubview($0) }
     }
     
@@ -56,11 +47,6 @@ class AboutView: UIView {
         
         gradient.snp.makeConstraints { (make) in
             make.left.bottom.right.equalToSuperview()
-        }
-        
-        versionLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
     }
 

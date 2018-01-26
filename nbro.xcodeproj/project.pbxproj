@@ -263,7 +263,7 @@
 		6C3144581C71FE3D00A138EF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6C85B2591C74E64900157C93 /* Credit */,
+				6C85B2591C74E64900157C93 /* DetailCell */,
 				6C31445A1C71FE4F00A138EF /* EventList */,
 				6C3144591C71FE4700A138EF /* About */,
 				6C4134E51CA2AEC300704797 /* User */,
@@ -382,12 +382,12 @@
 			name = "stickers-svg";
 			sourceTree = "<group>";
 		};
-		6C85B2591C74E64900157C93 /* Credit */ = {
+		6C85B2591C74E64900157C93 /* DetailCell */ = {
 			isa = PBXGroup;
 			children = (
 				6C5BADA01C8716C300A0ECD0 /* CreditCell.swift */,
 			);
-			name = Credit;
+			name = DetailCell;
 			sourceTree = "<group>";
 		};
 		6C8AF9D41C6E7FE8004D4789 /* Fonts */ = {

@@ -38,16 +38,16 @@ class UserProfileCell: UITableViewCell {
     
     fileprivate func defineLayouts() {
         userImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(userImageView.superview!).inset(40)
+            make.top.equalTo(userImageView.superview!).inset(20)
             make.centerX.equalTo(userImageView.superview!)
             make.width.height.equalTo(90).priority(750)
         }
         
         userNameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(userImageView.snp.bottom).offset(30)
+            make.top.equalTo(userImageView.snp.bottom).offset(15)
             make.leading.trailing.equalTo(userNameLabel.superview!).inset(20)
             make.height.equalTo(30)
-            make.bottom.equalTo(userNameLabel.superview!)
+            make.bottom.equalTo(userNameLabel.superview!).offset(-15)
         }
     }
 }

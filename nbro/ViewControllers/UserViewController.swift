@@ -11,7 +11,7 @@ import Nuke
 
 fileprivate class ViewModel {
     enum TableData: Int {
-        case profile, information, event
+        case profile, about, icon, garmin
     }
     
     var user: FacebookProfile?
@@ -35,6 +35,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "hideout".uppercased()
+        contentView.versionLabel.text = applicationVersionString()
         setupSubviews()
     }
     
@@ -61,7 +63,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let staticCells: [ViewModel.TableData] = [.profile, .information]
+        let staticCells: [ViewModel.TableData] = [.profile, .about, .icon, .garmin]
 
         return staticCells.count
     }
@@ -82,30 +84,46 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
             return cell
-        case .information:
-            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "text-cell", for: indexPath) as! UserTextCell
-            cell.bodyLabel.text = "It looks like you don't have any upcoming events. Remember, your commitment will be rewarded mile by mile."
-
+        case .about:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "detail-cell", for: indexPath) as! DetailCell
+            cell.titleLabel.text = "NBRO".uppercased()
+            cell.detailLabel.text = "What is it all about?"
+            cell.iconImageView.image = #imageLiteral(resourceName: "info")
+            cell.bottomSeparatorView.isHidden = true
+            
             return cell
-        case .event:
-            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "event-cell", for: indexPath) as! UserEventCell
+        case .icon:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "detail-cell", for: indexPath) as! DetailCell
+            cell.titleLabel.text = "App Icon"
+            cell.detailLabel.text = "Alternates icons available"
+            cell.iconImageView.image = #imageLiteral(resourceName: "alt-icon")
+            cell.bottomSeparatorView.isHidden = true
+            return cell
+        case .garmin:
+            let cell = contentView.tableView.dequeueReusableCell(withIdentifier: "detail-cell", for: indexPath) as! DetailCell
+            cell.titleLabel.text = "Garmin Watch Face"
+            cell.detailLabel.text = "Get that sweet NBRO watch face"
+            cell.iconImageView.image = #imageLiteral(resourceName: "garmin")
             return cell
         }
 
     }
     
     fileprivate func tableDataRow(_ indexPath: IndexPath) -> ViewModel.TableData {
-        if(indexPath.row == 0) {
-            return .profile
-        } else if (indexPath.row == 1) {
-            return .information
-        } else {
-            return .event
-        }
+        let type = ViewModel.TableData(rawValue: indexPath.row)!
+        return type
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         contentView.tableView.deselectRow(at: indexPath, animated: true)
+        let type = tableDataRow(indexPath)
+        switch type {
+        case .about:
+            DispatchQueue.main.async { () -> Void in
+                self.navigationController?.pushViewController(AboutViewController(), animated: true)
+            }
+        default: break;
+        }
     }
 }
 
@@ -170,4 +188,13 @@ extension UserViewController {
         })
     }
     
+}
+
+extension UserViewController {
+    func applicationVersionString() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
+        
+        return version + " (" + build + ")"
+    }
 }

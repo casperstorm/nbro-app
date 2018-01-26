@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CreditCell: UITableViewCell {
+class DetailCell: UITableViewCell {
     let titleLabel = UILabel.titleLabel()
     let detailLabel = UILabel.detailLabel()
     let containerView = UIView()
@@ -83,6 +83,7 @@ class CreditCell: UITableViewCell {
         iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(iconImageView.superview!)
             make.left.equalTo(22)
+            make.width.height.lessThanOrEqualTo(18)
         }
         
         detailIconImageView.snp.makeConstraints { (make) -> Void in
@@ -93,7 +94,7 @@ class CreditCell: UITableViewCell {
     
     func setTitleText(_ title: String) {
         let attrString = NSMutableAttributedString(string: title)
-        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.characters.count))
+        attrString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, title.count))
         titleLabel.attributedText = attrString
     }
     
@@ -125,7 +126,9 @@ private extension UIImageView {
     }
     
     static func iconImageView() -> UIImageView {
-        return UIImageView()
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }
 }
 

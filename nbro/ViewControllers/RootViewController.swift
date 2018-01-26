@@ -11,18 +11,12 @@ import UIKit
 
 class RootViewController: UIViewController {
     enum ControllerType {
-        case event, image, profile, about
+        case event, image, profile
         func associatedViewController() -> UIViewController {
             switch self {
             case .event:
                 let vc = EventListViewController()
-//                vc.view.backgroundColor = .clear
                 vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_events").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_events_selected").withRenderingMode(.alwaysOriginal))
-                vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
-                return vc
-            case .about:
-                let vc = AboutViewController()
-                vc.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "tab_about").withRenderingMode(.alwaysOriginal), selectedImage: #imageLiteral(resourceName: "tab_about_selected").withRenderingMode(.alwaysOriginal))
                 vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
                 return vc
             case .image:
@@ -51,7 +45,7 @@ class RootViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        let viewControllers: [ControllerType] = [.event, .image, .profile, .about]
+        let viewControllers: [ControllerType] = [.event, .image, .profile]
         
         tabBarViewController.tabBar.isTranslucent = false
         tabBarViewController.viewControllers = viewControllers.map { return UINavigationController(rootViewController: $0.associatedViewController()) }

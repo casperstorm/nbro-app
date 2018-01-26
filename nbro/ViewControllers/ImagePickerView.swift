@@ -45,7 +45,7 @@ class ImagePickerView: UIView {
     fileprivate func defineLayout() {
         helperView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalTo(helperView.superview!)
-            make.height.equalTo(100)
+            make.height.equalTo(60)
         }
         
         informationView.snp.makeConstraints { (make) in

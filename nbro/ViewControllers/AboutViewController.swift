@@ -24,17 +24,12 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        contentView.versionLabel.text = applicationVersionString()
+        navigationItem.title = "about".uppercased()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         TrackingManager.trackEvent(.viewAbout)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
     }
     
     fileprivate func setupSubviews() {
@@ -74,13 +69,3 @@ extension AboutViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }
-
-extension AboutViewController {
-    func applicationVersionString() -> String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
-        
-        return version + " (" + build + ")"
-    }
-}
-

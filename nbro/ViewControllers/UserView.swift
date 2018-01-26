@@ -28,6 +28,13 @@ class UserView: UIView {
     let notAuthenticatedView = InformationView()
     let tableView = UITableView.tableView()
     let loadingView = LoadingView()
+    let versionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.font = UIFont.defaultLightFontOfSize(12)
+        return label
+    }()
     init() {
         super.init(frame: CGRect.zero)
         backgroundColor = .black
@@ -40,7 +47,7 @@ class UserView: UIView {
     }
     
     fileprivate func setupSubviews() {
-        let subviews = [loadingView, tableView, notAuthenticatedView]
+        let subviews = [loadingView, tableView, versionLabel, notAuthenticatedView]
         subviews.forEach { addSubview($0) }
     }
     
@@ -55,6 +62,10 @@ class UserView: UIView {
         notAuthenticatedView.snp.makeConstraints { (make) -> Void in
             make.center.equalToSuperview()
         }
+        versionLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -64,9 +75,9 @@ private extension UITableView {
         tableView.register(UserProfileCell.self, forCellReuseIdentifier: "user-cell")
         tableView.register(UserTextCell.self, forCellReuseIdentifier: "text-cell")
         tableView.register(UserEventCell.self, forCellReuseIdentifier: "event-cell")
+        tableView.register(DetailCell.self, forCellReuseIdentifier: "detail-cell")
         tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor.clear
-        tableView.alwaysBounceVertical = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
         return tableView
