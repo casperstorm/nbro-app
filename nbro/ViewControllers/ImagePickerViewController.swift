@@ -43,7 +43,8 @@ class ImagePickerViewController: UIViewController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         checkStatus()
         self.tabBarController?.delegate = self
-        
+        self.navigationController?.isNavigationBarHidden = true
+
         if initial {
             contentView.collectionView.isHidden = true
             initial = false
@@ -90,11 +91,7 @@ class ImagePickerViewController: UIViewController, UITabBarControllerDelegate {
 }
 
 extension ImagePickerViewController {
-    fileprivate func setupSubviews() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barStyle = .black
-        navigationItem.title = "Select image".uppercased()
-        
+    fileprivate func setupSubviews() {        
         contentView.informationView.button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
     
@@ -173,15 +170,18 @@ extension ImagePickerView {
             informationView.descriptionLabel.text = "Photos permission was declined. Open settings and allow it to continue."
             informationView.isHidden = false
             collectionView.isHidden = true
+            helperView.isHidden = true
         case .notDetermined:
             informationView.titleLabel.font = UIFont.titleBoldFontOfSize(44)
             informationView.titleLabel.text = "Allow access".uppercased()
             informationView.descriptionLabel.text = "Use stickers to decorate your photos. Allow access to start."
             informationView.isHidden = false
             collectionView.isHidden = true
+            helperView.isHidden = true
         case .authorized:
             informationView.isHidden = true
             collectionView.isHidden = false
+            helperView.isHidden = false
         }
     }
 }

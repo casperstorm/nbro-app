@@ -40,6 +40,7 @@
 		684FF324201B83F3006F2B31 /* sticker_sunday_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF315201B83F3006F2B31 /* sticker_sunday_white.svg */; };
 		684FF327201B852E006F2B31 /* sticker_nbro_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF325201B852E006F2B31 /* sticker_nbro_black.svg */; };
 		684FF328201B852E006F2B31 /* sticker_nbro_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF326201B852E006F2B31 /* sticker_nbro_white.svg */; };
+		684FF32A201B8F53006F2B31 /* ImagePickerHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684FF329201B8F53006F2B31 /* ImagePickerHelperView.swift */; };
 		685328DE2019EAD1000D510C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685328DD2019EAD1000D510C /* LoadingView.swift */; };
 		6870FA3E201797260067DDA8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6870FA3C201797260067DDA8 /* LaunchScreen.xib */; };
 		6C0EF05B1C6F785300A53017 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EF05A1C6F785300A53017 /* EventCell.swift */; };
@@ -141,6 +142,7 @@
 		684FF315201B83F3006F2B31 /* sticker_sunday_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_sunday_white.svg; path = SVG/sticker_sunday_white.svg; sourceTree = "<group>"; };
 		684FF325201B852E006F2B31 /* sticker_nbro_black.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_nbro_black.svg; path = SVG/sticker_nbro_black.svg; sourceTree = "<group>"; };
 		684FF326201B852E006F2B31 /* sticker_nbro_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sticker_nbro_white.svg; path = SVG/sticker_nbro_white.svg; sourceTree = "<group>"; };
+		684FF329201B8F53006F2B31 /* ImagePickerHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePickerHelperView.swift; path = nbro/Views/ImagePickerHelperView.swift; sourceTree = SOURCE_ROOT; };
 		685328DD2019EAD1000D510C /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = nbro/Views/LoadingView.swift; sourceTree = SOURCE_ROOT; };
 		6870FA3D201797260067DDA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6C0EF05A1C6F785300A53017 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventCell.swift; path = Views/EventCell.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				6CDA768B1E46A37B00A170F5 /* ImagePickerView.swift */,
 				D0CD768E1E59AEC6005B08EE /* ImagePickerViewModel.swift */,
 				D0CD76911E59AFC9005B08EE /* ImagePickerCollectionViewCell.swift */,
+				684FF329201B8F53006F2B31 /* ImagePickerHelperView.swift */,
 			);
 			name = ImagePicker;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				6C3144641C72128F00A138EF /* UIColor+HEX.swift in Sources */,
 				6C2123F01C6A753100DB7EE7 /* LoginViewController.swift in Sources */,
 				6C7337081C73224300744511 /* ImageCatalog.swift in Sources */,
+				684FF32A201B8F53006F2B31 /* ImagePickerHelperView.swift in Sources */,
 				D02E19071C6F794000D4C3D5 /* EventDetailView.swift in Sources */,
 				6CB6CC7C1CA144CC00B9CD9E /* UserViewController.swift in Sources */,
 				6CD06B491C804E0700351A20 /* DissmissAnimator.swift in Sources */,

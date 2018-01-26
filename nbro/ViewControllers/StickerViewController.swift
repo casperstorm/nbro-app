@@ -74,6 +74,11 @@ class StickerViewController: UIViewController {
         shareBarButtonItem.tintColor = .white
         navigationItem.rightBarButtonItem = shareBarButtonItem        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
 
     @objc dynamic private func didTouchDownStickerButton() {
         animateScaleTransform(view: stickerView.toolsView, sx: 0.85, 0.85)

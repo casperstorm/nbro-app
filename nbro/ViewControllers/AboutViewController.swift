@@ -24,9 +24,6 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barStyle = .black
-        
         contentView.versionLabel.text = applicationVersionString()
     }
     
@@ -35,7 +32,11 @@ class AboutViewController: UIViewController {
         TrackingManager.trackEvent(.viewAbout)
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     fileprivate func setupSubviews() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self

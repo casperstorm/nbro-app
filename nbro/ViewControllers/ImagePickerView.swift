@@ -19,6 +19,12 @@ class ImagePickerView: UIView {
         
         return collectionView
     }()
+
+    lazy var helperView: ImagePickerHelperView = {
+        let image = ImagePickerHelperView()
+        image.textLabel.text = "Select a image\nthen apply stickers!".uppercased()
+        return image
+    }()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -33,10 +39,15 @@ class ImagePickerView: UIView {
     fileprivate func setupSubviews() {
         backgroundColor = UIColor(hex:0x000000)
         
-        [ collectionView, informationView ].forEach { addSubview($0) }
+        [ collectionView, informationView, helperView ].forEach { addSubview($0) }
     }
     
     fileprivate func defineLayout() {
+        helperView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalTo(helperView.superview!)
+            make.height.equalTo(100)
+        }
+        
         informationView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
         }
