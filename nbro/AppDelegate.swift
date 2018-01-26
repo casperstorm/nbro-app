@@ -90,11 +90,11 @@ extension AppDelegate {
         UITabBar.appearance().barTintColor = .black
         
         let backButtonImage = #imageLiteral(resourceName: "back_button")
-        
+
         navigationBarAppearace.backIndicatorImage = backButtonImage
         navigationBarAppearace.backIndicatorTransitionMaskImage = backButtonImage
-        
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -CGFloat.greatestFiniteMagnitude), for: .default)
+
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(-200, 0), for: .default)
         UIBarButtonItem.appearance().setTitleTextAttributes([
             NSAttributedStringKey.font: UIFont.defaultSemiBoldFontOfSize(14),
             NSAttributedStringKey.foregroundColor: UIColor(hex: 0x000000),
