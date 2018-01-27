@@ -53,7 +53,8 @@ class ImagePickerView: UIView {
         }
         
         collectionView.snp.makeConstraints { (make) in
-            make.edges.equalTo(collectionView.superview!)
+            make.left.top.right.equalTo(collectionView.superview!)
+            make.bottom.equalTo(helperView.snp.top)
         }
     }
 }

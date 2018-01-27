@@ -1030,8 +1030,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bba04ef-8800-4dee-8027-84380db5a706";
-				PROVISIONING_PROFILE_SPECIFIER = "NBRO Development";
+				PROVISIONING_PROFILE = "a89a1c49-7f1e-452e-8e96-0df17f16ab65";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.nbrorunning.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -1053,8 +1053,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nbrorunning.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1d1db8f3-9c08-44b2-9494-78396bbe6671";
-				PROVISIONING_PROFILE_SPECIFIER = "NBRO App Store";
+				PROVISIONING_PROFILE = "023f37e1-334b-46ac-96fe-554cac05ca89";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.nbrorunning.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

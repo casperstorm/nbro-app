@@ -8,66 +8,34 @@ Make sure you have the latest version of the Xcode command line tools installed:
 xcode-select --install
 ```
 
-## Choose your installation method:
+Install _fastlane_ using
+```
+[sudo] gem install fastlane -NV
+```
+or alternatively using `brew cask install fastlane`
 
-<table width="100%" >
-<tr>
-<th width="33%"><a href="http://brew.sh">Homebrew</a></td>
-<th width="33%">Installer Script</td>
-<th width="33%">Rubygems</td>
-</tr>
-<tr>
-<td width="33%" align="center">macOS</td>
-<td width="33%" align="center">macOS</td>
-<td width="33%" align="center">macOS or Linux with Ruby 2.0.0 or above</td>
-</tr>
-<tr>
-<td width="33%"><code>brew cask install fastlane</code></td>
-<td width="33%"><a href="https://download.fastlane.tools/fastlane.zip">Download the zip file</a>. Then double click on the <code>install</code> script (or run it in a terminal window).</td>
-<td width="33%"><code>sudo gem install fastlane -NV</code></td>
-</tr>
-</table>
 # Available Actions
 ## iOS
+### ios codesigning
+```
+fastlane ios codesigning
+```
+fetch all certificates and provisioning profiles
 ### ios bump
 ```
 fastlane ios bump
 ```
-BUMP VERSION
-
- - ensure git status is clean
-
- - increment build number
-
- - commit changes
-
- 
+bump version
 ### ios beta
 ```
 fastlane ios beta
 ```
-Submit a new Beta Build to Apple TestFlight
-
- - build
-
- - deliver to itc testflight
-
- 
+testflight
 ### ios release
 ```
 fastlane ios release
 ```
-Deploy a new version to the App Store
-
- - todo
-
- - todo
-
- - todo
-
- - todo
-
- 
+appstore
 
 ----
 

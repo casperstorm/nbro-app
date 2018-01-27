@@ -120,12 +120,12 @@ class EventDetailView: UIView, MGLMapViewDelegate, UIScrollViewDelegate, UIGestu
         }
         
         cancelButton.snp.makeConstraints { (make) -> Void in
-            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 20, left: 5, bottom: 0, right: 0))
+            make.top.leading.equalTo(cancelButton.superview!).inset(UIEdgeInsets(top: 35, left: 5, bottom: 0, right: 0))
             make.width.height.equalTo(40)
         }
         
         facebookButton.snp.makeConstraints { (make) -> Void in
-            make.top.trailing.equalTo(facebookButton.superview!).inset(UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 5))
+            make.top.trailing.equalTo(facebookButton.superview!).inset(UIEdgeInsets(top: 35, left: 0, bottom: 0, right: 5))
             make.width.height.equalTo(40)
         }
         

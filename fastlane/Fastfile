@@ -20,21 +20,23 @@ platform :ios do
 
   ## PUBLIC LANES ##
 
-  desc "BUMP VERSION"
-  desc " - ensure git status is clean"
-  desc " - increment build number"
-  desc " - commit changes"
-  desc " "
+  desc "fetch all certificates and provisioning profiles"
+  lane :codesigning do |options|
+    ["development", "adhoc", "appstore"].each do |type|
+      match(
+        type: type
+      )
+    end
+  end
+
+  desc "bump version"
   lane :bump do
     ensure_git_status_clean
     increment_build_number
     commit
    end
    
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc " - build"
-  desc " - deliver to itc testflight"
-  desc " "
+  desc "testflight"
   lane :beta do
     # match(type: "appstore") # more information: https://codesigning.guide
     gym # Build your app - more options available
@@ -44,12 +46,7 @@ platform :ios do
     # You can also use other beta testing services here (run `fastlane actions`)
   end
 
-  desc "Deploy a new version to the App Store"
-  desc " - todo"
-  desc " - todo"
-  desc " - todo"
-  desc " - todo"
-  desc " "
+  desc "appstore"
   lane :release do
     # match(type: "appstore")
     # snapshot
