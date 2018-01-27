@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             TrackingManager.trackUser()
         }
         
+        ReviewManager.incrementAppRuns()
         return true
     }
     

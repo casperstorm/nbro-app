@@ -36,6 +36,14 @@ class EventListViewController: UIViewController {
         if traitCollection.forceTouchCapability == UIForceTouchCapability.available {
             registerForPreviewing(with: self, sourceView: view)
         }
+        
+    }
+    
+    func requestStoreReview() {
+        let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            ReviewManager.showReview()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,6 +90,7 @@ extension EventListViewController {
             if (events.count > 0) {
                 self.hideLoadingAnimation()
                 self.hideErrorView()
+                self.requestStoreReview()
             } else {
                 self.presentErrorView()
             }
