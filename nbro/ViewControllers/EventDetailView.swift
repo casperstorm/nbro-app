@@ -268,8 +268,8 @@ class EventView: UIView {
         soundPlayer.currentTime = 0
         soundPlayer.play()
         
-        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
-        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(M_PI)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
+        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(Double.pi)/2, withForce: 500, confettiWidth: 8, numberOfConfetti: 40)
+        confettiView.blast(from: CGPoint(x: 150, y: 25), towards: CGFloat(Double.pi)/2, withForce: 500, confettiWidth: 3, numberOfConfetti: 20)
     }
     
     class EventSeparator: UIView {

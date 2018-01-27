@@ -39,7 +39,6 @@
 		684FF323201B83F3006F2B31 /* sticker_madness_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF314201B83F3006F2B31 /* sticker_madness_white.svg */; };
 		684FF324201B83F3006F2B31 /* sticker_sunday_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF315201B83F3006F2B31 /* sticker_sunday_white.svg */; };
 		684FF327201B852E006F2B31 /* sticker_nbro_black.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF325201B852E006F2B31 /* sticker_nbro_black.svg */; };
-		684FF328201B852E006F2B31 /* sticker_nbro_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 684FF326201B852E006F2B31 /* sticker_nbro_white.svg */; };
 		684FF32A201B8F53006F2B31 /* ImagePickerHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684FF329201B8F53006F2B31 /* ImagePickerHelperView.swift */; };
 		684FF32C201BB6B5006F2B31 /* AppIconListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684FF32B201BB6B5006F2B31 /* AppIconListViewController.swift */; };
 		684FF32F201BB6D6006F2B31 /* AppIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684FF32E201BB6D6006F2B31 /* AppIconListView.swift */; };
@@ -713,7 +712,6 @@
 				684FF2F9201B813E006F2B31 /* sticker_run-repeat_black.svg in Resources */,
 				684FF34E201BF1EB006F2B31 /* icon_alt_daf@3x.png in Resources */,
 				684FF2F8201B813E006F2B31 /* sticker_long_black.svg in Resources */,
-				684FF328201B852E006F2B31 /* sticker_nbro_white.svg in Resources */,
 				D0B0F8FB1C74F79800955461 /* Exo2-Regular.ttf in Resources */,
 				684FF302201B813E006F2B31 /* sticker_btg_black.svg in Resources */,
 				684FF349201BF07D006F2B31 /* icon_alt_nbro@1x.png in Resources */,
@@ -1033,7 +1031,7 @@
 				PROVISIONING_PROFILE = "a89a1c49-7f1e-452e-8e96-0df17f16ab65";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.nbrorunning.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -1056,7 +1054,7 @@
 				PROVISIONING_PROFILE = "023f37e1-334b-46ac-96fe-554cac05ca89";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.nbrorunning.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_NAME)/Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

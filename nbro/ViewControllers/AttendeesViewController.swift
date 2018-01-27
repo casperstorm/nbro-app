@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Nuke
+import SafariServices
 
 public enum State {
     case attendees
@@ -126,7 +127,8 @@ class AttendeesViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let attendee = attendees[indexPath.row]
-        UIApplication.shared.openURL(URL(string: "https://www.facebook.com/\(attendee.id)/")!)
+        let safariVC = SFSafariViewController(url: NSURL(string: "https://www.facebook.com/\(attendee.id)/")! as URL)
+        self.present(safariVC, animated: true, completion: nil)
     }
     
     //MARK: Actions
