@@ -16,16 +16,16 @@ struct Event {
         
         fileprivate static var dateformatters = [String:DateFormatter]()
         
-        func formattedStringFromDate(_ date: Foundation.Date) -> String {
+        func formattedStringFromDate(_ date: Date) -> String {
             switch self {
             case .date(_):
                 return dateString(date, dateFormat: self)
             case .time:
                 return dateString(date, dateFormat: self)
             case .relative(let fallback):
-                if(date.isTomorrow()) {
+                if(date.compare(.isTomorrow)) {
                     return "Tomorrow"
-                } else if(date.isToday()) {
+                } else if(date.compare(.isToday)) {
                     return "Today"
                 } else {
                     return dateString(date, dateFormat: fallback)
@@ -33,7 +33,7 @@ struct Event {
             }
         }
         
-        fileprivate func dateString(_ date: Foundation.Date, dateFormat: DateFormat) -> String {
+        fileprivate func dateString(_ date: Date, dateFormat: DateFormat) -> String {
             let format = formatFromDateFormat(dateFormat)
             let dateFormatter = self.dateFormatter(format)
             return dateFormatter.string(from: date)

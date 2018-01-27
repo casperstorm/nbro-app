@@ -1016,7 +1016,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07E660ECEE8004E91C4D7C6F /* Pods-nbro.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = icon_default;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Casper Storm Larsen (8Y7745NBEV)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1040,7 +1039,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C625E569A5B50E8573F2BAB8 /* Pods-nbro.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = icon_default;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Casper Storm Larsen (6QPB2W4T9D)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
