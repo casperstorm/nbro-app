@@ -48,11 +48,8 @@ platform :ios do
 
   desc "appstore"
   lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym # Build your app - more options available
+    gym(scheme: 'nbro')
     deliver(force: true)
-    # frameit
   end
 
   # You can define as many lanes as you want

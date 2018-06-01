@@ -636,7 +636,6 @@
 				6C9A5C241C60BF72007459A8 /* Resources */,
 				6CA29E191C7F67AC0086FE67 /* Fabric */,
 				91C20A8A6848C4C751F865BF /* [CP] Embed Pods Frameworks */,
-				193689D309A4D7DBEA36044C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -748,21 +747,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		193689D309A4D7DBEA36044C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nbro/Pods-nbro-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6CA29E191C7F67AC0086FE67 /* Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
