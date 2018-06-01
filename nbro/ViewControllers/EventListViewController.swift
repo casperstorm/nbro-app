@@ -101,7 +101,9 @@ extension EventListViewController {
             self.viewModel.events = events
             self.contentView.tableView.reloadData()
             self.animateCellsEntrance(animate)
-        }) { }
+        }) {
+            self.presentErrorView()
+        }
     }
 }
 

@@ -75,6 +75,7 @@ class FacebookManager {
             (connection, result, error) -> Void in
             if error != nil {
                 failure()
+                return
             } else if let r = result as? NSDictionary {
                 guard let data = r["data"] as? Array<NSDictionary> else {
                     completion([])
